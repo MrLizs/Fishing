@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "c67d16be-b22f-4751-af97-65fdf0808b74",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "DH_bluefishi": {
+      "ver": "1.0.3",
+      "uuid": "d7708448-1acb-4c6e-8d5e-b0e39686cbcb",
+      "rawTextureUuid": "c67d16be-b22f-4751-af97-65fdf0808b74",
+      "trimType": "custom",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 163,
+      "height": 121,
+      "rawWidth": 163,
+      "rawHeight": 121,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
