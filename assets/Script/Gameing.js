@@ -2,8 +2,9 @@ var boatMoveSpeed = 0.15;
 var boatVec = null;
 var firstPushSite=null;
 var firstFloor_fishes;
-var SecondFloor_fishes
+var SecondFloor_fishes;
 var thirdlyFloor_fishes;
+var walkSpeed = 2.5;
 
 var MaxFishNum = 3;//最大鱼数量
 window.theFishes = [];//鱼群
@@ -67,9 +68,8 @@ cc.Class({
             theFishes.push(theFish);
         }
         //鱼群属性初始化
-        for (var i = 0; i < theFishes.length; i++) {
-            cc.fishesManager.initFishes(theFishes[i]);
-        }
+        cc.fishesManager.initFishes(theFishes);
+
 
     },
 
@@ -86,8 +86,8 @@ cc.Class({
         for (var i = 0; i < theFishes.length; i++) {
             cc.fishesManager.updatefish(theFishes[i]);
         }
-    },
 
+    },
 
     //返回主场景
     returnMainScene:function(){
@@ -151,5 +151,38 @@ cc.Class({
 
     randFishScript:function(){
         
+    },
+
+    updatefish: function (fishNode) {
+        if(fishNode)
+        {
+            if(fishNode.fishCollisions === false)
+            {
+                if(fishNode.scroll)
+                {
+                    fishNode.node.x += fishNode.speed * walkSpeed;
+                }
+                else
+                {
+                    fishNode.node.x -= fishNode.speed * walkSpeed;
+                }
+                if(fishNode.node.x >= 2017 || fishNode.node.x < -150)
+                {
+                    this.resetMovePoint(fishNode);
+                }
+            }
+        }
+    },
+    
+    resetMovePoint:function(_fishNode){
+        if(_fishNode.scroll === true)
+        {
+            _fishNode.scroll = false;
+        }
+        else
+        {
+            _fishNode.scroll = true;
+        }
+        _fishNode.node.width = -_fishNode.node.width;
     },
 });

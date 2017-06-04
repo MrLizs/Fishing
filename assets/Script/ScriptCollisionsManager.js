@@ -18,33 +18,37 @@ var ScriptCollisionsManager = cc.Class({
         ThirdlyFloor_Node = ThirdlyFloor.getChildByName('DH');
     },
 
-    initFishes:function(_fish){
-        var rnum = Math.random()*2+1;
-        if(rnum > 0 && rnum < 1)
+    initFishes:function(_fishes){
+        for(var i = 0 ; i < _fishes.length ; i++)
         {
-            _fish.node = cc.instantiate(FirstFloor_Node);
-            _fish.node.parent = FirstFloor_Node.parent;
-            _fish.node.x = FirstFloor_Node.x;
-            _fish.node.y = FirstFloor_Node.y;
-            _fish.Floor = 1;
+            var _fish = _fishes[i];
+            var rnum = Math.random()*2+1;
+            if(rnum > 0 && rnum < 1)
+            {
+                _fish.node = cc.instantiate(FirstFloor_Node);
+                _fish.node.parent = FirstFloor_Node.parent;
+                _fish.node.x = FirstFloor_Node.x;
+                _fish.node.y = FirstFloor_Node.y;
+                _fish.Floor = 1;
+            }
+            else if(rnum > 1 && rnum < 2)
+            {
+                _fish.node = cc.instantiate(SecondFloor_Node);
+                _fish.node.parent = SecondFloor_Node.parent;
+                _fish.node.x = SecondFloor_Node.x;
+                _fish.node.y = SecondFloor_Node.y;
+                _fish.Floor = 2;
+            }
+            else
+            {
+                _fish.node = cc.instantiate(ThirdlyFloor_Node);
+                _fish.node.parent = ThirdlyFloor_Node.parent;
+                _fish.node.x = ThirdlyFloor_Node.x;
+                _fish.node.y = ThirdlyFloor_Node.y;
+                _fish.Floor = 3;
+            }
+            _fish.speed = rnum + 2;
         }
-        else if(rnum > 1 && rnum < 2)
-        {
-            _fish.node = cc.instantiate(SecondFloor_Node);
-            _fish.node.parent = SecondFloor_Node.parent;
-            _fish.node.x = SecondFloor_Node.x;
-            _fish.node.y = SecondFloor_Node.y;
-            _fish.Floor = 2;
-        }
-        else
-        {
-            _fish.node = cc.instantiate(ThirdlyFloor_Node);
-            _fish.node.parent = ThirdlyFloor_Node.parent;
-            _fish.node.x = ThirdlyFloor_Node.x;
-            _fish.node.y = ThirdlyFloor_Node.y;
-            _fish.Floor = 3;
-        }
-        _fish.speed = rnum + 2;
     },
 
     // called every frame, uncomment this function to activate update callback
