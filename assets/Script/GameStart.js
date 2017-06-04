@@ -28,10 +28,9 @@ cc.Class({
     },
     clickEndStartBtn:function(){
         var self = this;
-        cc.loader.loadRes('Login/Ui_home_start',cc.SpriteFrame,function(err,spriteFrame){
+        cc.loader.loadRes('Login/UI_home_start',cc.SpriteFrame,function(err,spriteFrame){
             self.start_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
         });
-
         cc.director.loadScene('FishingGame');
     }
 

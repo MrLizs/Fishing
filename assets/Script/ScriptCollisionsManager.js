@@ -3,71 +3,105 @@ var FirstFloor_Node = null;
 var SecondFloor_Node = null;
 var ThirdlyFloor_Node = null;
 
+var MaxFishNum = 3;//最大鱼数量
+window.theFishes = [];//鱼群
+var theFish = {
+   node:null,//节点
+   sroll:true,//方向
+   Floor:null,//层
+   speed:null,//速度
+   fishCollisions:false,//是否碰撞
+};//鱼数据
+
 var ScriptCollisionsManager = cc.Class({
     extends: cc.Component,
 
     properties: {
-        scroll:true,
-        velocity:0,
-
+        FirstFloor_Node:{
+            default:null,
+            type:cc.Node,
+        },
+        SecondFloor_Node:{
+            default:null,
+            type:cc.Node,
+        },
+        ThirdlyFloor_Node:{
+            default:null,
+            type:cc.Node,
+        },
     },
-    initFloor(FirstFloor,SecondFloor,ThirdlyFloor)
+    onLoad:function(){
+        //鱼群初始化
+        theFishes = new Array();
+        for (var i = 0; i < MaxFishNum; i++) {
+            theFishes.push(theFish);
+        }
+        this.initFloor();
+        this.initFishes();
+    },
+
+    initFloor(/*FirstFloor,SecondFloor,ThirdlyFloor*/)
     {
-        FirstFloor_Node = FirstFloor.getChildByName('DH');
-        SecondFloor_Node = SecondFloor.getChildByName('DH');
-        ThirdlyFloor_Node = ThirdlyFloor.getChildByName('DH');
+        FirstFloor_Node = this.FirstFloor_Node.getChildByName('DH');
+        SecondFloor_Node = this.SecondFloor_Node.getChildByName('DH');
+        ThirdlyFloor_Node = this.ThirdlyFloor_Node.getChildByName('DH');
     },
 
-    initFishes:function(_fishes){
-        for(var i = 0 ; i < _fishes.length ; i++)
+    initFishes:function(){
+
+        for(var i = 0 ; i < MaxFishNum ; i++)
         {
-            var _fish = _fishes[i];
             var rnum = Math.random()*2+1;
             if(rnum > 0 && rnum < 1)
             {
-                _fish.node = cc.instantiate(FirstFloor_Node);
-                _fish.node.parent = FirstFloor_Node.parent;
-                _fish.node.x = FirstFloor_Node.x;
-                _fish.node.y = FirstFloor_Node.y;
-                _fish.Floor = 1;
+                theFishes[i].node = cc.instantiate(FirstFloor_Node);
+                theFishes[i].node.parent = FirstFloor_Node.parent;
+                theFishes[i].node.x = FirstFloor_Node.x;
+                theFishes[i].node.y = FirstFloor_Node.y;
+                theFishes[i].Floor = 1;
             }
             else if(rnum > 1 && rnum < 2)
             {
-                _fish.node = cc.instantiate(SecondFloor_Node);
-                _fish.node.parent = SecondFloor_Node.parent;
-                _fish.node.x = SecondFloor_Node.x;
-                _fish.node.y = SecondFloor_Node.y;
-                _fish.Floor = 2;
+                theFishes[i].node = cc.instantiate(SecondFloor_Node);
+                theFishes[i].node.parent = SecondFloor_Node.parent;
+                theFishes[i].node.x = SecondFloor_Node.x;
+                theFishes[i].node.y = SecondFloor_Node.y;
+                theFishes[i].Floor = 2;
             }
             else
             {
-                _fish.node = cc.instantiate(ThirdlyFloor_Node);
-                _fish.node.parent = ThirdlyFloor_Node.parent;
-                _fish.node.x = ThirdlyFloor_Node.x;
-                _fish.node.y = ThirdlyFloor_Node.y;
-                _fish.Floor = 3;
+                theFishes[i].node = cc.instantiate(ThirdlyFloor_Node);
+                theFishes[i].node.parent = ThirdlyFloor_Node.parent;
+                theFishes[i].node.x = ThirdlyFloor_Node.x;
+                theFishes[i].node.y = ThirdlyFloor_Node.y;
+                theFishes[i].Floor = 3;
             }
-            _fish.speed = rnum + 2;
+            this.randFishSpriteFrame(randFishSpriteFrame);
+            theFishes[i].speed = rnum + 1;
         }
     },
 
     // called every frame, uncomment this function to activate update callback
-    updatefish: function (fishNode) {
-        if(fishNode)
-        {
-            if(fishNode.fishCollisions === false)
+    update: function () {
+        for (var i = 0; i < theFishes.length; i++) {
+            var fishNode = theFishes[i];
+            if(fishNode)
             {
-                if(fishNode.scroll)
+                cc.log(fishNode);
+                if(fishNode.fishCollisions === false)
                 {
-                    fishNode.node.x += fishNode.speed * walkSpeed;
-                }
-                else
-                {
-                    fishNode.node.x -= fishNode.speed * walkSpeed;
-                }
-                if(fishNode.node.x >= 2017 || fishNode.node.x < -150)
-                {
-                    this.resetMovePoint(fishNode);
+                    if(fishNode.scroll)
+                    {
+                        fishNode.node.x += fishNode.speed * walkSpeed;
+                    }
+                    else
+                    {
+                        fishNode.node.x -= fishNode.speed * walkSpeed;
+                    }
+                    if(fishNode.node.x >= 2200 || fishNode.node.x < -500)
+                    {
+                        this.resetMovePoint(fishNode);
+                    }
                 }
             }
         }
@@ -77,13 +111,62 @@ var ScriptCollisionsManager = cc.Class({
         if(_fishNode.scroll === true)
         {
             _fishNode.scroll = false;
-            _fishNode.node.width = _fishNode.node.width;
+            _fishNode.node.width = -_fishNode.node.width;
         }
         else
         {
             _fishNode.scroll = true;
             _fishNode.node.width = -_fishNode.node.width;
         }
+    },
+
+
+    randFishSpriteFrame:function(fishNode){
+        var fishNodeSpriteFrame = fishNode.getComponent(cc.SpriteFrame).spriteFrame;
+        var rand = Math.random()*7;
+        if(rand < 1)
+        {
+            cc.loader.loadRes('Fishes/DH_agouti',cc.SpriteFrame,function(err,spriteFrame){
+                fishNodeSpriteFrame = spriteFrame; 
+            });
+        }
+        else if(rand < 2)
+        {
+            cc.loader.loadRes('Fishes/DH_bluefishi',cc.SpriteFrame,function(err,spriteFrame){
+                fishNodeSpriteFrame = spriteFrame; 
+            });
+        }
+        else if(rand < 3)
+        {
+            cc.loader.loadRes('Fishes/DH_crab',cc.SpriteFrame,function(err,spriteFrame){
+                fishNodeSpriteFrame = spriteFrame; 
+            });
+        }
+        else if(rand < 4)
+        {
+            cc.loader.loadRes('Fishes/DH_inkfish',cc.SpriteFrame,function(err,spriteFrame){
+                fishNodeSpriteFrame = spriteFrame; 
+            });
+        }
+        else if(rand < 5)
+        {
+            cc.loader.loadRes('Fishes/DH_tropicalfish',cc.SpriteFrame,function(err,spriteFrame){
+                fishNodeSpriteFrame = spriteFrame; 
+            });
+        }
+        else if(rand < 6)
+        {
+            cc.loader.loadRes('Fishes/DH_yellowfish',cc.SpriteFrame,function(err,spriteFrame){
+                fishNodeSpriteFrame = spriteFrame; 
+            });
+        }
+        else
+        {
+            cc.loader.loadRes('garbage/DH_garbage_2',cc.SpriteFrame,function(err,spriteFrame){
+                fishNodeSpriteFrame = spriteFrame; 
+            });
+        }
+        
     },
 
 });

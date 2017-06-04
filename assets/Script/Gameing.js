@@ -6,16 +6,6 @@ var SecondFloor_fishes;
 var thirdlyFloor_fishes;
 var walkSpeed = 2.5;
 
-var MaxFishNum = 3;//最大鱼数量
-window.theFishes = [];//鱼群
-var theFish = {
-   node:null,//节点
-   sroll:true,//方向
-   Floor:null,//层
-   speed:null,//速度
-   fishCollisions:false,//是否碰撞
-};//鱼数据
-
 cc.Class({
     extends: cc.Component,
 
@@ -57,20 +47,14 @@ cc.Class({
         this.touchLayout.on(cc.Node.EventType.TOUCH_START,this.Angling,this);
         this.touchLayout.on(cc.Node.EventType.TOUCH_END,this.ChangeStatus,this);
 
-        var scm = require('ScriptCollisionsManager');
-        cc.fishesManager = new scm();
+        //var scm = require('ScriptCollisionsManager');
+        //cc.fishesManager = new scm();
 
         //刷鱼层初始化
-        cc.fishesManager.initFloor(this.FirstFloor_Node,this.SecondFloor_Node,this.ThirdlyFloor_Node);
-        //鱼群初始化
-        theFishes = new Array();
-        for (var i = 0; i < MaxFishNum; i++) {
-            theFishes.push(theFish);
-        }
+        //cc.fishesManager.initFloor(this.FirstFloor_Node,this.SecondFloor_Node,this.ThirdlyFloor_Node);
+
         //鱼群属性初始化
-        cc.fishesManager.initFishes(theFishes);
-
-
+        //cc.fishesManager.initFishes(theFishes);
     },
 
     // called every frame, uncomment this function to activate update callback
@@ -83,10 +67,7 @@ cc.Class({
         {
             this.UpFishhook();
         }
-        for (var i = 0; i < theFishes.length; i++) {
-            cc.fishesManager.updatefish(theFishes[i]);
-        }
-
+        //cc.fishesManager.updatefish(theFishes);
     },
 
     //返回主场景
@@ -153,36 +134,4 @@ cc.Class({
         
     },
 
-    updatefish: function (fishNode) {
-        if(fishNode)
-        {
-            if(fishNode.fishCollisions === false)
-            {
-                if(fishNode.scroll)
-                {
-                    fishNode.node.x += fishNode.speed * walkSpeed;
-                }
-                else
-                {
-                    fishNode.node.x -= fishNode.speed * walkSpeed;
-                }
-                if(fishNode.node.x >= 2017 || fishNode.node.x < -150)
-                {
-                    this.resetMovePoint(fishNode);
-                }
-            }
-        }
-    },
-    
-    resetMovePoint:function(_fishNode){
-        if(_fishNode.scroll === true)
-        {
-            _fishNode.scroll = false;
-        }
-        else
-        {
-            _fishNode.scroll = true;
-        }
-        _fishNode.node.width = -_fishNode.node.width;
-    },
 });
