@@ -48,7 +48,6 @@ var ScriptCollisionsManager = cc.Class({
     },
 
     initFishes:function(){
-
         for(var i = 0 ; i < MaxFishNum ; i++)
         {
             var rnum = Math.random()*2+1;
@@ -76,7 +75,7 @@ var ScriptCollisionsManager = cc.Class({
                 theFishes[i].node.y = ThirdlyFloor_Node.y;
                 theFishes[i].Floor = 3;
             }
-            this.randFishSpriteFrame(randFishSpriteFrame);
+            this.randFishSpriteFrame(theFishes[i]);
             theFishes[i].speed = rnum + 1;
         }
     },
