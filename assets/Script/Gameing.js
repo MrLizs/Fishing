@@ -47,6 +47,10 @@ cc.Class({
         this.touchLayout.on(cc.Node.EventType.TOUCH_START,this.Angling,this);
         this.touchLayout.on(cc.Node.EventType.TOUCH_END,this.ChangeStatus,this);
 
+        var scMgr = require('ScriptCollisionsManager');
+        cc.Fish = {};
+        cc.Fish.scMgr = new scMgr();
+        
         //var scm = require('ScriptCollisionsManager');
         //cc.fishesManager = new scm();
 
