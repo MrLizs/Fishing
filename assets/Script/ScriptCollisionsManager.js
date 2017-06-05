@@ -49,7 +49,6 @@ var ScriptCollisionsManager = cc.Class({
     },
 
     fishFun:function(rnum,i){
-        console.log("i:"+i);
         theFishes[i].node = new cc.Node();
         theFishes[i].node.name = ""+i;
         //theFishes[i].node.addComponent(cc.Sprite);
@@ -174,6 +173,10 @@ var ScriptCollisionsManager = cc.Class({
         }
         
         fishNode.addComponent(cc.BoxCollider).size = new cc.size(fishNode.width, fishNode.height);
+        fishNode.group = "Fishing";
+        cc.log(fishNode.getComponent(cc.BoxCollider).name);
+        // fishNode.addComponent(cc.BoxCollider);
+        // fishNode.getComponent(cc.BoxCollider).size = new cc.size(fishNode.width, fishNode.height);
 
     },
 
