@@ -6,6 +6,10 @@ cc.Class({
           default:null,
           type:cc.Node,
         },
+        RegulationBg_Node:{
+            default:null,
+            type:cc.Node,
+        }
     },
 
     // use this for initialization
@@ -32,6 +36,12 @@ cc.Class({
             self.start_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
         });
         cc.director.loadScene('FishingGame');
-    }
+    },
+    RegulationOpen:function(){
+        this.RegulationBg_Node.active = true;
+    },
+    RegulationClose:function(){
+        this.RegulationBg_Node.active = false;
+    },
 
 });

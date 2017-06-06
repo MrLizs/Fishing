@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "33356793-3e0c-473e-aba7-0b7e6444a0d8",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "DH_waterplant_3": {
+      "ver": "1.0.3",
+      "uuid": "375afb7f-63e9-4ca6-976a-88c784fee549",
+      "rawTextureUuid": "33356793-3e0c-473e-aba7-0b7e6444a0d8",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 122,
+      "height": 391,
+      "rawWidth": 122,
+      "rawHeight": 391,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

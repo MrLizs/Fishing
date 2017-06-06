@@ -1,7 +1,4 @@
 var walkSpeed = 2;
-var FirstFloor_Node = null;
-var SecondFloor_Node = null;
-var ThirdlyFloor_Node = null;
 
 var MaxFishNum = 5;//最大鱼数量
 window.theFishes = [];//鱼群
@@ -49,29 +46,32 @@ var ScriptCollisionsManager = cc.Class({
     },
 
     fishFun:function(rnum,i){
-        theFishes[i].node = new cc.Node();
-        theFishes[i].node.name = ""+i;
-        //theFishes[i].node.addComponent(cc.Sprite);
-        this.randFishSpriteFrame(theFishes[i].node);
-        if (rnum > 0 && rnum < 1) {
-            theFishes[i].node.parent = this.FirstFloor_Node;
-            theFishes[i].node.x = -300;
-            theFishes[i].node.y = this.FirstFloor_Node.y - 200;
-            theFishes[i].Floor = 1;
+        if(theFishes[i].fishCollisions === false)
+        {
+            theFishes[i].node = new cc.Node();
+            theFishes[i].node.name = ""+i;
+            //theFishes[i].node.addComponent(cc.Sprite);
+            this.randFishSpriteFrame(theFishes[i]);
+            if (rnum > 0 && rnum < 1) {
+                theFishes[i].node.parent = this.FirstFloor_Node;
+                theFishes[i].node.x = -300;
+                theFishes[i].node.y = this.FirstFloor_Node.y - 200;
+                theFishes[i].Floor = 1;
+            }
+            else if (rnum > 1 && rnum < 2) {
+                theFishes[i].node.parent = this.SecondFloor_Node;
+                theFishes[i].node.x = -300;
+                theFishes[i].node.y = this.SecondFloor_Node.y - 200;
+                theFishes[i].Floor = 2;
+            }
+            else {
+                theFishes[i].node.parent = this.ThirdlyFloor_Node;
+                theFishes[i].node.x = -300;
+                theFishes[i].node.y = this.ThirdlyFloor_Node.y - 200;
+                theFishes[i].Floor = 3;
+            }
+            theFishes[i].speed = rnum;
         }
-        else if (rnum > 1 && rnum < 2) {
-            theFishes[i].node.parent = this.SecondFloor_Node;
-            theFishes[i].node.x = -300;
-            theFishes[i].node.y = this.SecondFloor_Node.y - 200;
-            theFishes[i].Floor = 2;
-        }
-        else {
-            theFishes[i].node.parent = this.ThirdlyFloor_Node;
-            theFishes[i].node.x = -300;
-            theFishes[i].node.y = this.ThirdlyFloor_Node.y - 200;
-            theFishes[i].Floor = 3;
-        }
-        theFishes[i].speed = rnum;
     },
     // called every frame, uncomment this function to activate update callback
     update: function () {
@@ -79,17 +79,16 @@ var ScriptCollisionsManager = cc.Class({
     },
     fishMove:function(){
         for (var i = 0; i < theFishes.length; i++) {
-            var fishNode = theFishes[i];
-            if (fishNode) {
-                if (fishNode.fishCollisions === false) {
-                    if (fishNode.scroll) {
-                        theFishes[i].node.x += fishNode.speed * walkSpeed;
+            if (theFishes[i]) {
+                if (theFishes[i].fishCollisions === false) {
+                    if (theFishes[i].scroll) {
+                        theFishes[i].node.x += theFishes[i].speed * walkSpeed;
                     }
                     else {
-                        theFishes[i].node.x -= fishNode.speed * walkSpeed;
+                        theFishes[i].node.x -= theFishes[i].speed * walkSpeed;
                     }
                     if (theFishes[i].node.x >= 2200 || theFishes[i].node.x < -500) {
-                        this.resetMovePoint(fishNode);
+                        this.resetMovePoint(theFishes[i]);
                     }
                 }
             }
@@ -107,7 +106,8 @@ var ScriptCollisionsManager = cc.Class({
     },
 
 
-    randFishSpriteFrame: function (fishNode) {
+    randFishSpriteFrame: function (_fishNode) {
+        var fishNode = _fishNode.node;
         var rand = Math.random() * 7;
         if(rand < 1)
         {
