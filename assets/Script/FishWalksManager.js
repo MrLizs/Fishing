@@ -7,30 +7,21 @@ cc.Class({
             default:null,
             type:cc.Node,
         },
+        speed:null,
     },
 
     onLoad: function () {
-
+        this.speed = Math.random() * 3;
     },
 
     update:function(){
         this.fishMove();
     },
     fishMove:function(){
-        for (var i = 0; i < theFishes.length; i++) {
-            if (theFishes[i]) {
-                if (theFishes[i].fishCollisions === false) {
-                    if (theFishes[i].scroll) {
-                        theFishes[i].node.x += theFishes[i].speed * walkSpeed;
-                    }
-                    else {
-                        theFishes[i].node.x -= theFishes[i].speed * walkSpeed;
-                    }
-                    if (theFishes[i].node.x >= 2200 || theFishes[i].node.x < -500) {
-                        this.resetMovePoint(theFishes[i]);
-                    }
-                }
-            }
+        this.node.x += this.speed * walkSpeed;
+        if(this.node.x >= 2200)
+        {
+            this.node.destroy();
         }
     },
     resetMovePoint: function (_fishNode) {
@@ -45,5 +36,21 @@ cc.Class({
     },
     onCollisionEnter: function (other, self) {
         this.node.destroy();
-    },
+    },    
 });
+        // for (var i = 0; i < theFishes.length; i++) {
+        //     cc.log(theFishes[i].node == this.node);
+        //     if (theFishes[i] && theFishes[i].node == this.node) {
+        //         if (theFishes[i].fishCollisions === false) {
+        //             if (theFishes[i].scroll) {
+        //                 this.node.x += theFishes[i].speed * walkSpeed;
+        //             }
+        //             else {
+        //                 this.node.x -= theFishes[i].speed * walkSpeed;
+        //             }
+        //             if (this.node.x >= 2200 || this.node.x < -500) {
+        //                 this.resetMovePoint(theFishes[i]);
+        //             }
+        //         }
+        //     }
+        // }

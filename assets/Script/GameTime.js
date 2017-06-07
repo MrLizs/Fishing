@@ -36,9 +36,9 @@ cc.Class({
         MinTime++;
         clock_minute.rotation += 360/60;
         ///每10秒增加一条鱼
-        if(MinTime%10 === 0){
-            cc.Fish.scMgr.addFish(1);
-        }
+        // if(MinTime%10 === 0){
+        //     cc.Fish.scMgr.addFish(1);
+        // }
     },
     updatime_hour:function(){
         clock_hour.rotation += 360/12;

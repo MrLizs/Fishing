@@ -1,19 +1,18 @@
 var MaxFishNum = 5;//最大鱼数量
 window.theFishes = [];//鱼群
-var scene = cc.director.getScene();
 
 var ScriptCollisionsManager = cc.Class({
     extends: cc.Component,
 
     properties: {
-        theFish_Node: {
+        fishhook_Node: {
             default: null,
             type: cc.Node,
         },
-        // fish_Node:{
-        //     default:null,
-        //     type:cc.Prefab,
-        // },
+        fish_Node:{
+            default:null,
+            type:cc.Node,
+        },
     },
     onLoad: function () {
         //鱼群初始化
@@ -23,6 +22,7 @@ var ScriptCollisionsManager = cc.Class({
 
     addFish:function(addFishNum){
         for (var i = 0; i < addFishNum; i++) {
+            var scene = cc.director.getScene();
             var theFish = {
                 node: null,//节点
                 sroll: true,//方向
@@ -30,32 +30,33 @@ var ScriptCollisionsManager = cc.Class({
                 speed: null,//速度
                 fishCollisions: false,//是否碰撞
             };//鱼数据
-            theFishes.push(theFish);
-            var rnum = Math.random() * 3;
-            this.fishFun(rnum,i);
+            theFishes.push(theFish); 
+            theFishes[i].node = cc.instantiate(this.fish_Node);
+            this.fishFun(Math.random() * 3,i);
+            theFishes[i].node.active = true;
+            scene.addChild(theFishes[i].node);
         }
     },
 
     fishFun:function(rnum,i){
         if(theFishes[i].fishCollisions === false)
         {
-            theFishes[i].node = cc.instantiate(this.theFish_Node);
             theFishes[i].node.name = ""+i;
             //theFishes[i].node.addComponent(cc.Sprite);
             this.randFishSpriteFrame(theFishes[i]);
             if (rnum > 0 && rnum < 1) {
                 theFishes[i].node.x = -300;
-                theFishes[i].node.y = 450 - 540;
+                theFishes[i].node.y = 300;
                 theFishes[i].Floor = 1;
             }
             else if (rnum > 1 && rnum < 2) {
                 theFishes[i].node.x = -300;
-                theFishes[i].node.y = 300 - 540;
+                theFishes[i].node.y = 200;
                 theFishes[i].Floor = 2;
             }
             else {
                 theFishes[i].node.x = -300;
-                theFishes[i].node.y = 150 - 540;
+                theFishes[i].node.y = 100;
                 theFishes[i].Floor = 3;
             }
             theFishes[i].speed = rnum;
@@ -67,7 +68,8 @@ var ScriptCollisionsManager = cc.Class({
             if(theFishes[i].node == null)
             {
                 this.fishFun(Math.random() * 3,i);
-                scene.addChild(theFishes[i].node);
+                cc.log(theFishes[i].node);
+                
             }
         }
     },
@@ -78,67 +80,67 @@ var ScriptCollisionsManager = cc.Class({
         if(rand < 1)
         {
             cc.loader.loadRes('Fishes/DH_agouti',cc.SpriteFrame,function(err,spriteFrame){
-                fishNode.addComponent(cc.Sprite).spriteFrame = spriteFrame;
-                fishNode.width = 189;
+                fishNode.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+                fishNode.width = -189;
                 fishNode.height = 166;
             });
         }
         else if(rand < 2)
         {
             cc.loader.loadRes('Fishes/DH_bluefishi',cc.SpriteFrame,function(err,spriteFrame){
-                fishNode.addComponent(cc.Sprite).spriteFrame = spriteFrame;
-                fishNode.width = 163;
+                fishNode.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+                fishNode.width = -163;
                 fishNode.height = 121;
             });
         }
         else if(rand < 3)
         {
             cc.loader.loadRes('Fishes/DH_crab',cc.SpriteFrame,function(err,spriteFrame){
-                fishNode.addComponent(cc.Sprite).spriteFrame = spriteFrame;
-                fishNode.width = 172;
+                fishNode.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+                fishNode.width = -172;
                 fishNode.height = 164;
             });
         }
         else if(rand < 4)
         {
             cc.loader.loadRes('Fishes/DH_inkfish',cc.SpriteFrame,function(err,spriteFrame){
-                fishNode.addComponent(cc.Sprite).spriteFrame = spriteFrame;
-                fishNode.width = 124;
+                fishNode.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+                fishNode.width = -124;
                 fishNode.height = 131;
             });
         }
         else if(rand < 5)
         {
             cc.loader.loadRes('Fishes/DH_redfishi',cc.SpriteFrame,function(err,spriteFrame){
-                fishNode.addComponent(cc.Sprite).spriteFrame = spriteFrame;
-                fishNode.width = 332;
+                fishNode.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+                fishNode.width = -332;
                 fishNode.height = 114;
             });
         }
         else if(rand < 6)
         {
             cc.loader.loadRes('Fishes/DH_tropicalfish',cc.SpriteFrame,function(err,spriteFrame){
-                fishNode.addComponent(cc.Sprite).spriteFrame = spriteFrame;
-                fishNode.width = 138;
+                fishNode.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+                fishNode.width = -138;
                 fishNode.height = 144;
             });
         }
         else if(rand < 7)
         {
             cc.loader.loadRes('Fishes/DH_yellowfish',cc.SpriteFrame,function(err,spriteFrame){
-                fishNode.addComponent(cc.Sprite).spriteFrame = spriteFrame;
-                fishNode.width = 245;
+                fishNode.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+                fishNode.width = -245;
                 fishNode.height = 129;
             });
         }
         else
         {
             cc.loader.loadRes('garbage/DH_garbage_2', cc.SpriteFrame, function (err, spriteFrame) {
-                fishNode.addComponent(cc.Sprite).spriteFrame = spriteFrame;
+                fishNode.getComponent(cc.Sprite).spriteFrame = spriteFrame;
             });
         }
         
-        fishNode.addComponent(cc.BoxCollider).size = new cc.size(fishNode.width, fishNode.height);
+        fishNode.getComponent(cc.BoxCollider).size = new cc.size(Math.abs(fishNode.width), Math.abs(fishNode.height));
         fishNode.group = "Fishing";
         //cc.log(fishNode.getComponent(cc.BoxCollider).name);
         // fishNode.addComponent(cc.BoxCollider);
