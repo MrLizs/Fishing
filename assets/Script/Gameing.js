@@ -35,7 +35,7 @@ cc.Class({
         var self = this;
         this.touchLayout.on(cc.Node.EventType.TOUCH_START,this.Angling,this);
         this.touchLayout.on(cc.Node.EventType.TOUCH_END,this.ChangeStatus,this);
-        this.boat_Node.on("touchmove",function(event){
+        this.touchLayout.on("touchmove",function(event){
             self.boat_Node.x = event.getLocationX();
             self.fishline_Node.rotation += (event.getDelta().x/24);
             if(self.boat_Node.x < 200){

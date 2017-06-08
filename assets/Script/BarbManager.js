@@ -23,8 +23,6 @@ cc.Class({
 
     onCollisionEnter: function (other, self) {
         for (var i = 0; i < theFishes.length; i++) {
-            cc.log(theFishes[i].node);
-            cc.log(other.node);
             if(theFishes[i].node === other.node)
             {
                 theFishes[i].fishCollisions = true;
@@ -41,8 +39,8 @@ cc.Class({
                 {
                     this.score.getComponent(cc.Label).string = parseInt(this.score.getComponent(cc.Label).string) + 50;
                 }
-                theFishes[i].node.active = false;
-                
+                theFishes[i].node.destroy();
+                cc.log('BarbManager 销毁节点');
                 //theFishes[i]=null;
                 //cc.log('对象已销毁');
                 //break;
