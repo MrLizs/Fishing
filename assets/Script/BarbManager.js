@@ -25,8 +25,7 @@ cc.Class({
         for (var i = 0; i < theFishes.length; i++) {
             if(theFishes[i].node === other.node)
             {
-                // theFishes[i].fishCollisions = true;
-                //theFishes[i].node.moveTo(self.node.x,self.node.y);
+
                 if(theFishes[i].Floor === 1)
                 {
                     this.score.getComponent(cc.Label).string = parseInt(this.score.getComponent(cc.Label).string) + 10;
@@ -39,12 +38,8 @@ cc.Class({
                 {
                     this.score.getComponent(cc.Label).string = parseInt(this.score.getComponent(cc.Label).string) + 50;
                 }
-                // theFishes[i].node.destroy();
-                // other.node.y = self.node.wide;
                 cc.log('BarbManager 销毁节点');
-                //theFishes[i]=null;
-                //cc.log('对象已销毁');
-                //break;
+
             }
             
         }

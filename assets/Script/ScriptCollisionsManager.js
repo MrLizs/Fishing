@@ -75,7 +75,10 @@ var ScriptCollisionsManager = cc.Class({
         var fishNode = _fishNode.node;
         var rand = Math.random() * 7;
 
-        fishNode.addComponent(cc.Sprite);
+        if(!fishNode.getComponent(cc.Sprite))
+        {
+            fishNode.addComponent(cc.Sprite);
+        }
         
         if(rand < 1)
         {
@@ -148,6 +151,7 @@ var ScriptCollisionsManager = cc.Class({
             fishNode.addComponent(cc.BoxCollider).size = new cc.size(Math.abs(fishNode.width), Math.abs(fishNode.height));
         }
         fishNode.group = "Fishing";
+        fishNode.rotation = 0;
         //cc.log(fishNode.getComponent(cc.BoxCollider).name);
         // fishNode.addComponent(cc.BoxCollider);
         // fishNode.getComponent(cc.BoxCollider).size = new cc.size(fishNode.width, fishNode.height);

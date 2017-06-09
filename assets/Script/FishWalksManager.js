@@ -10,7 +10,11 @@ cc.Class({
         speed:0,
         sroll:"left or right",
         Catchup:false,
-        BarbNode:cc.Node,
+        BarbNode:{
+            default:null,
+            type:cc.Node,
+            tooltip:'Default Null'
+        },
     },
 
     onLoad: function () {
@@ -44,8 +48,26 @@ cc.Class({
         {
             if(this.BarbNode)
             {
-                this.node.y += this.BarbNode.height;
-                this.node.x = this.BarbNode.x;
+                if(this.node.parent)
+                {
+                    if(this.node.parent.name == 'DH_boat')
+                    {
+                        if(this.node.y < this.node.parent.y)
+                        {
+                            this.node.y += 50 * 0.15;
+                        }
+                        if(this.node.x < this.node.parent.x)
+                        {
+                            this.node.x += 50 * 0.15;
+                        }
+                        if(this.node.x > this.node.parent.x)
+                        {
+                            this.node.x -= 50 * 0.15;
+                        }
+                    }
+                }
+                //this.node.x = this.BarbNode.getPositionX();
+                //this.node.position = this.BarbNode.getAnchorPointInPoints();
             }
         }
     },
@@ -66,6 +88,8 @@ cc.Class({
         {
             this.Catchup = true;
             this.BarbNode = other.node;
+            self.node.rotation = 90;
+            self.node.parent = other.node.parent.parent;
         }
         if(other.node.name == 'DH_boat')
         {

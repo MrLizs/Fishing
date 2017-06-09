@@ -2849,7 +2849,9 @@
       "__id__": 62
     },
     "speed": 0,
-    "sroll": "left or right"
+    "sroll": "left or right",
+    "Catchup": false,
+    "BarbNode": null
   },
   {
     "__type__": "cc.PrefabInfo",
