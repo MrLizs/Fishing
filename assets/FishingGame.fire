@@ -2848,7 +2848,8 @@
     "Floor_Node": {
       "__id__": 62
     },
-    "speed": null
+    "speed": 0,
+    "sroll": "left or right"
   },
   {
     "__type__": "cc.PrefabInfo",

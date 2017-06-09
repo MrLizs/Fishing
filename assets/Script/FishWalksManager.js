@@ -9,52 +9,68 @@ cc.Class({
         },
         speed:0,
         sroll:"left or right",
-
+        Catchup:false,
+        BarbNode:cc.Node,
     },
 
     onLoad: function () {
         this.speed = Math.random() * 3;
         this.sroll = 'right';
+        this.Catchup = false;
     },
 
     update:function(){
         this.fishMove();
     },
     fishMove:function(){
-        for (var i = 0; i < theFishes.length; i++) {
-            if(theFishes[i].node === this.node)
-            {
-                if(this.node.x >= 2200)
+        if(this.Catchup == false)
+        {
+            for (var i = 0; i < theFishes.length; i++) {
+                if(theFishes[i].node === this.node)
                 {
-                    theFishes[i].node.destroy();
+                    if(this.node.x >= 2200)
+                    {
+                        this.sroll = 'left';
+                    }
+                    if(this.node.x <= -500)
+                    {
+                        this.sroll = 'right';
+                    }
                 }
             }
+            this.resetMovePoint(this.node);
         }
+        else
+        {
+            if(this.BarbNode)
+            {
+                this.node.y += this.BarbNode.height;
+                this.node.x = this.BarbNode.x;
+            }
+        }
+    },
+    resetMovePoint: function (_fishNode) {
         if(this.sroll == 'right')
         {
-            this.node.x += this.speed * walkSpeed;
+            _fishNode.x += this.speed * walkSpeed;
+            _fishNode.width = -1 * Math.abs(_fishNode.width);
         }
         if(this.sroll == 'left')
         {
-            this.node.x -= this.speed * walkSpeed;
-        }
-
-        
-    },
-    resetMovePoint: function (_fishNode) {
-        if (_fishNode.scroll === true) {
-            _fishNode.scroll = false;
-            _fishNode.node.width = -_fishNode.node.width;
-        }
-        else {
-            _fishNode.scroll = true;
-            _fishNode.node.width = -_fishNode.node.width;
+            _fishNode.x -= this.speed * walkSpeed;
+            _fishNode.width = Math.abs(_fishNode.width);
         }
     },
     onCollisionEnter: function (other, self) {
-        //this.node.destroy();
-        // cc.Fish.scMgr.addFish(1);
-        //cc.log('FishWalkManager 销毁节点');
+        if(other.node.name == 'DH_barb')
+        {
+            this.Catchup = true;
+            this.BarbNode = other.node;
+        }
+        if(other.node.name == 'DH_boat')
+        {
+            self.node.destroy();
+        }
     },
 });
 // for (var i = 0; i < theFishes.length; i++) {
