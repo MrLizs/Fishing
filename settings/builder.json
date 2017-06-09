@@ -1,0 +1,17 @@
+{
+  "excludeScenes": [],
+  "includeAnySDK": false,
+  "includeSdk": [
+    "anysdk"
+  ],
+  "orientation": {
+    "landscapeLeft": true,
+    "landscapeRight": true,
+    "portrait": false,
+    "upsideDown": false
+  },
+  "packageName": "org.cocos2d.Fishing",
+  "startScene": "59fd0bb8-a791-4b84-a838-e302f21fc43c",
+  "title": "Fishing",
+  "webOrientation": "auto"
+}
