@@ -52,25 +52,7 @@ cc.Class({
                 {
                     if(this.node.parent.name == 'DH_boat')
                     {
-                        if(this.node.y < this.node.parent.y)
-                        {
-                            this.node.y += 50 * 0.15;
-                        }
-                        if(this.node.y > this.node.parent.y)
-                        {
-                            this.node.y -= 50 * 0.15;
-                        }
-                        if(this.node.x < this.node.parent.x)
-                        {
-                            this.node.x += 50 * 0.15;
-                        }
-                        if(this.node.x > this.node.parent.x)
-                        {
-                            this.node.x -= 50 * 0.15;
-                        }
-                        cc.log('原坐标' + this.node.parent.position);
-                        cc.log('转换成世界坐标' + this.node.parent.convertToWorldSpace(this.node.parent.position));
-
+                        this.node.x = this.node.parent.getPositionX();
                         //this.node.x = this.node.parent.convertToWorldSpace(this.node.parent.position);
                     }
                 }
@@ -96,8 +78,10 @@ cc.Class({
         {
             this.Catchup = true;
             this.BarbNode = other.node;
-            self.node.rotation = -90;
-            self.node.parent = other.node.parent.parent;
+            //self.node.rotation = -90;
+            self.node.parent = other.node/*.parent.parent*/;
+            self.node.x = 0;
+            self.node.y = 0;
         }
         if(other.node.name == 'DH_boat')
         {

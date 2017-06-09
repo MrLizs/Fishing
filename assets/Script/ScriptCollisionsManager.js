@@ -75,7 +75,7 @@ var ScriptCollisionsManager = cc.Class({
         var fishNode = _fishNode.node;
         var rand = Math.random() * 7;
 
-        if(!fishNode.getComponent(cc.Sprite))
+        if(fishNode.getComponent(cc.Sprite) === null)
         {
             fishNode.addComponent(cc.Sprite);
         }
