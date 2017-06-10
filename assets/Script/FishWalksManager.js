@@ -87,47 +87,39 @@ cc.Class({
     animationSwitch:function(_fishNode){
         cc.log(_fishNode.getComponent(cc.Sprite).spriteFrame.getTexture().url);
         if(_fishNode.getComponent(cc.Sprite).spriteFrame.getTexture().url == 'res/raw-assets/resources/Fishes/DH_agouti.png'){
-            this.SpriteAnimation(_fishNode,"Animcations/hetun/hetun00",10);
+            this.SpriteAnimation(_fishNode,"Animcations/hetun");
         }
         else if(_fishNode.getComponent(cc.Sprite).spriteFrame.getTexture() == 'res/raw-assets/resources/Fishes/DH_bluefishi.png'){
-            this.SpriteAnimation(_fishNode,"Animcations/xiaolanyu/xiaolanyu00",10);
+            this.SpriteAnimation(_fishNode,"Animcations/xiaolanyu");
         }
         else if(_fishNode.getComponent(cc.Sprite).spriteFrame.getTexture() == 'res/raw-assets/resources/Fishes/DH_crab.png'){
             return;
         }
         else if(_fishNode.getComponent(cc.Sprite).spriteFrame.getTexture() == 'res/raw-assets/resources/Fishes/DH_inkfish.png'){
-            this.SpriteAnimation(_fishNode,"Animcations/moyu/moyu00",10);
+            this.SpriteAnimation(_fishNode,"Animcations/moyu");
         }
         else if(_fishNode.getComponent(cc.Sprite).spriteFrame.getTexture() == 'res/raw-assets/resources/Fishes/DH_redfishi.png'){
-            this.SpriteAnimation(_fishNode,"Animcations/xiaohongyu/xiaohongyu00",10);
+            this.SpriteAnimation(_fishNode,"Animcations/xiaohongyu");
         }
         else if(_fishNode.getComponent(cc.Sprite).spriteFrame.getTexture() == 'res/raw-assets/resources/Fishes/DH_tropicalfish.png'){
-            this.SpriteAnimation(_fishNode,"Animcations/redaiyu/redaiyu00",10);
+            this.SpriteAnimation(_fishNode,"Animcations/redaiyu");
         }
         else if(_fishNode.getComponent(cc.Sprite).spriteFrame.getTexture() == 'res/raw-assets/resources/Fishes/DH_yellowfish.png'){
-            this.SpriteAnimation(_fishNode,"Animcations/xiaohuangyu/xiaohuangyu00",10);
+            this.SpriteAnimation(_fishNode,"Animcations/xiaohuangyu");
         }
         else{
             return;
         }
-
     },
 
-    SpriteAnimation:function(_fishNode,frameName,_length){
-        var animation = this._fishNode.addComponent(cc.Animation);
-        var clip;
-        for (var i = 0; i < _length; i++) {
-            if(i<10){
-                clip = cc.AnimationClip.createWithSpriteFrames(frameName+'0'+i,_length);
-            }
-            else{
-                clip = cc.AnimationClip.createWithSpriteFrames(frameName+i,_length);
-            }
-        }
-        clip.name = "anim_run";
-        clip.wrapMode = cc.WrapMode.Loop;
-        animation.addClip(clip);
-        animation.playOnLoad = true;
-        // animation.play('anim_run');
+    SpriteAnimation:function(_fishNode,frameName){
+        var self = this;
+        cc.loader.loadRes(frameName, function (err, clip) {
+            self._fishNode.getComponent(cc.Animation).addClip(clip, "anim");
+            // self._fishNode.getComponent(cc.Animation).defaultClip = clip;
+            // self._fishNode.getComponent(cc.Animation).currentClip = clip;
+            // self._fishNode.getComponent(cc.Animation).playOnLoad =true;
+        });
+
     },
 });

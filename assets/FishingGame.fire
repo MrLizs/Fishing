@@ -173,10 +173,10 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 82
+        "__id__": 83
       },
       {
-        "__id__": 83
+        "__id__": 84
       }
     ],
     "_prefab": null,
@@ -954,9 +954,6 @@
     "_active": true,
     "_components": [
       {
-        "__id__": 78
-      },
-      {
         "__id__": 79
       },
       {
@@ -964,6 +961,9 @@
       },
       {
         "__id__": 81
+      },
+      {
+        "__id__": 82
       }
     ],
     "_prefab": null,
@@ -2866,8 +2866,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 56,
-      "y": 118
+      "x": -120,
+      "y": -210
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -2886,10 +2886,13 @@
       },
       {
         "__id__": 76
+      },
+      {
+        "__id__": 77
       }
     ],
     "_prefab": {
-      "__id__": 77
+      "__id__": 78
     },
     "groupIndex": 1
   },
@@ -2954,6 +2957,20 @@
     "sroll": "left or right",
     "Catchup": false,
     "BarbNode": null
+  },
+  {
+    "__type__": "cc.Animation",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 73
+    },
+    "_enabled": true,
+    "_defaultClip": null,
+    "_clips": [
+      null
+    ],
+    "playOnLoad": true
   },
   {
     "__type__": "cc.PrefabInfo",
