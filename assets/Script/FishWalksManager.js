@@ -15,6 +15,13 @@ cc.Class({
             type:cc.Node,
             tooltip:'Default Null'
         },
+        clip1:cc.AnimationClip,
+        clip2:cc.AnimationClip,
+        clip3:cc.AnimationClip,
+        clip4:cc.AnimationClip,
+        clip5:cc.AnimationClip,
+        clip6:cc.AnimationClip,
+        clip7:cc.AnimationClip,
     },
 
     onLoad: function () {
@@ -73,7 +80,7 @@ cc.Class({
             this.Catchup = true;
             this.BarbNode = other.node;
             //self.node.rotation = -90;
-            self.node.parent = other.node/*.parent.parent*/;
+            self.node.parent = other.node;
             self.node.x = 0;
             self.node.y = 0;
         }
@@ -87,25 +94,31 @@ cc.Class({
     animationSwitch:function(_fishNode){
         cc.log(_fishNode.getComponent(cc.Sprite).spriteFrame.getTexture().url);
         if(_fishNode.getComponent(cc.Sprite).spriteFrame.getTexture().url == 'res/raw-assets/resources/Fishes/DH_agouti.png'){
-            this.SpriteAnimation(_fishNode,"Animcations/hetun");
+            // this.SpriteAnimation(_fishNode,"Animcations/hetun");
+            _fishNode.getComponent(cc.Animation).addClip(this.clip1);
         }
         else if(_fishNode.getComponent(cc.Sprite).spriteFrame.getTexture() == 'res/raw-assets/resources/Fishes/DH_bluefishi.png'){
-            this.SpriteAnimation(_fishNode,"Animcations/xiaolanyu");
+            // this.SpriteAnimation(_fishNode,"Animcations/xiaolanyu");
+            _fishNode.getComponent(cc.Animation).addClip(this.clip2);
         }
         else if(_fishNode.getComponent(cc.Sprite).spriteFrame.getTexture() == 'res/raw-assets/resources/Fishes/DH_crab.png'){
             return;
         }
         else if(_fishNode.getComponent(cc.Sprite).spriteFrame.getTexture() == 'res/raw-assets/resources/Fishes/DH_inkfish.png'){
-            this.SpriteAnimation(_fishNode,"Animcations/moyu");
+            // this.SpriteAnimation(_fishNode,"Animcations/moyu");
+            _fishNode.getComponent(cc.Animation).addClip(this.clip4);
         }
         else if(_fishNode.getComponent(cc.Sprite).spriteFrame.getTexture() == 'res/raw-assets/resources/Fishes/DH_redfishi.png'){
-            this.SpriteAnimation(_fishNode,"Animcations/xiaohongyu");
+            // this.SpriteAnimation(_fishNode,"Animcations/xiaohongyu");
+            _fishNode.getComponent(cc.Animation).addClip(this.clip5);
         }
         else if(_fishNode.getComponent(cc.Sprite).spriteFrame.getTexture() == 'res/raw-assets/resources/Fishes/DH_tropicalfish.png'){
-            this.SpriteAnimation(_fishNode,"Animcations/redaiyu");
+            // this.SpriteAnimation(_fishNode,"Animcations/redaiyu");
+            _fishNode.getComponent(cc.Animation).addClip(this.clip6);
         }
         else if(_fishNode.getComponent(cc.Sprite).spriteFrame.getTexture() == 'res/raw-assets/resources/Fishes/DH_yellowfish.png'){
-            this.SpriteAnimation(_fishNode,"Animcations/xiaohuangyu");
+            // this.SpriteAnimation(_fishNode,"Animcations/xiaohuangyu");
+            _fishNode.getComponent(cc.Animation).addClip(this.clip7);
         }
         else{
             return;
@@ -115,11 +128,7 @@ cc.Class({
     SpriteAnimation:function(_fishNode,frameName){
         var self = this;
         cc.loader.loadRes(frameName, function (err, clip) {
-            self._fishNode.getComponent(cc.Animation).addClip(clip, "anim");
-            // self._fishNode.getComponent(cc.Animation).defaultClip = clip;
-            // self._fishNode.getComponent(cc.Animation).currentClip = clip;
-            // self._fishNode.getComponent(cc.Animation).playOnLoad =true;
+            _fishNode.addComponent(cc.Animation).addClip(clip);
         });
-
     },
 });

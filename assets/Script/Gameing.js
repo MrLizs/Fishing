@@ -80,13 +80,13 @@ cc.Class({
 
     //返回主场景
     returnMainScene:function(){
-        cc.log('返回场景?');
-        cc.director.loadScene('Fishing');
+        var AreYouloadscene = cc.director.loadScene('Fishing');
+        cc.log('返回场景?'+AreYouloadscene);
     },
+
     boatControl:function(){
-        
-            
     },
+    
     boatTouchControl:function(event){
         var touchVec = event.getDelta();
         boatVec = touchVec;
