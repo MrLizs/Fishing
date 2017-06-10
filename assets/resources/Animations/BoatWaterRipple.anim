@@ -1,0 +1,49 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "BoatWaterRipple",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 0.875,
+  "sample": 24,
+  "speed": 1,
+  "wrapMode": 2,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "79a40919-264e-4c22-8272-49b917229487"
+            }
+          },
+          {
+            "frame": 0.20833333333333334,
+            "value": {
+              "__uuid__": "32b951b8-9af4-48b0-934a-cd1d2fc352b3"
+            }
+          },
+          {
+            "frame": 0.4166666666666667,
+            "value": {
+              "__uuid__": "047565e4-49b6-4e7e-96f6-e1edaa34273e"
+            }
+          },
+          {
+            "frame": 0.625,
+            "value": {
+              "__uuid__": "2f33047b-c8c7-4470-92c4-b336fbc476c6"
+            }
+          },
+          {
+            "frame": 0.8333333333333334,
+            "value": {
+              "__uuid__": "e4a3be28-3aa5-48a5-a9f7-b3886a823662"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}
