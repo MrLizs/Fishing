@@ -42,10 +42,7 @@ cc.Class({
                     this.score.getComponent(cc.Label).string = parseInt(this.score.getComponent(cc.Label).string) + 50;
                     cc.log('第3层,类型'+theFishes[i].nodeClass);
                 }
-                cc.log('BarbManager 销毁节点');
-
             }
-            
         }
     },
 
