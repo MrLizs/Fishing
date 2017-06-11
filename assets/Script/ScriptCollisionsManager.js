@@ -66,20 +66,23 @@ var ScriptCollisionsManager = cc.Class({
     },
 
     update: function (dt) {
-        if(cc.director.getScene().childrenCount > 3 && cc.director.getScene().childrenCount < 3+MaxFishNum)
+        if(cc.director.getScene().childrenCount >= 3 && cc.director.getScene().childrenCount < 3+MaxFishNum)
         {
-            for (var i = 0; i < theFishes.length; i++) {
-                var element = theFishes[i];
-                if(element.node == null)
-                {
-                    element = null;
-                    this.GameingAddFish(i);
-                }
-            }
+            this.GameingAddFish();
+            // for (var i = 0; i < theFishes.length; i++) {
+            //     var element = theFishes[i];
+            //     if(element.node == null)
+            //     {
+            //         element = null;
+            //         this.GameingAddFish(i);
+            //     }
+            // }
         }
     },
 
-    GameingAddFish:function(i){
+    GameingAddFish:function(){
+        var scene = cc.director.getScene();
+        var _length = theFishes.length;
         var theFish = {
                 node: null,//节点
                 sroll: true,//方向
@@ -88,17 +91,18 @@ var ScriptCollisionsManager = cc.Class({
                 fishCollisions: false,//是否碰撞
                 nodeClass:0,//节点种类
             };//鱼数据
-        theFishes[i].push(theFish);
-        theFishes[i].node = cc.instantiate(this.fish_Node);
-        this.fishFun(Math.random() * 3,i);
-        theFishes[i].node.active = true;
-        scene.addChild(theFishes[i].node);
+        theFishes.push(theFish);
+        theFishes[_length].node = cc.instantiate(this.fish_Node);
+        this.fishFun(Math.random() * 3,_length);
+        theFishes[_length].node.active = true;
+        scene.addChild(theFishes[_length].node);
     },
 
     randFishSpriteFrame: function (_fishNode) {
         var fishNode = _fishNode.node;
         var rand = Math.random() * 7;
 
+        //新刷出来的鱼被钓起时此处报错。
         if(fishNode.getComponent(cc.Sprite) === null)
         {
             fishNode.addComponent(cc.Sprite);
