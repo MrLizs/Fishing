@@ -1,3 +1,4 @@
+var sceneManager = require('SceneManager');
 cc.Class({
     extends: cc.Component,
 
@@ -34,6 +35,9 @@ cc.Class({
 
         this.RankList_Node.on(cc.Node.EventType.TOUCH_START,this.RanklistStart,this);
         this.RankList_Node.on(cc.Node.EventType.TOUCH_END,this.RanklistEnd,this);
+
+        cc.FishGame = {};
+        cc.FishGame.sceneManager = new sceneManager();
     },
 
     // called every frame, uncomment this function to activate update callback

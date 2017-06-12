@@ -35,17 +35,17 @@ cc.Class({
         if(clock_hour.rotation === (27 + 360*3))
         {
             TimeIsOver = true;
-            cc.log('游戏结束');
+            cc.log('游戏结束1');
         }
     },
 
     updatime_minute:function(){
         MinTime++;
         clock_minute.rotation += 360/60;
-        if(this.TimeUiBg_Node.width <= 0)
+        if(this.TimeUiBg_Node.width <= (294/60))
         {
             TimeIsOver = true;
-            cc.log('游戏结束');
+            cc.log('游戏结束2');
         }
         else
         {
@@ -56,6 +56,7 @@ cc.Class({
         clock_hour.rotation += 360/12;
         if(MinTime>=MaxTime)
         {
+            cc.log('计时器结束回调')
             this.unschedule(this.updatime_minute,this);
             this.unschedule(this.updatime_hour,this);
         }

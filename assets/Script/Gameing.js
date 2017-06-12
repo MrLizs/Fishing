@@ -30,6 +30,10 @@ cc.Class({
             default:null,
             type:cc.Node,
         },
+        GameSettlementLayout_Node:{
+            default:null,
+            type:cc.Node,
+        },
         angling:false,
     },
     
@@ -47,12 +51,6 @@ cc.Class({
         this.pauseBtn_Node.on(cc.Node.EventType.TOUCH_START,this.pauseStart,this);
         this.pauseBtn_Node.on(cc.Node.EventType.TOUCH_END,this.pauseEnd,this);
 
-        var scMgr = require('ScriptCollisionsManager');
-        
-        cc.Fish = {};
-        cc.Fish.scMgr = new scMgr();
-        
-        
     },
 
     // called every frame, uncomment this function to activate update callback
@@ -77,7 +75,17 @@ cc.Class({
                 this.fishline_Node.rotation  =0;
             }
         }
+        if(TimeIsOver === true)
+        {
+            this.GameSettlementLayoutOpen();
+        }
         //cc.fishesManager.updatefish(theFishes);
+    },
+
+    GameSettlementLayoutOpen:function(){
+        //这里须暂停.
+
+        this.GameSettlementLayout_Node.active = true;
     },
 
     //返回主场景
@@ -88,22 +96,22 @@ cc.Class({
 
     pauseStart:function(){
         var self = this;
-        cc.loader.loadRes('Gameing/UI_pause_click',cc.Sprite,function(err,spriteFrame){
+        cc.loader.loadRes('Gameing/UI_pause_click',cc.SpriteFrame,function(err,spriteFrame){
             self.pauseBtn_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
         });
     },
     pauseEnd:function(){
         var self = this;
-        cc.loader.loadRes('Gameing/UI_pause_click',cc.Sprite,function(err,spriteFrame){
+        cc.loader.loadRes('Gameing/UI_pause',cc.SpriteFrame,function(err,spriteFrame){
             self.pauseBtn_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
         });
-        if(cc.Game.isPaused())
+        if(cc.director.isPause != true)
         {
-            cc.Game.resume();
+            //这里须暂停.
         }
         else
         {
-            cc.Game.pause();
+            //这里须恢复.
         }
     },
     
@@ -121,7 +129,7 @@ cc.Class({
         if(touchVec.x > 2 || touchVec.x < -2)
         {
             this.angling = false;
-        }
+        }    
     },
     
     leftMove:function(){
