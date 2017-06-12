@@ -9,6 +9,10 @@ cc.Class({
             default:null,
             type:cc.Node,
         },
+        TimeUiBg_Node:{
+            default:null,
+            type:cc.Node,
+        },
     },
 
     // use this for initialization
@@ -19,6 +23,8 @@ cc.Class({
         clock_hour.rotation = -27;
         clock_minute.rotation = 117;
 
+        this.TimeUiBg_Node.width = 294;
+
         this.schedule(this.updatime_minute,1);
         this.schedule(this.updatime_hour,60);
         MinTime = 0;
@@ -28,17 +34,23 @@ cc.Class({
     update: function (dt) {
         if(clock_hour.rotation === (27 + 360*3))
         {
-            TimeIsOver=true;
+            TimeIsOver = true;
+            cc.log('游戏结束');
         }
     },
 
     updatime_minute:function(){
         MinTime++;
         clock_minute.rotation += 360/60;
-        ///每10秒增加一条鱼
-        // if(MinTime%10 === 0){
-        //     cc.Fish.scMgr.addFish(1);
-        // }
+        if(this.TimeUiBg_Node.width <= 0)
+        {
+            TimeIsOver = true;
+            cc.log('游戏结束');
+        }
+        else
+        {
+            this.TimeUiBg_Node.width -= (294/60);
+        }
     },
     updatime_hour:function(){
         clock_hour.rotation += 360/12;

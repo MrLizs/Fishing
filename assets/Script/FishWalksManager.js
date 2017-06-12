@@ -28,7 +28,8 @@ cc.Class({
         this.speed = Math.random() * 3;
         this.sroll = 'right';
         this.Catchup = false;
-        this.animationSwitch(this.node);
+        this.randFishSpriteFrame();
+        this.animationSwitch();
         // this.node.getComponent(cc.Animation).play();
     },
 
@@ -54,7 +55,7 @@ cc.Class({
             }
         }
     },
-    resetMovePoint: function (_fishNode) {
+    resetMovePoint: function () {
         if(this.node.x >= 2000)
         {
             this.sroll = 'left';
@@ -65,13 +66,13 @@ cc.Class({
         }
         if(this.sroll == 'right')
         {
-            _fishNode.x += this.speed * walkSpeed;
-            _fishNode.width = -1 * Math.abs(_fishNode.width);
+            this.node.x += this.speed * walkSpeed;
+            this.node.width = -1 * Math.abs(this.node.width);
         }
         if(this.sroll == 'left')
         {
-            _fishNode.x -= this.speed * walkSpeed;
-            _fishNode.width = Math.abs(_fishNode.width);
+            this.node.x -= this.speed * walkSpeed;
+            this.node.width = Math.abs(this.node.width);
         }
     },
     onCollisionEnter: function (other, self) {
@@ -91,44 +92,168 @@ cc.Class({
         }
     },
 
-    animationSwitch:function(_fishNode){
-        cc.log(_fishNode.getComponent(cc.Sprite).spriteFrame.getTexture().url);
-        if(_fishNode.getComponent(cc.Sprite).spriteFrame.getTexture().url == 'res/raw-assets/resources/Fishes/DH_agouti.png'){
-            // this.SpriteAnimation(_fishNode,"Animcations/hetun");
-            _fishNode.getComponent(cc.Animation).addClip(this.clip1);
+    animationSwitch:function(){
+        // if(this.node.getComponent(cc.Amiation).getClips())
+        // {
+        //     for (var i = 0; i < this.node.getComponent(cc.Amiation).getClips().length; i++) {
+        //         var element = this.node.getComponent(cc.Amiation).getClips()[i];
+        //         this.node.getComponent(cc.Amiation).removeClip(element,this);
+        //     }
+        // }
+
+        cc.log("动画前" + this.node.getComponent(cc.Sprite).spriteFrame.name);
+
+        if(this.node.getComponent(cc.Sprite).spriteFrame.name == 'DH_agouti'){
+            // this.SpriteAnimation(this.node,"Animcations/hetun");
+            this.node.getComponent(cc.Animation).defaultClip = this.clip1;
         }
-        else if(_fishNode.getComponent(cc.Sprite).spriteFrame.getTexture() == 'res/raw-assets/resources/Fishes/DH_bluefishi.png'){
-            // this.SpriteAnimation(_fishNode,"Animcations/xiaolanyu");
-            _fishNode.getComponent(cc.Animation).addClip(this.clip2);
+        else if(this.node.getComponent(cc.Sprite).spriteFrame.name == 'DH_bluefishi'){
+            // this.SpriteAnimation(this.node,"Animcations/xiaolanyu");
+            this.node.getComponent(cc.Animation).defaultClip = this.clip2;
         }
-        else if(_fishNode.getComponent(cc.Sprite).spriteFrame.getTexture() == 'res/raw-assets/resources/Fishes/DH_crab.png'){
+        else if(this.node.getComponent(cc.Sprite).spriteFrame.name == 'DH_crab'){
             return;
         }
-        else if(_fishNode.getComponent(cc.Sprite).spriteFrame.getTexture() == 'res/raw-assets/resources/Fishes/DH_inkfish.png'){
-            // this.SpriteAnimation(_fishNode,"Animcations/moyu");
-            _fishNode.getComponent(cc.Animation).addClip(this.clip4);
+        else if(this.node.getComponent(cc.Sprite).spriteFrame.name == 'DH_inkfish'){
+            // this.SpriteAnimation(this.node,"Animcations/moyu");
+            this.node.getComponent(cc.Animation).defaultClip = this.clip4;
         }
-        else if(_fishNode.getComponent(cc.Sprite).spriteFrame.getTexture() == 'res/raw-assets/resources/Fishes/DH_redfishi.png'){
-            // this.SpriteAnimation(_fishNode,"Animcations/xiaohongyu");
-            _fishNode.getComponent(cc.Animation).addClip(this.clip5);
+        else if(this.node.getComponent(cc.Sprite).spriteFrame.name == 'DH_redfishi'){
+            // this.SpriteAnimation(this.node,"Animcations/xiaohongyu");
+            this.node.getComponent(cc.Animation).defaultClip = this.clip5;
         }
-        else if(_fishNode.getComponent(cc.Sprite).spriteFrame.getTexture() == 'res/raw-assets/resources/Fishes/DH_tropicalfish.png'){
-            // this.SpriteAnimation(_fishNode,"Animcations/redaiyu");
-            _fishNode.getComponent(cc.Animation).addClip(this.clip6);
+        else if(this.node.getComponent(cc.Sprite).spriteFrame.name == 'DH_tropicalfish'){
+            // this.SpriteAnimation(this.node,"Animcations/redaiyu");
+            this.node.getComponent(cc.Animation).defaultClip = this.clip6;
         }
-        else if(_fishNode.getComponent(cc.Sprite).spriteFrame.getTexture() == 'res/raw-assets/resources/Fishes/DH_yellowfish.png'){
-            // this.SpriteAnimation(_fishNode,"Animcations/xiaohuangyu");
-            _fishNode.getComponent(cc.Animation).addClip(this.clip7);
+        else if(this.node.getComponent(cc.Sprite).spriteFrame.name == 'DH_yellowfish'){
+            // this.SpriteAnimation(this.node,"Animcations/xiaohuangyu");
+            this.node.getComponent(cc.Animation).defaultClip = this.clip7;
         }
         else{
-            return;
+            // return;
         }
     },
 
-    SpriteAnimation:function(_fishNode,frameName){
+    SpriteAnimation:function(frameName){
         var self = this;
         cc.loader.loadRes(frameName, function (err, clip) {
-            _fishNode.addComponent(cc.Animation).addClip(clip);
+            self.node.addComponent(cc.Animation).addClip(clip);
         });
+    },
+
+    randFishSpriteFrame: function () {
+        var self = this;
+        var rand = Math.random() * 7;
+
+        // 新刷出来的鱼被钓起时此处报错。
+        if(self.node.getComponent(cc.Sprite).spriteFrame == null)
+        {
+            self.node.addComponent(cc.Sprite);
+        }
+        else
+        {
+        }
+        
+        if(rand < 1)
+        {
+            cc.loader.loadRes('Fishes/DH_agouti',cc.SpriteFrame,function(err,spriteFrame){
+                self.node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+                // cc.log(self.node.getComponent(cc.Sprite).spriteFrame);
+                self.node.width = -189;
+                self.node.height = 166;
+                self.randNodeClass(1);
+            });
+        }
+        else if(rand < 2)
+        {
+            cc.loader.loadRes('Fishes/DH_bluefishi',cc.SpriteFrame,function(err,spriteFrame){
+                self.node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+                // cc.log(self.node.getComponent(cc.Sprite).spriteFrame);
+                self.node.width = -163;
+                self.node.height = 121;
+                self.randNodeClass(2);
+            });
+        }
+        else if(rand < 3)
+        {
+            cc.loader.loadRes('Fishes/DH_crab',cc.SpriteFrame,function(err,spriteFrame){
+                self.node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+                // cc.log(self.node.getComponent(cc.Sprite).spriteFrame);
+                self.node.width = -172;
+                self.node.height = 164;
+                self.randNodeClass(3);
+            });
+        }
+        else if(rand < 4)
+        {
+            cc.loader.loadRes('Fishes/DH_inkfish',cc.SpriteFrame,function(err,spriteFrame){
+                self.node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+                // cc.log(self.node.getComponent(cc.Sprite).spriteFrame);
+                self.node.width = -124;
+                self.node.height = 131;
+                self.randNodeClass(4);
+            });
+        }
+        else if(rand < 5)
+        {
+            cc.loader.loadRes('Fishes/DH_redfishi',cc.SpriteFrame,function(err,spriteFrame){
+                self.node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+                // cc.log(self.node.getComponent(cc.Sprite).spriteFrame);
+                self.node.width = -332;
+                self.node.height = 114;
+                self.randNodeClass(5);
+            });
+        }
+        else if(rand < 6)
+        {
+            cc.loader.loadRes('Fishes/DH_tropicalfish',cc.SpriteFrame,function(err,spriteFrame){
+                self.node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+                // cc.log(self.node.getComponent(cc.Sprite).spriteFrame);
+                self.node.width = -138;
+                self.node.height = 144;
+                self.randNodeClass(6);
+            });
+        }
+        else if(rand < 7)
+        {
+            cc.loader.loadRes('Fishes/DH_yellowfish',cc.SpriteFrame,function(err,spriteFrame){
+                self.node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+                // cc.log(self.node.getComponent(cc.Sprite).spriteFrame);
+                self.node.width = -245;
+                self.node.height = 129;
+                self.randNodeClass(7);
+            });
+        }
+        else
+        {
+            cc.loader.loadRes('garbage/DH_garbage_2', cc.SpriteFrame, function (err, spriteFrame) {
+                self.node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+            });
+            self.randNodeClass(-1);
+        }
+        if(self.node.getComponent(cc.BoxCollider) !=null)
+        {
+            self.node.getComponent(cc.BoxCollider).size = new cc.size(Math.abs(self.node.width), Math.abs(self.node.height));
+        }
+        else
+        {
+            self.node.addComponent(cc.BoxCollider).size = new cc.size(Math.abs(self.node.width), Math.abs(self.node.height));
+        }
+        self.node.group = "Fishing";
+        self.node.rotation = 0;
+        
+        cc.log("加载动画后" + this.node.getComponent(cc.Sprite).spriteFrame.name);
+        // self.node.addComponent(cc.BoxCollider);
+    },
+
+    randNodeClass:function(rand){
+        for (var i = 0; i < theFishes.length; i++) {
+            var element = theFishes[i];
+            if(element.node == this.node)
+            {
+                element.nodeClass = rand;
+            }
+        }
     },
 });

@@ -17,8 +17,7 @@ var ScriptCollisionsManager = cc.Class({
     onLoad: function () {
         //鱼群初始化
         theFishes = new Array();
-        this.initFish(MaxFishNum)
-
+        //this.initFish(MaxFishNum)
     },
 
     initFish:function(addFishNum){
@@ -34,18 +33,18 @@ var ScriptCollisionsManager = cc.Class({
             };//鱼数据
             theFishes.push(theFish);
             theFishes[i].node = cc.instantiate(this.fish_Node);
-            this.fishFun(Math.random() * 3,i);
             theFishes[i].node.active = true;
+            this.fishFun(Math.random() * 3,i);
             scene.addChild(theFishes[i].node);
         }
     },
 
     fishFun:function(rnum,i){
+        // this.randFishSpriteFrame(theFishes[i]);
         if(theFishes[i].fishCollisions === false)
         {
             //theFishes[i].node.name = ""+i;
             //theFishes[i].node.addComponent(cc.Sprite);
-            this.randFishSpriteFrame(theFishes[i]);
             if (rnum > 0 && rnum < 1) {
                 theFishes[i].node.x = -300;
                 theFishes[i].node.y = 300;
@@ -69,14 +68,6 @@ var ScriptCollisionsManager = cc.Class({
         if(cc.director.getScene().childrenCount >= 3 && cc.director.getScene().childrenCount < 3+MaxFishNum)
         {
             this.GameingAddFish();
-            // for (var i = 0; i < theFishes.length; i++) {
-            //     var element = theFishes[i];
-            //     if(element.node == null)
-            //     {
-            //         element = null;
-            //         this.GameingAddFish(i);
-            //     }
-            // }
         }
     },
 
@@ -93,19 +84,22 @@ var ScriptCollisionsManager = cc.Class({
             };//鱼数据
         theFishes.push(theFish);
         theFishes[_length].node = cc.instantiate(this.fish_Node);
-        this.fishFun(Math.random() * 3,_length);
         theFishes[_length].node.active = true;
+        this.fishFun(Math.random() * 3,_length);
         scene.addChild(theFishes[_length].node);
     },
 
-    randFishSpriteFrame: function (_fishNode) {
+    /*randFishSpriteFrame: function (_fishNode) {
         var fishNode = _fishNode.node;
         var rand = Math.random() * 7;
 
-        //新刷出来的鱼被钓起时此处报错。
-        if(fishNode.getComponent(cc.Sprite) === null)
+        // 新刷出来的鱼被钓起时此处报错。
+        if(fishNode.getComponent(cc.Sprite).spriteFrame == null)
         {
             fishNode.addComponent(cc.Sprite);
+        }
+        else
+        {
         }
         
         if(rand < 1)
@@ -192,7 +186,7 @@ var ScriptCollisionsManager = cc.Class({
         // fishNode.addComponent(cc.BoxCollider);
         fishNode.getComponent(cc.BoxCollider).size = new cc.size(Math.abs(fishNode.width),Math.abs(fishNode.height));
 
-    },
+    },*/
 
     
 });

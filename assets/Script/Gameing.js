@@ -26,6 +26,10 @@ cc.Class({
             default:null,
             type:cc.Node,
         },
+        pauseBtn_Node:{
+            default:null,
+            type:cc.Node,
+        },
         angling:false,
     },
     
@@ -39,18 +43,16 @@ cc.Class({
         this.touchLayout.on("touchmove",function(event){
             self.fishline_Node.rotation += (event.getDelta().x/24);
         },this);
+        
+        this.pauseBtn_Node.on(cc.Node.EventType.TOUCH_START,this.pauseStart,this);
+        this.pauseBtn_Node.on(cc.Node.EventType.TOUCH_END,this.pauseEnd,this);
+
         var scMgr = require('ScriptCollisionsManager');
+        
         cc.Fish = {};
         cc.Fish.scMgr = new scMgr();
         
-        //var scm = require('ScriptCollisionsManager');
-        //cc.fishesManager = new scm();
-
-        //刷鱼层初始化
-        //cc.fishesManager.initFloor(this.FirstFloor_Node,this.SecondFloor_Node,this.ThirdlyFloor_Node);
-
-        //鱼群属性初始化
-        //cc.fishesManager.initFishes(theFishes);
+        
     },
 
     // called every frame, uncomment this function to activate update callback
@@ -84,7 +86,25 @@ cc.Class({
         cc.log('返回场景?'+AreYouloadscene);
     },
 
-    boatControl:function(){
+    pauseStart:function(){
+        var self = this;
+        cc.loader.loadRes('Gameing/UI_pause_click',cc.Sprite,function(err,spriteFrame){
+            self.pauseBtn_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+        });
+    },
+    pauseEnd:function(){
+        var self = this;
+        cc.loader.loadRes('Gameing/UI_pause_click',cc.Sprite,function(err,spriteFrame){
+            self.pauseBtn_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+        });
+        if(cc.Game.isPaused())
+        {
+            cc.Game.resume();
+        }
+        else
+        {
+            cc.Game.pause();
+        }
     },
     
     boatTouchControl:function(event){
