@@ -1,5 +1,5 @@
 cc.Class({
-    extends: cc.Sc,
+    extends: cc.Component,
 
     /**
      * 场景管理

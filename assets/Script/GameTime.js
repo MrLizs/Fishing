@@ -41,19 +41,19 @@ cc.Class({
 
     updatime_minute:function(){
         MinTime++;
-        clock_minute.rotation += 360/60;
-        if(this.TimeUiBg_Node.width <= (294/60))
+        clock_minute.rotation += 360 / 60;
+        if(this.TimeUiBg_Node.width <= (294 / 60))
         {
             TimeIsOver = true;
             cc.log('游戏结束2');
         }
         else
         {
-            this.TimeUiBg_Node.width -= (294/60);
+            this.TimeUiBg_Node.width -= (294 / 60);
         }
     },
     updatime_hour:function(){
-        clock_hour.rotation += 360/12;
+        clock_hour.rotation += 360 / 12;
         if(MinTime>=MaxTime)
         {
             cc.log('计时器结束回调')

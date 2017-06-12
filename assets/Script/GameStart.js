@@ -1,4 +1,4 @@
-var sceneManager = require('SceneManager');
+
 cc.Class({
     extends: cc.Component,
 
@@ -37,7 +37,8 @@ cc.Class({
         this.RankList_Node.on(cc.Node.EventType.TOUCH_END,this.RanklistEnd,this);
 
         cc.FishGame = {};
-        cc.FishGame.sceneManager = new sceneManager();
+        var smanager = require('SceneManager');
+        cc.FishGame.sceneManager = new smanager();
     },
 
     // called every frame, uncomment this function to activate update callback
@@ -63,13 +64,13 @@ cc.Class({
     ruleClickStart:function(){
         var self = this;
         cc.loader.loadRes('Login/UI_home_rule_click',cc.SpriteFrame,function(err,spriteFrame){
-            self.start_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+            self.rule_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
         });
     },
     ruleClickEnd:function(){
         var self = this;
         cc.loader.loadRes('Login/UI_home_rule',cc.SpriteFrame,function(err,spriteFrame){
-            self.start_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+            self.rule_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
         });
         this.RegulationBg_Node.active = true;
     },

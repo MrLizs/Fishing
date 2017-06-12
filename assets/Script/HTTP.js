@@ -8,7 +8,7 @@ module.exports = {
                 console.log(response);
             }
         };
-        xhr.open("POST", url + msg, true);
+        xhr.open("POST", url + '?' + msg, true);
         xhr.send();
     },
     close:function(){
