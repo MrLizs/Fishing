@@ -1,3 +1,4 @@
+var HTTP = require('HTTP');
 cc.Class({
     extends: cc.Component,
 
@@ -14,6 +15,10 @@ cc.Class({
 
     // use this for initialization
     onLoad: function () {
+        var msgStr = '{ "phone": "18963542874" }';
+        var cmd = 'fish/findUserMaxScore';
+        HTTP.send(msgStr,cmd);
+        
         this.loadDataBase();
     },
 
