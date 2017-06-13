@@ -17,7 +17,7 @@ cc.Class({
     onLoad: function () {
         var msgStr = '{ "phone": "18963542874" }';
         var cmd = 'fish/findUserMaxScore';
-        HTTP.send(msgStr,cmd);
+        HTTP.send1(msgStr,cmd);
         
         this.loadDataBase();
     },
