@@ -10,7 +10,7 @@ module.exports = {
         formdata.append('data',msg);
 
         //#md5第一次拼接的字符串，拼接到字符串前面
-        var md5_keyone=md5('242c630c7c9e4deeb98e744d1e1cd940' + formdata.get('cmd') + formdata.get('data'));
+        var md5_keyone=md5('242c630c7c9e4deeb98e744d1e1cd940' + formdata.get('cmd')+'&' + formdata.get('data'));
         //#md5第一次拼接的字符串，拼接到字符串后面
         var md5_keytwo= md5(md5_keyone + 'b7694d10cf4b48088be14fe436f87200');
 
@@ -40,3 +40,33 @@ module.exports = {
         // xhr.close();
     },
 };
+/*
+var postData = {
+    "name1": "value1",
+    "name2": "value2"};
+ 
+postData = (function(obj){ // 转成post需要的字符串.
+    var str = "";
+ 
+    for(var prop in obj){
+        str += prop + "=" + obj[prop] + "&"
+    }
+    return str;
+})(postData);
+ 
+var xhr = new XMLHttpRequest();
+ 
+xhr.open("POST", "../module", true);
+xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+xhr.onreadystatechange = function(){
+    var XMLHttpReq = xhr;
+    if (XMLHttpReq.readyState == 4) {
+        if (XMLHttpReq.status == 200) {
+            var text = XMLHttpReq.responseText;
+ 
+            console.log(text);
+        }
+    }
+};
+xhr.send(postData);
+*/
