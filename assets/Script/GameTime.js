@@ -23,6 +23,8 @@ cc.Class({
         clock_hour.rotation = -27;
         clock_minute.rotation = 117;
 
+        TimeIsOver = false;
+        
         this.TimeUiBg_Node.width = 294;
 
         this.schedule(this.updatime_minute,1);

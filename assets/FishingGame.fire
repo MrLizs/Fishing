@@ -7438,7 +7438,9 @@
       "__id__": 149
     },
     "_enabled": true,
-    "shadow_Node": null
+    "shadow_Node": {
+      "__id__": 213
+    }
   },
   {
     "__type__": "cc.Node",
