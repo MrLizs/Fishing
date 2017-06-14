@@ -83,9 +83,9 @@ cc.Class({
     },
 
     GameSettlementLayoutOpen:function(){
-        //这里须暂停.
-
         this.GameSettlementLayout_Node.active = true;
+        //这里须暂停.
+        cc.director.pause();
     },
 
     //返回主场景
@@ -105,13 +105,15 @@ cc.Class({
         cc.loader.loadRes('Gameing/UI_pause',cc.SpriteFrame,function(err,spriteFrame){
             self.pauseBtn_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
         });
-        if(cc.director.isPause != true)
+        if(cc.director.isPause() != true)
         {
             //这里须暂停.
+            cc.director.pause();
         }
         else
         {
             //这里须恢复.
+            cc.director.resume();
         }
     },
     

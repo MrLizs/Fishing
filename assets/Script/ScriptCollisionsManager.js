@@ -1,6 +1,6 @@
 var MaxFishNum = 5;//最大鱼数量
 window.theFishes = [];//鱼群
-
+var sceneChildrenCount = 0;
 var ScriptCollisionsManager = cc.Class({
     extends: cc.Component,
 
@@ -9,7 +9,55 @@ var ScriptCollisionsManager = cc.Class({
             default: null,
             type: cc.Node,
         },
-        fish_Node:{
+        agouti_Node:{
+            default:null,
+            type:cc.Node,
+        },
+        bluefish_Node:{
+            default:null,
+            type:cc.Node,
+        },
+        crab_Node:{
+            default:null,
+            type:cc.Node,
+        },
+        cuttlefish_Node:{
+            default:null,
+            type:cc.Node,
+        },
+        redfish_Node:{
+            default:null,
+            type:cc.Node,
+        },
+        tropicalfish_Node:{
+            default:null,
+            type:cc.Node,
+        },
+        yellowfish_Node:{
+            default:null,
+            type:cc.Node,
+        },
+        prop1_Node:{
+            default:null,
+            type:cc.Node,
+        },
+        prop2_Node:{
+            default:null,
+            type:cc.Node,
+        },
+        prop3_Node:{
+            default:null,
+            type:cc.Node,
+        },
+        prop4_Node:{
+            default:null,
+            type:cc.Node,
+        },
+        prop5_Node:{
+            default:null,
+            type:cc.Node,
+        },
+        prop6_Node:{
             default:null,
             type:cc.Node,
         },
@@ -18,8 +66,13 @@ var ScriptCollisionsManager = cc.Class({
         //鱼群初始化
         theFishes = new Array();
         //this.initFish(MaxFishNum)
+        sceneChildrenCount = cc.director.getScene().childrenCount;
+        cc.log(sceneChildrenCount);
     },
 
+    /**
+     * 未使用
+     */
     initFish:function(addFishNum){
         for (var i = 0; i < addFishNum; i++) {
             var scene = cc.director.getScene();
@@ -32,10 +85,17 @@ var ScriptCollisionsManager = cc.Class({
                 nodeClass:0,//节点种类
             };//鱼数据
             theFishes.push(theFish);
-            theFishes[i].node = cc.instantiate(this.fish_Node);
+            theFishes[i].node = cc.instantiate(this.randFish());
             theFishes[i].node.active = true;
             this.fishFun(Math.random() * 3,i);
             scene.addChild(theFishes[i].node);
+        }
+    },
+
+    update: function (dt) {
+        if(cc.director.getScene().childrenCount >= sceneChildrenCount && cc.director.getScene().childrenCount < sceneChildrenCount + MaxFishNum)
+        {
+            this.GameingAddFish();
         }
     },
 
@@ -47,12 +107,12 @@ var ScriptCollisionsManager = cc.Class({
             //theFishes[i].node.addComponent(cc.Sprite);
             if (rnum > 0 && rnum < 1) {
                 theFishes[i].node.x = -300;
-                theFishes[i].node.y = 300;
+                theFishes[i].node.y = 400;
                 theFishes[i].Floor = 1;
             }
             else if (rnum > 1 && rnum < 2) {
                 theFishes[i].node.x = -300;
-                theFishes[i].node.y = 200;
+                theFishes[i].node.y = 250;
                 theFishes[i].Floor = 2;
             }
             else {
@@ -64,14 +124,11 @@ var ScriptCollisionsManager = cc.Class({
         }
     },
 
-    update: function (dt) {
-        if(cc.director.getScene().childrenCount >= 3 && cc.director.getScene().childrenCount < 3+MaxFishNum)
-        {
-            this.GameingAddFish();
-        }
-    },
-
+    /**
+     * 动态添加鱼
+     */
     GameingAddFish:function(){
+
         var scene = cc.director.getScene();
         var _length = theFishes.length;
         var theFish = {
@@ -83,110 +140,54 @@ var ScriptCollisionsManager = cc.Class({
                 nodeClass:0,//节点种类
             };//鱼数据
         theFishes.push(theFish);
-        theFishes[_length].node = cc.instantiate(this.fish_Node);
+        theFishes[_length].node = cc.instantiate(this.randFishSpriteFrame());/*cc.instantiate(this.fish_Node)*/
         theFishes[_length].node.active = true;
         this.fishFun(Math.random() * 3,_length);
         scene.addChild(theFishes[_length].node);
     },
+    /**
+     * 加载已创建的鱼节点
+     * agouti_Node
+     * bluefish_Node
+     * crab_Node
+     * cuttlefish_Node
+     * redfish_Node
+     * tropicalfish_Node
+     * yellowfish_Node
+     */
+    randFishSpriteFrame: function () {
+        var rand = Math.random() * 12;
+        switch (Math.round(rand)) {
+            case 0:
+                return this.agouti_Node;
+            case 1:
+                return this.bluefish_Node;
+            case 2:
+                return this.crab_Node;
+            case 3:
+                return this.cuttlefish_Node;
+            case 4:
+                return this.redfish_Node;
+            case 5:
+                return this.tropicalfish_Node;
+            case 6:
+                return this.yellowfish_Node;
+            case 7:
+                return this.prop1_Node;
+            case 8:
+                return this.prop2_Node;
+            case 9:
+                return this.prop3_Node;
+            case 10:
+                return this.prop4_Node;
+            case 11:
+                return this.prop5_Node;
+            case 12:
+                return this.prop6_Node;
+            default:
+                return this.prop1_Node;
+        }
 
-    /*randFishSpriteFrame: function (_fishNode) {
-        var fishNode = _fishNode.node;
-        var rand = Math.random() * 7;
-
-        // 新刷出来的鱼被钓起时此处报错。
-        if(fishNode.getComponent(cc.Sprite).spriteFrame == null)
-        {
-            fishNode.addComponent(cc.Sprite);
-        }
-        else
-        {
-        }
-        
-        if(rand < 1)
-        {
-            cc.loader.loadRes('Fishes/DH_agouti',cc.SpriteFrame,function(err,spriteFrame){
-                fishNode.getComponent(cc.Sprite).spriteFrame = spriteFrame;
-                fishNode.width = -189;
-                fishNode.height = 166;
-                _fishNode.nodeClass = 1;
-            });
-        }
-        else if(rand < 2)
-        {
-            cc.loader.loadRes('Fishes/DH_bluefishi',cc.SpriteFrame,function(err,spriteFrame){
-                fishNode.getComponent(cc.Sprite).spriteFrame = spriteFrame;
-                fishNode.width = -163;
-                fishNode.height = 121;
-                _fishNode.nodeClass = 2;
-            });
-        }
-        else if(rand < 3)
-        {
-            cc.loader.loadRes('Fishes/DH_crab',cc.SpriteFrame,function(err,spriteFrame){
-                fishNode.getComponent(cc.Sprite).spriteFrame = spriteFrame;
-                fishNode.width = -172;
-                fishNode.height = 164;
-                _fishNode.nodeClass = 3;
-            });
-        }
-        else if(rand < 4)
-        {
-            cc.loader.loadRes('Fishes/DH_inkfish',cc.SpriteFrame,function(err,spriteFrame){
-                fishNode.getComponent(cc.Sprite).spriteFrame = spriteFrame;
-                fishNode.width = -124;
-                fishNode.height = 131;
-                _fishNode.nodeClass = 4;
-            });
-        }
-        else if(rand < 5)
-        {
-            cc.loader.loadRes('Fishes/DH_redfishi',cc.SpriteFrame,function(err,spriteFrame){
-                fishNode.getComponent(cc.Sprite).spriteFrame = spriteFrame;
-                fishNode.width = -332;
-                fishNode.height = 114;
-                _fishNode.nodeClass = 5;
-            });
-        }
-        else if(rand < 6)
-        {
-            cc.loader.loadRes('Fishes/DH_tropicalfish',cc.SpriteFrame,function(err,spriteFrame){
-                fishNode.getComponent(cc.Sprite).spriteFrame = spriteFrame;
-                fishNode.width = -138;
-                fishNode.height = 144;
-                _fishNode.nodeClass = 6;
-            });
-        }
-        else if(rand < 7)
-        {
-            cc.loader.loadRes('Fishes/DH_yellowfish',cc.SpriteFrame,function(err,spriteFrame){
-                fishNode.getComponent(cc.Sprite).spriteFrame = spriteFrame;
-                fishNode.width = -245;
-                fishNode.height = 129;
-                _fishNode.nodeClass = 7;
-            });
-        }
-        else
-        {
-            cc.loader.loadRes('garbage/DH_garbage_2', cc.SpriteFrame, function (err, spriteFrame) {
-                fishNode.getComponent(cc.Sprite).spriteFrame = spriteFrame;
-            });
-            _fishNode.nodeClass = -1;
-        }
-        if(fishNode.getComponent(cc.BoxCollider) !=null)
-        {
-            fishNode.getComponent(cc.BoxCollider).size = new cc.size(Math.abs(fishNode.width), Math.abs(fishNode.height));
-        }
-        else
-        {
-            fishNode.addComponent(cc.BoxCollider).size = new cc.size(Math.abs(fishNode.width), Math.abs(fishNode.height));
-        }
-        fishNode.group = "Fishing";
-        fishNode.rotation = 0;
-        // cc.log(fishNode.getComponent(cc.BoxCollider).name);
-        // fishNode.addComponent(cc.BoxCollider);
-        fishNode.getComponent(cc.BoxCollider).size = new cc.size(Math.abs(fishNode.width),Math.abs(fishNode.height));
-
-    },*/
-
+    },
     
 });

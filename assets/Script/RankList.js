@@ -15,7 +15,6 @@ cc.Class({
 
     // use this for initialization
     onLoad: function () {
-
         var cb = {
             cmd:"fish/queryScoreDescPage",
             data:{
@@ -23,8 +22,7 @@ cc.Class({
                 size : 1
             }
         };
-        HTTP.send(cb);
-        
+        HTTP.send(cb);        
         this.loadDataBase();
     },
 
@@ -58,7 +56,6 @@ cc.Class({
         {
             year = '20' + y;
         }
-
         var Month = Math.round(Math.random() * 12);
         var day = Math.round(Math.random() * 31);
         var hour = Math.round(Math.random() * 24);
