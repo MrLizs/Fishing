@@ -1,30 +1,35 @@
 var url = 'http://192.168.3.157:8080/game-collection-server/ws/rest';
 
-
 module.exports = {
-    send1:function(msg,cmd){
+    send:function(msg){
         var xhr = new XMLHttpRequest();
-        var formdata = new FormData();
+        console.log(msg);
+        var param=JSON.stringify(msg);
 
-        formdata.append('cmd',cmd);
-        formdata.append('data',msg);
-
-        //#md5第一次拼接的字符串，拼接到字符串前面
-        var md5_keyone=md5('242c630c7c9e4deeb98e744d1e1cd940' + formdata.get('cmd')+'&' + formdata.get('data'));
-        //#md5第一次拼接的字符串，拼接到字符串后面
-        var md5_keytwo= md5(md5_keyone + 'b7694d10cf4b48088be14fe436f87200');
-
+        //#md5
+        var md5_keyone="242c630c7c9e4deeb98e744d1e1cd940";
+        var md5_keytwo="b7694d10cf4b48088be14fe436f87200";
+        var dataString = JSON.stringify(msg.data);
+        var num1=md5_keyone+dataString;
+        var md51=md5(num1);
+        var value2=md51+md5_keytwo;
+	    //head
+	    var md52=md5(value2);
 
         if(xhr.withCredentials){
             cc.log('当前不支持ajax');
         }
         else{
-            // msg;
-            // xhr.setRequestHeader('Context-Type','application/x-www-form-urlencoded');
-            xhr.open('POST',url,true);
-            xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-            // xhr.setRequestHeader("Access-Control-Allow-Origin", "Origin, X-Requested-With, Content-Type, Accept");
-            xhr.send(md5_keytwo);
+            console.log('ajax');
+
+            xhr.open('POST',url);
+            
+            xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+
+            xhr.setRequestHeader("token",md52);
+
+            var strValue="paramString="+param;
+            xhr.send(strValue);
             xhr.onprogress = function(e){
                 cc.log('正在处理...'+(e.laoded/e.total));
             };
@@ -36,37 +41,23 @@ module.exports = {
             };
         }
     },
-    close:function(){
-        // xhr.close();
-    },
+    close:function(){/*xhr.close();*/},
 };
-/*
-var postData = {
-    "name1": "value1",
-    "name2": "value2"};
- 
-postData = (function(obj){ // 转成post需要的字符串.
-    var str = "";
- 
-    for(var prop in obj){
-        str += prop + "=" + obj[prop] + "&"
-    }
-    return str;
-})(postData);
- 
-var xhr = new XMLHttpRequest();
- 
-xhr.open("POST", "../module", true);
-xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-xhr.onreadystatechange = function(){
-    var XMLHttpReq = xhr;
-    if (XMLHttpReq.readyState == 4) {
-        if (XMLHttpReq.status == 200) {
-            var text = XMLHttpReq.responseText;
- 
-            console.log(text);
-        }
-    }
-};
-xhr.send(postData);
-*/
+// xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+// xhr.setRequestHeader("Access-Control-Allow-Origin", "Origin, X-Requested-With, Content-Type, Accept");
+
+// $.ajax({
+//     url:url,
+//     data:param,
+//     type:'POST',
+//     headers:{
+//         'Content-Type':'application/x-www-form-urlencoded',
+//         token:'949687b220f99fbfe493d64a07c8f5ff'},
+//     success:function(data){
+//         console.log('请求成功:' + data);
+//     },
+// });
+// $.post(url,param,function(data,status){
+//     console.log('data:' + data + 'status:' + status);
+// });
+// msg;

@@ -15,9 +15,15 @@ cc.Class({
 
     // use this for initialization
     onLoad: function () {
-        var msgStr = '{ "phone": "18963542874" }';
-        var cmd = 'fish/findUserMaxScore';
-        HTTP.send1(msgStr,cmd);
+
+        var cb = {
+            cmd:"fish/queryScoreDescPage",
+            data:{
+                page : 1,
+                size : 1
+            }
+        };
+        HTTP.send(cb);
         
         this.loadDataBase();
     },
