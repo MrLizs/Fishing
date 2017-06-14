@@ -35,6 +35,10 @@ cc.Class({
             type:cc.Node,
         },
         angling:false,
+        shadow_Node:{
+            default:null,
+            type:cc.Node,
+        },
     },
     
     // use this for initialization
@@ -50,6 +54,11 @@ cc.Class({
         
         this.pauseBtn_Node.on(cc.Node.EventType.TOUCH_START,this.pauseStart,this);
         this.pauseBtn_Node.on(cc.Node.EventType.TOUCH_END,this.pauseEnd,this);
+        if(cc.director.isPaused())
+        {
+            //这里须暂停.
+            cc.director.resume();
+        }
 
     },
 
@@ -83,7 +92,12 @@ cc.Class({
     },
 
     GameSettlementLayoutOpen:function(){
+        this.shadow_Node.active = true;
         this.GameSettlementLayout_Node.active = true;
+        theFishes.forEach(function(element) {
+            element.node.destroy();
+            element = null;
+        }, this);
         //这里须暂停.
         cc.director.pause();
     },
@@ -105,15 +119,15 @@ cc.Class({
         cc.loader.loadRes('Gameing/UI_pause',cc.SpriteFrame,function(err,spriteFrame){
             self.pauseBtn_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
         });
-        if(cc.director.isPause() != true)
-        {
-            //这里须暂停.
-            cc.director.pause();
-        }
-        else
+        if(cc.director.isPaused())
         {
             //这里须恢复.
             cc.director.resume();
+        }
+        else
+        {
+            //这里须暂停.
+            cc.director.pause();
         }
     },
     

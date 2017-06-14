@@ -1,3 +1,4 @@
+window.phoneNumber = '18963542874';
 
 cc.Class({
     extends: cc.Component,
@@ -23,6 +24,14 @@ cc.Class({
             default:null,
             type:cc.Node,
         },
+        gameExitBtn_Node:{
+            default:null,
+            type:cc.Node,
+        },
+        shadow_Node:{
+            default:null,
+            type:cc.Node,
+        },
     },
 
     // use this for initialization
@@ -36,6 +45,8 @@ cc.Class({
         this.RankList_Node.on(cc.Node.EventType.TOUCH_START,this.RanklistStart,this);
         this.RankList_Node.on(cc.Node.EventType.TOUCH_END,this.RanklistEnd,this);
 
+        this.gameExitBtn_Node.on(cc.Node.EventType.TOUCH_START,this.ExitClick,this);
+        this.gameExitBtn_Node.on(cc.Node.EventType.TOUCH_END,this.ExitGame,this);
         cc.FishGame = {};
         var smanager = require('SceneManager');
         cc.FishGame.sceneManager = new smanager();
@@ -72,10 +83,12 @@ cc.Class({
         cc.loader.loadRes('Login/UI_home_rule',cc.SpriteFrame,function(err,spriteFrame){
             self.rule_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
         });
+        this.shadow_Node.active = true;
         this.RegulationBg_Node.active = true;
     },
 
     RegulationClose:function(){
+        this.shadow_Node.active = false;
         this.RegulationBg_Node.active = false;
     },
     RanklistStart:function(){
@@ -89,10 +102,25 @@ cc.Class({
         cc.loader.loadRes('Login/UI_home_ranking',cc.SpriteFrame,function(err,spriteFrame){
             self.RankList_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
         });
+        this.shadow_Node.active = true;
         this.RankListBg_Node.active = true;
     },
     RanklistClose:function(){
+        this.shadow_Node.active = false;
         this.RankListBg_Node.active = false;
+    },
+
+    ExitClick:function(){
+        var self = this;
+        cc.loader.loadRes('Login/UI_home_exit_click',cc.SpriteFrame,function(err,spriteFrame){
+            self.gameExitBtn_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+        });
+    },
+    ExitGame:function(){
+        var self = this;
+        cc.loader.loadRes('Login/UI_home_exit',cc.SpriteFrame,function(err,spriteFrame){
+            self.gameExitBtn_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+        });
     },
 
 

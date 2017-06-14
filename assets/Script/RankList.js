@@ -1,4 +1,5 @@
 var HTTP = require('HTTP');
+var ranklist = null;
 cc.Class({
     extends: cc.Component,
 
@@ -19,10 +20,12 @@ cc.Class({
             cmd:"fish/queryScoreDescPage",
             data:{
                 page : 1,
-                size : 1
+                phone : phoneNumber,
+                size : 10
             }
         };
-        HTTP.send(cb);        
+        ranklist = HTTP.send(cb);
+        cc.log(ranklist);
         this.loadDataBase();
     },
 

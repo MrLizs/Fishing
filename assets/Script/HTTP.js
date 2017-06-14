@@ -22,7 +22,7 @@ module.exports = {
         else{
             console.log('ajax');
 
-            xhr.open('POST',url);
+            xhr.open('POST',url,true);
             
             xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 
@@ -38,6 +38,8 @@ module.exports = {
             };
             xhr.onload = function(e){
                 cc.log('处理完成 : '+xhr.responseText);
+                var response = new Function(xhr.responseText);
+                return response;
             };
         }
     },

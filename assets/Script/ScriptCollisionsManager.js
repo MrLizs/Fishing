@@ -1,4 +1,4 @@
-var MaxFishNum = 5;//最大鱼数量
+var MaxFishNum = 10;//最大鱼数量
 window.theFishes = [];//鱼群
 var sceneChildrenCount = 0;
 var ScriptCollisionsManager = cc.Class({
@@ -64,6 +64,7 @@ var ScriptCollisionsManager = cc.Class({
     },
     onLoad: function () {
         //鱼群初始化
+        theFishes = null;
         theFishes = new Array();
         //this.initFish(MaxFishNum)
         sceneChildrenCount = cc.director.getScene().childrenCount;
@@ -141,6 +142,10 @@ var ScriptCollisionsManager = cc.Class({
             };//鱼数据
         theFishes.push(theFish);
         theFishes[_length].node = cc.instantiate(this.randFishSpriteFrame());/*cc.instantiate(this.fish_Node)*/
+        cc.log(theFishes[_length].node.name);
+        if(theFishes[_length].node.name == 'prop'){
+            theFishes[_length].node.rotation += Math.random() * 360;
+        }
         theFishes[_length].node.active = true;
         this.fishFun(Math.random() * 3,_length);
         scene.addChild(theFishes[_length].node);
