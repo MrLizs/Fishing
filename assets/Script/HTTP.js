@@ -1,4 +1,4 @@
-var url = 'http://192.168.3.157:8080/game-collection-server/ws/rest';
+var url = 'http://192.168.3.191:8080/game-collection-server/ws/rest';
 
 module.exports = {
     send:function(msg){
@@ -22,7 +22,7 @@ module.exports = {
         else{
             console.log('ajax');
 
-            xhr.open('POST',url,true);
+            xhr.open('POST',url);
             
             xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
 
@@ -31,19 +31,45 @@ module.exports = {
             var strValue="paramString="+param;
             xhr.send(strValue);
             xhr.onprogress = function(e){
-                cc.log('正在处理...'+(e.laoded/e.total));
+                cc.log('正在处理...');
             };
             xhr.upload.onprogress = function(e){
-                cc.log('正在与服务器进行交互'+(e.laoded/e.total));
+                cc.log('正在与服务器进行交互');
             };
             xhr.onload = function(e){
                 cc.log('处理完成 : '+xhr.responseText);
-                var response = new Function(xhr.responseText);
-                return response;
+                if(xhr.responseText != null)
+                {
+                    var response = new Function(xhr.responseText);
+                    return response;
+                }
             };
         }
     },
-    close:function(){/*xhr.close();*/},
+    /**
+     * 查询自己最大分值
+     */
+    inquireUserMaxScore:function(){
+        var cb = {
+            cmd:"fish/findUserMaxScore",
+            data:{
+                phone : phoneNumber,
+            }
+        };
+        return this.send(cb);
+    },
+    /**
+     * 通过分值查询排行
+     */
+    inquireUserRansings:function(score){
+        var cb = {
+            cmd:"fish/queryBigThenThisScoreNum",
+            data:{
+                scoreNum : score,
+            }
+        };
+        return this.send(cb)
+    },
 };
 // xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
 // xhr.setRequestHeader("Access-Control-Allow-Origin", "Origin, X-Requested-With, Content-Type, Accept");

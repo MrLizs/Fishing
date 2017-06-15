@@ -2,7 +2,6 @@ window.phoneNumber = '18963542874';
 
 cc.Class({
     extends: cc.Component,
-
     properties: {
         start_Node:{
             default:null,

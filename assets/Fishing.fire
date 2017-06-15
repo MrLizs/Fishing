@@ -2438,6 +2438,9 @@
     },
     "rankContentItem_Prefab": {
       "__uuid__": "aebcc551-544c-463d-9459-61b13439bdeb"
+    },
+    "rankingSelf_Node": {
+      "__id__": 47
     }
   },
   {

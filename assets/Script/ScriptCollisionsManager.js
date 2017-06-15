@@ -1,6 +1,9 @@
-var MaxFishNum = 10;//最大鱼数量
+var MinFishesNums = 0;//最小鱼数量
+var MaxFishesNums = 30;
+var PushFrequencyNums = 1;
 window.theFishes = [];//鱼群
-var sceneChildrenCount = 0;
+var FishNum = 0;
+var GarbageNum = 0;
 var ScriptCollisionsManager = cc.Class({
     extends: cc.Component,
 
@@ -66,9 +69,10 @@ var ScriptCollisionsManager = cc.Class({
         //鱼群初始化
         theFishes = null;
         theFishes = new Array();
-        //this.initFish(MaxFishNum)
-        sceneChildrenCount = cc.director.getScene().childrenCount;
-        cc.log(sceneChildrenCount);
+        //this.initFish(MinFishesNums)
+        MinFishesNums = 0;
+        this.schedule(this.timePlusPlus,1);
+
     },
 
     /**
@@ -94,9 +98,40 @@ var ScriptCollisionsManager = cc.Class({
     },
 
     update: function (dt) {
-        if(cc.director.getScene().childrenCount >= sceneChildrenCount && cc.director.getScene().childrenCount < sceneChildrenCount + MaxFishNum)
+        if((FishNum+GarbageNum) < MaxFishesNums)
         {
             this.GameingAddFish();
+        }
+    },
+
+    /**
+     * 动态添加鱼
+     */
+    GameingAddFish:function(){
+        var scene = cc.director.getScene();
+        var _length = theFishes.length;
+        var theFish = {
+                node: null,//节点
+                sroll: true,//方向
+                Floor: null,//层
+                speed: null,//速度
+                fishCollisions: false,//是否碰撞
+                nodeClass:0,//节点种类,用于计算积分
+            };//鱼数据
+        theFishes.push(theFish);
+        theFishes[_length].node = cc.instantiate(this.randFishSpriteFrame());/*cc.instantiate(this.fish_Node)*/
+        if(theFishes[_length].node != null)
+        {
+            if(theFishes[_length].node.name == 'prop'){
+                theFishes[_length].node.rotation += Math.random() * 360;
+                theFishes[_length].nodeClass = -100
+            }
+            else if(theFishes[_length].node.name == 'DH'){
+                theFishes[_length].nodeClass = 100
+            }
+            theFishes[_length].node.active = true;
+            this.fishFun(Math.random() * 3,_length);
+            scene.addChild(theFishes[_length].node);
         }
     },
 
@@ -106,50 +141,25 @@ var ScriptCollisionsManager = cc.Class({
         {
             //theFishes[i].node.name = ""+i;
             //theFishes[i].node.addComponent(cc.Sprite);
-            if (rnum > 0 && rnum < 1) {
+            if (rnum <= 1) {
                 theFishes[i].node.x = -300;
                 theFishes[i].node.y = 400;
                 theFishes[i].Floor = 1;
             }
-            else if (rnum > 1 && rnum < 2) {
+            else if (rnum > 1 && rnum <= 2) {
                 theFishes[i].node.x = -300;
                 theFishes[i].node.y = 250;
-                theFishes[i].Floor = 2;
+                theFishes[i].Floor = 1.2;
             }
             else {
                 theFishes[i].node.x = -300;
                 theFishes[i].node.y = 100;
-                theFishes[i].Floor = 3;
+                theFishes[i].Floor = 1.5;
             }
             theFishes[i].speed = rnum;
         }
     },
 
-    /**
-     * 动态添加鱼
-     */
-    GameingAddFish:function(){
-
-        var scene = cc.director.getScene();
-        var _length = theFishes.length;
-        var theFish = {
-                node: null,//节点
-                sroll: true,//方向
-                Floor: null,//层
-                speed: null,//速度
-                fishCollisions: false,//是否碰撞
-                nodeClass:0,//节点种类
-            };//鱼数据
-        theFishes.push(theFish);
-        theFishes[_length].node = cc.instantiate(this.randFishSpriteFrame());/*cc.instantiate(this.fish_Node)*/
-        cc.log(theFishes[_length].node.name);
-        if(theFishes[_length].node.name == 'prop'){
-            theFishes[_length].node.rotation += Math.random() * 360;
-        }
-        theFishes[_length].node.active = true;
-        this.fishFun(Math.random() * 3,_length);
-        scene.addChild(theFishes[_length].node);
-    },
     /**
      * 加载已创建的鱼节点
      * agouti_Node
@@ -161,38 +171,176 @@ var ScriptCollisionsManager = cc.Class({
      * yellowfish_Node
      */
     randFishSpriteFrame: function () {
-        var rand = Math.random() * 12;
-        switch (Math.round(rand)) {
-            case 0:
-                return this.agouti_Node;
-            case 1:
-                return this.bluefish_Node;
-            case 2:
-                return this.crab_Node;
-            case 3:
-                return this.cuttlefish_Node;
-            case 4:
-                return this.redfish_Node;
-            case 5:
-                return this.tropicalfish_Node;
-            case 6:
-                return this.yellowfish_Node;
-            case 7:
-                return this.prop1_Node;
-            case 8:
-                return this.prop2_Node;
-            case 9:
-                return this.prop3_Node;
-            case 10:
-                return this.prop4_Node;
-            case 11:
-                return this.prop5_Node;
-            case 12:
-                return this.prop6_Node;
-            default:
-                return this.prop1_Node;
+        var moment;//刷什么东西
+        if(MinTime > 0 && MinTime <= 30)
+        {
+            moment = this.returnWaht(1);
+        }
+        else if(MinTime > 30 && MinTime < 60)
+        {
+            moment = this.returnWaht(2);
+        }
+        else if(MinTime >= 60)
+        {
+            moment = this.returnWaht(3);
+        }
+        if(moment == 'ALL')
+        {
+            var rand = Math.random() * 12;
+            switch (Math.round(rand)) {
+                case 0:
+                    FishNum++;
+                    return this.agouti_Node;
+                case 1:
+                    FishNum++;
+                    return this.bluefish_Node;
+                case 2:
+                    FishNum++;
+                    return this.crab_Node;
+                case 3:
+                    FishNum++;
+                    return this.cuttlefish_Node;
+                case 4:
+                    FishNum++;
+                    return this.redfish_Node;
+                case 5:
+                    FishNum++;
+                    return this.tropicalfish_Node;
+                case 6:
+                    FishNum++;
+                    return this.yellowfish_Node;
+                case 7:
+                    GarbageNum++;
+                    return this.prop1_Node;
+                case 8:
+                    GarbageNum++;
+                    return this.prop2_Node;
+                case 9:
+                    GarbageNum++;
+                    return this.prop3_Node;
+                case 10:
+                    GarbageNum++;
+                    return this.prop4_Node;
+                case 11:
+                    GarbageNum++;
+                    return this.prop5_Node;
+                case 12:
+                    GarbageNum++;
+                    return this.prop6_Node;
+                default:
+                    cc.log('返回了一个空对象0:'+Math.round(rand));
+                    return;
+            }
+        }
+        else if(moment == 'Fish')
+        {
+            FishNum++;
+            var rand = Math.random() * 6 + 1;
+            switch (Math.round(rand)) {
+                case 1:
+                    return this.agouti_Node;
+                case 2:
+                    return this.bluefish_Node;
+                case 3:
+                    return this.crab_Node;
+                case 4:
+                    return this.cuttlefish_Node;
+                case 5:
+                    return this.redfish_Node;
+                case 6:
+                    return this.tropicalfish_Node;
+                case 7:
+                    return this.yellowfish_Node;
+                default:
+                    cc.log('返回了一个空对象1:'+Math.round(rand));
+                    return;
+            }
+        }
+        else if(moment == 'Garbage')
+        {
+            GarbageNum++;
+            var rand = Math.random() * 5 + 1;
+            switch (Math.round(rand)) {
+                case 1:
+                    return this.prop1_Node;
+                case 2:
+                    return this.prop2_Node;
+                case 3:
+                    return this.prop3_Node;
+                case 4:
+                    return this.prop4_Node;
+                case 5:
+                    return this.prop5_Node;
+                case 6:
+                    return this.prop6_Node;
+                default:
+                    cc.log('返回了一个空对象2:'+Math.round(rand));
+                    return;
+            }
         }
 
     },
+    /**
+     * 在什么阶段刷什么内容
+     */
+    returnWaht:function(moment){
+        if(FishNum+GarbageNum < this.fishMomentSwitch(moment) + this.garbageMomentSwitch(moment))
+        {
+            if(FishNum < this.fishMomentSwitch(moment) && GarbageNum < this.garbageMomentSwitch(moment))
+            {
+                return 'ALL';
+            }
+            if(FishNum < this.fishMomentSwitch(moment))
+            {
+                return 'Fish';
+            }
+            if(GarbageNum < this.garbageMomentSwitch(moment))
+            {
+                return 'Garbage';
+            }
+        }
+        else
+        {
+            return;
+        }
+    },
+    /**
+     * 返回不同阶段鱼的数量
+     */
+    fishMomentSwitch:function(moment){
+        switch (moment) {
+            case 1:
+                return 48;
+            case 2:
+                return 39;
+            case 3:
+                return 30;
+        }
+    },
+    /**
+     * 返回不同阶段垃圾数量
+     */
+    garbageMomentSwitch:function(moment){
+        switch (moment) {
+            case 1:
+                return 12;
+            case 2:
+                return 21;
+            case 3:
+                return 30;
+        }
+    },
+    timePlusPlus:function(){
+        var self = this;
+        setTimeout(function() {
+            if(MinFishesNums < MaxFishesNums){
+                MinFishesNums += PushFrequencyNums;
+            }
+            else{
+                self.unschedule(self.timePlusPlus,self);
+            }
+        }, 2000);
+    },
+
     
 });

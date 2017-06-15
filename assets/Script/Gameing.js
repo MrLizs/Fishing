@@ -95,9 +95,9 @@ cc.Class({
         this.shadow_Node.active = true;
         this.GameSettlementLayout_Node.active = true;
         theFishes.forEach(function(element) {
-            element.node.destroy();
-            element = null;
+            if(element.node) element.node.destroy();
         }, this);
+        theFishes = {};
         //这里须暂停.
         cc.director.pause();
     },
