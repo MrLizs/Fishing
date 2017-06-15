@@ -87,10 +87,10 @@ cc.Class({
      */
     GameClearing:function(){
         var cb = {
-            cmd:"fish/insertFishUserScore",
-            data:{
-                phone : phoneNumber,
-                scoreNum : this.node.parent.getChildByName('score').getComponent(cc.Label).string,
+            "cmd":"fish/insertFishUserScore",
+            "data":{
+                "phone" : phoneNumber,
+                "scoreNum" : this.node.parent.getChildByName('score').getComponent(cc.Label).string,
             }
         };
         cc.log(cb.data.phone);

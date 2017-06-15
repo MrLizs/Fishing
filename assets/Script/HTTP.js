@@ -1,7 +1,7 @@
 var url = 'http://192.168.3.191:8080/game-collection-server/ws/rest';
 
 module.exports = {
-    send:function(msg){
+    send:function(msg,type){
         var xhr = new XMLHttpRequest();
         console.log(msg);
         var param=JSON.stringify(msg);
@@ -38,10 +38,13 @@ module.exports = {
             };
             xhr.onload = function(e){
                 cc.log('处理完成 : '+xhr.responseText);
-                if(xhr.responseText != null)
-                {
-                    var response = new Function(xhr.responseText);
-                    return response;
+                var response = JSON.parse(xhr.responseText);
+                switch (type) {
+                    case 1:
+                        RankingsCB = response;
+                        break;
+                    default:
+                        break;
                 }
             };
         }
@@ -49,27 +52,27 @@ module.exports = {
     /**
      * 查询自己最大分值
      */
-    inquireUserMaxScore:function(){
-        var cb = {
-            cmd:"fish/findUserMaxScore",
-            data:{
-                phone : phoneNumber,
-            }
-        };
-        return this.send(cb);
-    },
+    // inquireUserMaxScore:function(){
+    //     var cb = {
+    //         "cmd":"fish/findUserMaxScore",
+    //         "data":{
+    //             "phone" : phoneNumber,
+    //         }
+    //     };
+    //     return this.send(cb);
+    // },
     /**
      * 通过分值查询排行
      */
-    inquireUserRansings:function(score){
-        var cb = {
-            cmd:"fish/queryBigThenThisScoreNum",
-            data:{
-                scoreNum : score,
-            }
-        };
-        return this.send(cb)
-    },
+    // inquireUserRansings:function(score){
+    //     var cb = {
+    //         "cmd":"fish/queryBigThenThisScoreNum",
+    //         "data":{
+    //             "scoreNum" : score,
+    //         }
+    //     };
+    //     return this.send(cb)
+    // },
 };
 // xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
 // xhr.setRequestHeader("Access-Control-Allow-Origin", "Origin, X-Requested-With, Content-Type, Accept");
