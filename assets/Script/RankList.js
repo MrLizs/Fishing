@@ -1,6 +1,9 @@
 var HTTP = require('HTTP');
 var ranklist = null;
 window.RankingsCB=null;
+window.SelfRankings=null;
+window.UserMaxScore = null;
+
 cc.Class({
     extends: cc.Component,
 
@@ -21,6 +24,8 @@ cc.Class({
 
     // use this for initialization
     onLoad: function () {
+        var cmd = '"cmd":"fish/queryScoreDescPage"';
+        var data = '"data":"{"page":1,"phone":"'+phoneNumber+'","size":100}"';
         var cb = {
             "cmd":"fish/queryScoreDescPage",
             "data":{
@@ -29,15 +34,8 @@ cc.Class({
                 "size" : 100
             }
         };
-        var cb2 = {
-            "cmd":"fish/queryScoreRankingDescPage",
-            "data":{
-                "page" : 1,
-                "phone" : phoneNumber,
-                "size" : 1
-            }
-        };
-        HTTP.send(cb,1);
+        HTTP.sendobj(cb,1);
+
         this.schedule(this.sendMessage,0.2);
         this.viewSelfRankings();
     },
@@ -45,36 +43,69 @@ cc.Class({
     // called every frame, uncomment this function to activate update callback
     // update: function (dt) {
     // },
-
     sendMessage:function(){
         if(RankingsCB != null){
             this.unschedule(this.sendMessage,this);
             this.loadDataBase();
         }
     },
-
     loadDataBase:function(){
-        this.rankListContent_Node.height = RankingsCB.data.length * 80;
-        for (var i = 0; i < RankingsCB.data.length; i++) {
-            var itme = cc.instantiate(this.rankContentItem_Prefab);
-            itme.y = -(i * 80);
-            this.rankListContent_Node.addChild(itme);
-            itme.getChildByName('Ranking').getComponent(cc.Label).string = '' + i+1;
-            itme.getChildByName('UserName').getComponent(cc.Label).string = '' + RankingsCB.data[i].userScoreId;
-            itme.getChildByName('Score').getComponent(cc.Label).string = '' + RankingsCB.data[i].scoreNum;
-            itme.getChildByName('GameOverTime').getComponent(cc.Label).string = '' + RankingsCB.data[i].scoreNum;
+        if(RankingsCB.data != null)
+        {
+            this.rankListContent_Node.height = RankingsCB.data.length * 80;
+            for (var i = 0; i < RankingsCB.data.length; i++) {
+                var itme = cc.instantiate(this.rankContentItem_Prefab);
+                itme.y = -(i * 80);
+                this.rankListContent_Node.addChild(itme);
+                itme.getChildByName('Ranking').getComponent(cc.Label).string = '' +(i+1);
+                itme.getChildByName('UserName').getComponent(cc.Label).string = '' + RankingsCB.data[i].phone;
+                itme.getChildByName('Score').getComponent(cc.Label).string = '' + RankingsCB.data[i].scoreNum;
+                itme.getChildByName('GameOverTime').getComponent(cc.Label).string = '' + RankingsCB.data[i].createTime;
+            }
         }
     },
     viewSelfRankings:function(){
-        // var num1 = HTTP.inquireUserMaxScore();
-        // cc.log('用户最高分'+num1);
-        // var num2 = HTTP.inquireUserRansings(100);
-        // cc.log('100分的排行'+num2);
-
-        // this.rankingSelf_Node.getChildByName('Ranking').getComponent(cc.Label).string = num2;
-        this.rankingSelf_Node.getChildByName('UserName').getComponent(cc.Label).string = "自己";
-        // this.rankingSelf_Node.getChildByName('Score').getComponent(cc.Label).string = num1;
-        // this.rankingSelf_Node.getChildByName('GameOverTime').getComponent(cc.Label).string = this.timeDispose();
+        this.sendRequestSelfCB();
+        this.schedule(this.getSelfCB,0.1);
+    },
+    sendRequestSelfCB:function(){
+        var cb = {
+            "cmd":"fish/queryScoreRankingDescPage",
+            "data":{
+                "page" : 1,
+                "phone" : phoneNumber,
+                "size" : 1
+            }
+        };
+        HTTP.sendobj(cb,2);
+    },
+    showSelfMaxScore:function(){
+        var userMaxScore = {
+            "cmd":"fish/findUserMaxScore",
+            "data":{
+                "phone":phoneNumber
+            }
+        }
+        HTTP.sendobj(userMaxScore,5)
+    },
+    getSelfCB:function(){
+        if(SelfRankings !=null)
+        {
+            this.unschedule(this.getSelfCB,this);
+            cc.log(SelfRankings);
+            this.rankingSelf_Node.getChildByName('Ranking').getComponent(cc.Label).string = SelfRankings.data.maxRanking;
+            this.rankingSelf_Node.getChildByName('UserName').getComponent(cc.Label).string = "自己";
+            // this.rankingSelf_Node.getChildByName('GameOverTime').getComponent(cc.Label).string = this.timeDispose();
+        }
+        this.showSelfMaxScore();
+        this.schedule(this.getSelfCB2,0.1);
+    },
+    getSelfCB2:function(){
+        if(UserMaxScore != null)
+        {
+            this.unschedule(this.getSelfCB,this);
+            this.rankingSelf_Node.getChildByName('Score').getComponent(cc.Label).string = UserMaxScore.data;
+        }
     },
 
     /**

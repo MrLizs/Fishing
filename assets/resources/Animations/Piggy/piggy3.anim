@@ -1,0 +1,73 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "piggy3",
+  "_objFlags": 0,
+  "_rawFiles": null,
+  "_duration": 0.45,
+  "sample": 20,
+  "speed": 1,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "12e56369-192c-4f38-817c-ffe954029408"
+            }
+          },
+          {
+            "frame": 0.05,
+            "value": {
+              "__uuid__": "aaf9e39a-6de4-4cec-93df-456d09bf8ec7"
+            }
+          },
+          {
+            "frame": 0.1,
+            "value": {
+              "__uuid__": "14906f88-65ae-4199-a8b2-cc04744ae99e"
+            }
+          },
+          {
+            "frame": 0.15,
+            "value": {
+              "__uuid__": "9823f8ad-86cb-416d-98a3-3535c587b85b"
+            }
+          },
+          {
+            "frame": 0.2,
+            "value": {
+              "__uuid__": "757a7841-8add-45c3-9e39-5398bc4064a4"
+            }
+          },
+          {
+            "frame": 0.25,
+            "value": {
+              "__uuid__": "6e0e9a7d-dc8a-40c5-965d-6eede4e8a59d"
+            }
+          },
+          {
+            "frame": 0.3,
+            "value": {
+              "__uuid__": "ba655dc8-4fd3-4429-991f-56cc16d79119"
+            }
+          },
+          {
+            "frame": 0.35,
+            "value": {
+              "__uuid__": "45eb005d-8d8e-4893-b296-68b592037111"
+            }
+          },
+          {
+            "frame": 0.4,
+            "value": {
+              "__uuid__": "be7584d8-df23-45fa-bf3b-9e44bb387fcb"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

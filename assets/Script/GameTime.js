@@ -14,6 +14,10 @@ cc.Class({
             default:null,
             type:cc.Node,
         },
+        score_Label:{
+            default:null,
+            type:cc.Label,
+        },
     },
 
     // use this for initialization
@@ -77,7 +81,7 @@ cc.Class({
         clock_hour.rotation += 360 / 12;
         if(MinTime>=MaxTime)
         {
-            cc.log('计时器结束回调')
+            cc.log('计时器结束回调');
             this.unschedule(this.updatime_minute,this);
             this.unschedule(this.updatime_hour,this);
         }
@@ -86,16 +90,16 @@ cc.Class({
      * 游戏结算消息接口
      */
     GameClearing:function(){
+        var scorenum = this.score_Label.string;
         var cb = {
             "cmd":"fish/insertFishUserScore",
             "data":{
                 "phone" : phoneNumber,
-                "scoreNum" : this.node.parent.getChildByName('score').getComponent(cc.Label).string,
+                "scoreNum" : scorenum
             }
         };
-        cc.log(cb.data.phone);
-        cc.log(cb.data.scoreNum);
-        cc.log(HTTP.send(cb));
+        HTTP.sendobj(cb,2);
+        cc.log('发送游戏结束请求');
     },
 
 });

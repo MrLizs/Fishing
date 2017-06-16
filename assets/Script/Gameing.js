@@ -169,7 +169,7 @@ cc.Class({
     },
     //上钩 
     UpFishhook:function(){
-        if(this.fishline_Node.height > 80)
+        if(this.fishline_Node.height > 200)
         {
             this.fishline_Node.height -= 40 * boatMoveSpeed;
             this.barb_Node.y = -this.fishline_Node.height;

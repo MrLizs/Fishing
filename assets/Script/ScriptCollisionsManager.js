@@ -71,6 +71,8 @@ var ScriptCollisionsManager = cc.Class({
         theFishes = new Array();
         //this.initFish(MinFishesNums)
         MinFishesNums = 0;
+        FishNum = 0;
+        GarbageNum = 0;
         this.schedule(this.timePlusPlus,1);
 
     },

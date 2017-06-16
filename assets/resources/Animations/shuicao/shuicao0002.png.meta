@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "c35bb0b2-82c5-4a19-98c7-80562580c4b6",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "shuicao0002": {
+      "ver": "1.0.3",
+      "uuid": "8c564c50-b83f-441c-add7-7355be2c9522",
+      "rawTextureUuid": "c35bb0b2-82c5-4a19-98c7-80562580c4b6",
+      "trimType": "custom",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 650,
+      "height": 450,
+      "rawWidth": 650,
+      "rawHeight": 450,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
