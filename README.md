@@ -1,9 +1,10 @@
 # Fishing
 
-# Ver 0.8.08
+# Ver 0.8.16
 # 1.小猪动画按规则触发
 # 2.改变了判断鱼和垃圾道具的方式
-# 3.Bug GameSettlement/showSelfRankings 函数进不去?
+# 3.增加钓起鱼之后的旋转
+# 4.增加了猪蹄与钓鱼杆
 
 # Ver 0.8.0
 # 1.接口全通

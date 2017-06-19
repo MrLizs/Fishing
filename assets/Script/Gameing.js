@@ -1,4 +1,7 @@
 var boatMoveSpeed = 0.15;
+var fishesRodsStringLength = 750;
+var offStringSpeeds = 40;
+var onStringSpeeds = 60;
 var boatVec = null;
 var firstPushSite=null;
 var firstFloor_fishes;
@@ -6,6 +9,16 @@ var SecondFloor_fishes;
 var thirdlyFloor_fishes;
 var walkSpeed = 2.5;
 var piggy = null;
+
+window.UserMaxScore = null;
+window.ScoreSelectRankings = null;
+
+/**
+ * 0可以收线放线
+ * 1放线时,可收线
+ * 2收线时,不可放线
+ */
+var fishLineStatus = 0;
 
 cc.Class({
     extends: cc.Component,
@@ -60,9 +73,9 @@ cc.Class({
             //这里须暂停.
             cc.director.resume();
         }
-
         piggy = this.node.getChildByName('piggy');
-
+        UserMaxScore = null;
+        ScoreSelectRankings = null;
     },
 
     // called every frame, uncomment this function to activate update callback
@@ -89,7 +102,9 @@ cc.Class({
         }
         if(TimeIsOver === true)
         {
+            if(UserMaxScore && ScoreSelectRankings)
             this.GameSettlementLayoutOpen();
+            
         }
         //cc.fishesManager.updatefish(theFishes);
     },
@@ -167,7 +182,10 @@ cc.Class({
     },
     //钓鱼
     Angling:function(){
-        this.angling = true;
+        if(fishLineStatus != 2)
+        {
+            this.angling = true;
+        }
     },
     ChangeStatus:function(){
         this.angling = false;
@@ -176,18 +194,25 @@ cc.Class({
     UpFishhook:function(){
         if(this.fishline_Node.height > 200)
         {
-            this.fishline_Node.height -= 40 * boatMoveSpeed;
+            this.fishline_Node.height -= onStringSpeeds * boatMoveSpeed;
             this.barb_Node.y = -this.fishline_Node.height;
+            fishLineStatus = 2;
+        }
+        else if(this.fishline_Node.height <= 200){
+            fishLineStatus = 0;
         }
     },
     //下钩
     DownFishhook:function(){
-        if(this.fishline_Node.height >= 650)
-        {
+        if(this.fishline_Node.height >= fishesRodsStringLength){
+            fishLineStatus = 2;
             this.angling = false;
         }
-        this.fishline_Node.height += 20 * boatMoveSpeed;
-        this.barb_Node.y = -this.fishline_Node.height;
+        else if(this.fishline_Node.height < fishesRodsStringLength  && fishLineStatus != 2){
+            fishLineStatus = 1;
+            this.fishline_Node.height += offStringSpeeds * boatMoveSpeed;
+            this.barb_Node.y = -this.fishline_Node.height;
+        }
     },
 
     randFishScript:function(){

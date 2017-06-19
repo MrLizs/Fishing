@@ -2,7 +2,6 @@ var HTTP = require('HTTP');
 var ranklist = null;
 window.RankingsCB=null;
 window.SelfRankings=null;
-window.UserMaxScore = null;
 
 cc.Class({
     extends: cc.Component,
@@ -24,18 +23,7 @@ cc.Class({
 
     // use this for initialization
     onLoad: function () {
-        var cmd = '"cmd":"fish/queryScoreDescPage"';
-        var data = '"data":"{"page":1,"phone":"'+phoneNumber+'","size":100}"';
-        var cb = {
-            "cmd":"fish/queryScoreDescPage",
-            "data":{
-                "page" : 1,
-                "phone" : phoneNumber,
-                "size" : 100
-            }
-        };
-        HTTP.sendobj(cb,1);
-        this.schedule(this.sendMessage,0.2);
+        this.sendMessage();
         this.viewSelfRankings();
     },
 
@@ -103,7 +91,7 @@ cc.Class({
         if(UserMaxScore != null)
         {
             this.unschedule(this.getSelfCB,this);
-            this.rankingSelf_Node.getChildByName('Score').getComponent(cc.Label).string = UserMaxScore.data;
+            this.rankingSelf_Node.getChildByName('Score').getComponent(cc.Label).string = '' + UserMaxScore;
         }
     },
 

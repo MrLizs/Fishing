@@ -1,3 +1,4 @@
+var HTTP = require('HTTP');
 window.phoneNumber = '18963542874';
 
 cc.Class({
@@ -46,9 +47,7 @@ cc.Class({
 
         this.gameExitBtn_Node.on(cc.Node.EventType.TOUCH_START,this.ExitClick,this);
         this.gameExitBtn_Node.on(cc.Node.EventType.TOUCH_END,this.ExitGame,this);
-        cc.FishGame = {};
-        var smanager = require('SceneManager');
-        cc.FishGame.sceneManager = new smanager();
+
     },
 
     // called every frame, uncomment this function to activate update callback
@@ -102,7 +101,7 @@ cc.Class({
             self.RankList_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
         });
         this.shadow_Node.active = true;
-        this.RankListBg_Node.active = true;
+        this.selectRankings();
     },
     RanklistClose:function(){
         this.shadow_Node.active = false;
@@ -120,6 +119,25 @@ cc.Class({
         cc.loader.loadRes('Login/UI_home_exit',cc.SpriteFrame,function(err,spriteFrame){
             self.gameExitBtn_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
         });
+    },
+    selectRankings:function(){
+        var cb = {
+            "cmd":"fish/queryScoreDescPage",
+            "data":{
+                "page" : 1,
+                "phone" : phoneNumber,
+                "size" : 100
+            }
+        };
+        HTTP.sendobj(cb,1);
+        this.schedule(this.showRankingsBg,0.2);
+    },
+    showRankingsBg:function(){
+        cc.log(RankingsCB);
+        if(RankingsCB){
+            this.unschedule(this.showRankingsBg,this);
+            this.RankListBg_Node.active = true;
+        }
     },
 
 

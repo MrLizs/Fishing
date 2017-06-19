@@ -80,7 +80,6 @@ cc.Class({
             if(theFishes[i].node === other.node)
             {
                 var MyScore = theFishes[i].Floor * theFishes[i].nodeClass;
-                cc.log('增加积分' + MyScore);
                 this.score.getComponent(cc.Label).string = parseInt(this.score.getComponent(cc.Label).string) + MyScore;
                 // var spriteName = theFishes[i].node.getComponent(cc.Sprite).spriteFrame.name;
                 var switchNum = this.switchSpriteName(theFishes[i].node.name);

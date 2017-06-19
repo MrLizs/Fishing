@@ -32,31 +32,29 @@ module.exports = {
             xhr.onload = function(e){
                 cc.log('处理完成');
                 var response = JSON.parse(xhr.response);
-                switch (type) {
-                    case 1:
-                        RankingsCB = null;
-                        RankingsCB = response;
-                        cc.log("RankingsCB:"+RankingsCB);
-                        break;
-                    case 2:
-                        SelfRankings = null;
-                        SelfRankings = response;
-                        cc.log("SelfRankings:"+SelfRankings);
-                        break;
-                    case 4:
-                        ScoreSelectRankings = null;
-                        ScoreSelectRankings = response;
-                        cc.log("ScoreSelectRankings:"+ScoreSelectRankings);
-                        break;
-                    case 5:
-                        UserMaxScore = null;
-                        UserMaxScore = response;
-                        cc.log("UserMaxScore:"+UserMaxScore);
-                        break;
-                    default:
-                        cc.log(xhr.response)
-                        break;
+                if(type === 1){
+                    RankingsCB = null;
+                    RankingsCB = response;
+                    cc.log("RankingsCB:"+RankingsCB);
                 }
+                if(type === 2){
+                    SelfRankings = null;
+                    SelfRankings = response;
+                    cc.log("SelfRankings:"+SelfRankings);
+                }
+                if(type === 3){
+                }
+                if(type === 4){
+                    // ScoreSelectRankings = null;
+                    ScoreSelectRankings = response.data;
+                    cc.log("ScoreSelectRankings:"+ScoreSelectRankings);
+                }
+                if(type === 5){
+                    UserMaxScore = null;
+                    UserMaxScore = response.data;
+                    cc.log("UserMaxScore:"+UserMaxScore);
+                }
+
             };
         }
     }

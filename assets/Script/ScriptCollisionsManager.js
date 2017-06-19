@@ -112,7 +112,6 @@ var ScriptCollisionsManager = cc.Class({
     GameingAddFish:function(){
         var scene = cc.director.getScene();
         var _length = theFishes.length;
-        cc.log("鱼数组长度:"+_length);
         var theFish = {
                 node: null,//节点
                 sroll: true,//方向
@@ -122,19 +121,23 @@ var ScriptCollisionsManager = cc.Class({
                 nodeClass:0,//节点种类,用于计算积分
             };//鱼数据
         theFishes.push(theFish);
-        theFishes[_length].node = cc.instantiate(this.randFishSpriteFrame());/*cc.instantiate(this.fish_Node)*/
-        if(theFishes[_length].node != null)
+        var fishesObj = this.randFishSpriteFrame();
+        if(fishesObj)
         {
-            if(this.switchSpriteName(theFishes[_length].node.name) > 6){
-                theFishes[_length].node.rotation += Math.random() * 360;
-                theFishes[_length].nodeClass = -100
+            theFishes[_length].node = cc.instantiate(fishesObj);/*cc.instantiate(this.fish_Node)*/
+            if(theFishes[_length].node != null)
+            {
+                if(this.switchSpriteName(theFishes[_length].node.name) > 6){
+                    theFishes[_length].node.rotation += Math.random() * 360;
+                    theFishes[_length].nodeClass = -100
+                }
+                else{
+                    theFishes[_length].nodeClass = 100
+                }
+                theFishes[_length].node.active = true;
+                this.fishFun(Math.random() * 3,_length);
+                scene.addChild(theFishes[_length].node);
             }
-            else{
-                theFishes[_length].nodeClass = 100
-            }
-            theFishes[_length].node.active = true;
-            this.fishFun(Math.random() * 3,_length);
-            scene.addChild(theFishes[_length].node);
         }
     },
 

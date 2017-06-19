@@ -2,6 +2,7 @@ var HTTP = require('HTTP');
 window.TimeIsOver = false;
 window.MinTime = 0;
 window.MaxTime = 90;
+
 cc.Class({
     extends: cc.Component,
 
@@ -43,7 +44,7 @@ cc.Class({
 
     // called every frame, uncomment this function to activate update callback
     update: function (dt) {
-        if(MinTime >= 60 && MinTime <= 90)
+        if(MinTime >= MaxTime*0.667 && MinTime <= MaxTime)
         {
             if(this.TimeUiBg_Node.getComponent(cc.Sprite).spriteFrame.name != 'Gameing/UI_time_red'){
                 var self = this;
@@ -52,7 +53,7 @@ cc.Class({
                 });
             }
         }
-        else if(MinTime > 30 && MinTime < 60)
+        else if(MinTime > MaxTime*0.334 && MinTime < MaxTime*0.667)
         {
             if(this.TimeUiBg_Node.getComponent(cc.Sprite).spriteFrame.name != 'Gameing/UI_time_yellow'){
                 var self = this;
@@ -68,9 +69,13 @@ cc.Class({
         clock_minute.rotation += 360 / 60;
         if(MinTime >= MaxTime)//this.TimeUiBg_Node.width <= (294 / 60)
         {
-            TimeIsOver = true;
             cc.log('游戏结束2');
             this.GameClearing();
+            this.sendRequestSelfCB();
+            this.requestMaxScore();
+            // this.schedule(this.showSelfRankings,0.1);
+            // this.schedule(this.responesMaxScore,0.1);
+            TimeIsOver = true;
         }
         else
         {
@@ -99,7 +104,43 @@ cc.Class({
             }
         };
         HTTP.sendobj(cb,2);
-        cc.log('发送游戏结束请求');
     },
 
+    sendRequestSelfCB:function(){
+        var score = this.score_Label.string;
+        cc.log('现在分数:'+score);
+        var cb = {
+            "cmd":"fish/queryBigThenThisScoreNum",
+            "data":{
+                "scoreNum": score
+            }
+        };
+        HTTP.sendobj(cb,4);
+    },
+    // showSelfRankings:function(){
+    //     console.log("showSelfRankings");
+    //     //cc.log('showSelfRankings: ' + ScoreSelectRankings);
+    //     if(ScoreSelectRankings != null){
+    //         this.unschedule(this.showSelfRankings,this);
+    //         cc.log("这个分数排行:" + ScoreSelectRankings);
+    //         this.ranking_Label.string = '' + ScoreSelectRankings;
+    //     }
+    // },
+    requestMaxScore:function(){
+        var cb = {
+            "cmd":"fish/findUserMaxScore",
+            "data":{
+                "phone": phoneNumber
+            }
+        };
+        HTTP.sendobj(cb,5)
+    },
+    // responesMaxScore:function(){
+    //     cc.log('UserMaxScore: ' + UserMaxScore)
+    //     if(UserMaxScore != null)
+    //     {
+    //         this.unschedule(this.responesMaxScore,this);
+    //         this.MaxScore_Label.string = ''+ UserMaxScore;
+    //     }
+    // },
 });

@@ -38,7 +38,7 @@ cc.Class({
         {
             this.resetMovePoint();
         }
-        else
+        else if(this.Catchup == true)
         {
             if(this.BarbNode)
             {
@@ -47,6 +47,18 @@ cc.Class({
                     if(this.node.parent.name == 'DH_boat')
                     {
                         this.node.x = this.node.parent.getPositionX();
+                    }
+                }
+            }
+            if(this.switchSpriteName(this.node.name) < 7)
+            {
+                if(this.sroll == 'right'){
+                    if(this.node.rotation != -90)
+                        this.node.rotation -= 15;
+                }
+                else if(this.sroll == 'left'){
+                    if(this.node.rotation != 90){
+                        this.node.rotation += 15;
                     }
                 }
             }
@@ -84,7 +96,7 @@ cc.Class({
         {
             this.Catchup = true;
             this.BarbNode = other.node;
-            //self.node.rotation = -90;
+
             self.node.parent = other.node;
             self.node.x = 0;
             self.node.y = 0;
@@ -118,5 +130,45 @@ cc.Class({
             }
         }
     },
-
+    switchSpriteName:function(spriteName){
+        if(spriteName == 'hetun'){
+            return 0;
+        }
+        else if(spriteName == 'xiaolanyu'){
+            return 1;
+        }
+        else if(spriteName == 'pangxie'){
+            return 2;
+        }
+        else if(spriteName == 'moyu'){
+            return 3;
+        }
+        else if(spriteName == 'xiaohongyu'){
+            return 4;
+        }
+        else if(spriteName == 'redaiyu'){
+            return 5;
+        }
+        else if(spriteName == 'xiaohuangyu'){
+            return 6;
+        }
+        else if(spriteName == 'garbage1'){
+            return 7;
+        }
+        else if(spriteName == 'garbage2'){
+            return 8;
+        }
+        else if(spriteName == 'garbage3'){
+            return 9;
+        }
+        else if(spriteName == 'garbage4'){
+            return 10;
+        }
+        else if(spriteName == 'garbage5'){
+            return 11;
+        }
+        else if(spriteName == 'garbage6'){
+            return 12;
+        }
+    }
 });
