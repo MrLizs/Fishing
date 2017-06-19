@@ -1,5 +1,10 @@
 # Fishing
 
+# Ver 0.8.08
+# 1.小猪动画按规则触发
+# 2.改变了判断鱼和垃圾道具的方式
+# 3.Bug GameSettlement/showSelfRankings 函数进不去?
+
 # Ver 0.8.0
 # 1.接口全通
 # 2.增加海藻的动画

@@ -13,5 +13,12 @@
   "packageName": "org.cocos2d.Fishing",
   "startScene": "59fd0bb8-a791-4b84-a838-e302f21fc43c",
   "title": "Fishing",
-  "webOrientation": "auto"
+  "webOrientation": "auto",
+  "oauthLoginServer": "",
+  "appKey": "",
+  "appSecret": "",
+  "privateKey": "",
+  "renderMode": "0",
+  "inlineSpriteFrames": true,
+  "mergeStartScene": false
 }

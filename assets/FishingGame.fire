@@ -2720,7 +2720,7 @@
     "_position": {
       "__type__": "cc.Vec2",
       "x": -15,
-      "y": 25
+      "y": 36
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -3001,13 +3001,13 @@
     "tag": 0,
     "_offset": {
       "__type__": "cc.Vec2",
-      "x": -5,
-      "y": -20
+      "x": -10,
+      "y": -50
     },
     "_size": {
       "__type__": "cc.Size",
-      "width": 210,
-      "height": 155
+      "width": 260,
+      "height": 160
     }
   },
   {
@@ -3020,6 +3020,12 @@
     "_enabled": true,
     "score": {
       "__id__": 9
+    },
+    "barb_Node": {
+      "__id__": 68
+    },
+    "piggy_Node": {
+      "__id__": 63
     }
   },
   {
@@ -3112,7 +3118,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "DH",
+    "_name": "hetun",
     "_objFlags": 0,
     "_opacity": 255,
     "_color": {
@@ -3264,7 +3270,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "DH",
+    "_name": "xiaolanyu",
     "_objFlags": 0,
     "_opacity": 255,
     "_color": {
@@ -3416,7 +3422,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "DH",
+    "_name": "pangxie",
     "_objFlags": 0,
     "_opacity": 255,
     "_color": {
@@ -3547,7 +3553,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "DH",
+    "_name": "moyu",
     "_objFlags": 0,
     "_opacity": 255,
     "_color": {
@@ -3699,7 +3705,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "DH",
+    "_name": "xiaohongyu",
     "_objFlags": 0,
     "_opacity": 255,
     "_color": {
@@ -3851,7 +3857,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "DH",
+    "_name": "redaiyu",
     "_objFlags": 0,
     "_opacity": 255,
     "_color": {
@@ -4003,7 +4009,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "DH",
+    "_name": "xiaohuangyu",
     "_objFlags": 0,
     "_opacity": 255,
     "_color": {
@@ -4155,7 +4161,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "prop",
+    "_name": "garbage1",
     "_objFlags": 0,
     "_opacity": 255,
     "_color": {
@@ -4286,7 +4292,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "prop",
+    "_name": "garbage2",
     "_objFlags": 0,
     "_opacity": 255,
     "_color": {
@@ -4417,7 +4423,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "prop",
+    "_name": "garbage3",
     "_objFlags": 0,
     "_opacity": 255,
     "_color": {
@@ -4548,7 +4554,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "prop",
+    "_name": "garbage4",
     "_objFlags": 0,
     "_opacity": 255,
     "_color": {
@@ -4679,7 +4685,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "prop",
+    "_name": "garbage5",
     "_objFlags": 0,
     "_opacity": 255,
     "_color": {
@@ -4810,7 +4816,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "prop",
+    "_name": "garbage6",
     "_objFlags": 0,
     "_opacity": 255,
     "_color": {

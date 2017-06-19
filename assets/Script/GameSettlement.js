@@ -35,6 +35,7 @@ cc.Class({
     },
 
     onLoad: function () {
+        this.shadow_Node.active = true;
         this.node.getChildByName('UI_basis_bottom').getChildByName('UI_account_back').on(cc.Node.EventType.TOUCH_START,this.backMainSceneClick,this);
         this.node.getChildByName('UI_basis_bottom').getChildByName('UI_account_back').on(cc.Node.EventType.TOUCH_END,this.backMainScene,this);
         this.node.getChildByName('UI_basis_bottom').getChildByName('UI_account_again').on(cc.Node.EventType.TOUCH_START,this.gameAgainClick,this);
@@ -44,8 +45,7 @@ cc.Class({
         this.score_Label.string = this.targetScore_Node.string;
 
         this.sendRequestSelfCB();
-        this.schedule(this.showSelfRankings,0.1);
-        //this.MaxScore_Label.string = HTTP.inquireUserMaxScore();
+        this.showMaxScore();
     },
 
     backMainSceneClick(){
@@ -105,13 +105,37 @@ cc.Class({
             }
         };
         HTTP.sendobj(cb,4);
+        this.schedule(this.showSelfRankings,0.1);
     },
     showSelfRankings:function(){
-        if(ScoreSelectRankings.data != null){
+        cc.log('进来了');
+        if(ScoreSelectRankings.msg == "查询成功！"){
             this.unschedule(this.showSelfRankings,this);
-            cc.log(ScoreSelectRankings.data);
+            cc.log("这个分数排行:" + ScoreSelectRankings.data);
             this.ranking_Label.string = ScoreSelectRankings.data;
         }
-    }
+    },
+    showMaxScore:function(){
+        this.requestMaxScore();
+    },
+    requestMaxScore:function(){
+        var cb = {
+            "cmd":"fish/findUserMaxScore",
+            "data":{
+                "phone": phoneNumber
+            }
+        };
+        HTTP.sendobj(cb,5)
+        this.schedule(this.responesMaxScore,0.1);
+    },
+    responesMaxScore:function(){
+        if(UserMaxScore != null)
+        {
+            this.unschedule(this.responesMaxScore,this);
+            this.MaxScore_Label.string = UserMaxScore.data;
+        }
+
+        //this.MaxScore_Label.string = HTTP.inquireUserMaxScore();
+    },
 
 });

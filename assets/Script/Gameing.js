@@ -5,6 +5,7 @@ var firstFloor_fishes;
 var SecondFloor_fishes;
 var thirdlyFloor_fishes;
 var walkSpeed = 2.5;
+var piggy = null;
 
 cc.Class({
     extends: cc.Component,
@@ -59,6 +60,8 @@ cc.Class({
             //这里须暂停.
             cc.director.resume();
         }
+
+        piggy = this.node.getChildByName('piggy');
 
     },
 
@@ -152,12 +155,14 @@ cc.Class({
         if(this.boat_Node.x > 200)
         {
             this.boat_Node.x -= 50 * boatMoveSpeed;
+            piggy.x -= 50 * boatMoveSpeed;
         }
     },
     rightMove:function(){
         if(this.boat_Node.x < 1700)
         {
             this.boat_Node.x += 50 * boatMoveSpeed;
+            piggy.x += 50 * boatMoveSpeed;
         }
     },
     //钓鱼

@@ -35,7 +35,6 @@ cc.Class({
             }
         };
         HTTP.sendobj(cb,1);
-
         this.schedule(this.sendMessage,0.2);
         this.viewSelfRankings();
     },
@@ -58,7 +57,7 @@ cc.Class({
                 itme.y = -(i * 80);
                 this.rankListContent_Node.addChild(itme);
                 itme.getChildByName('Ranking').getComponent(cc.Label).string = '' +(i+1);
-                itme.getChildByName('UserName').getComponent(cc.Label).string = '' + RankingsCB.data[i].phone;
+                itme.getChildByName('UserName').getComponent(cc.Label).string = '' + RankingsCB.data[i].userScoreId;
                 itme.getChildByName('Score').getComponent(cc.Label).string = '' + RankingsCB.data[i].scoreNum;
                 itme.getChildByName('GameOverTime').getComponent(cc.Label).string = '' + RankingsCB.data[i].createTime;
             }
@@ -86,7 +85,7 @@ cc.Class({
                 "phone":phoneNumber
             }
         }
-        HTTP.sendobj(userMaxScore,5)
+        HTTP.sendobj(userMaxScore,5);
     },
     getSelfCB:function(){
         if(SelfRankings !=null)
