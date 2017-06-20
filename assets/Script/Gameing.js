@@ -9,6 +9,8 @@ var SecondFloor_fishes;
 var thirdlyFloor_fishes;
 var walkSpeed = 2.5;
 var piggy = null;
+var fishingRods = null;
+var piggyFeet = null;
 
 window.UserMaxScore = null;
 window.ScoreSelectRankings = null;
@@ -63,6 +65,7 @@ cc.Class({
         this.touchLayout.on(cc.Node.EventType.TOUCH_END,this.ChangeStatus,this);
         this.touchLayout.on(cc.Node.EventType.TOUCH_MOVE,this.boatTouchControl,this);
         this.touchLayout.on("touchmove",function(event){
+            if(self.fishline_Node.rotation > -90 && self.fishline_Node.rotation < 90)
             self.fishline_Node.rotation += (event.getDelta().x/24);
         },this);
         
@@ -74,6 +77,9 @@ cc.Class({
             cc.director.resume();
         }
         piggy = this.node.getChildByName('piggy');
+        fishingRods = this.node.getChildByName('fishingRods');
+        piggyFeet = this.node.getChildByName('piggyFeet');
+
         UserMaxScore = null;
         ScoreSelectRankings = null;
     },
@@ -150,36 +156,37 @@ cc.Class({
     },
     
     boatTouchControl:function(event){
-        var touchVec = event.getDelta();
-        boatVec = touchVec;
-        if(touchVec.x > 0)
+        if(!cc.director.isPaused())
         {
-            this.rightMove();
+            var touchVec = event.getDelta();
+            boatVec = touchVec;
+            this.leftMove(touchVec);
+            if(touchVec.x > 2 || touchVec.x < -2)
+            {
+                this.angling = false;
+            }
         }
-        if(touchVec.x < 0)
-        {
-            this.leftMove();
-        }
-        if(touchVec.x > 2 || touchVec.x < -2)
-        {
-            this.angling = false;
-        }    
     },
     
-    leftMove:function(){
-        if(this.boat_Node.x > 200)
+    leftMove:function(touchVec){
+        if(this.boat_Node.x > 200||this.boat_Node.x < 1700)
         {
-            this.boat_Node.x -= 50 * boatMoveSpeed;
-            piggy.x -= 50 * boatMoveSpeed;
+            this.boat_Node.x += touchVec.x;
+            piggy.x += touchVec.x;
+            fishingRods.x += touchVec.x;
+            piggyFeet.x += touchVec.x;
+            
         }
     },
-    rightMove:function(){
-        if(this.boat_Node.x < 1700)
-        {
-            this.boat_Node.x += 50 * boatMoveSpeed;
-            piggy.x += 50 * boatMoveSpeed;
-        }
-    },
+    // rightMove:function(touchVec){
+    //     if(this.boat_Node.x < 1700)
+    //     {
+    //         this.boat_Node.x += 50 * boatMoveSpeed;
+    //         piggy.x += 50 * boatMoveSpeed;
+    //         fishingRods.x += 50 * boatMoveSpeed;
+    //         piggyFeet.x += 50 * boatMoveSpeed;
+    //     }
+    // },
     //钓鱼
     Angling:function(){
         if(fishLineStatus != 2)

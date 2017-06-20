@@ -43,6 +43,7 @@ cc.Class({
         this.score_Label.string = this.targetScore_Node.string;
 
         this.MaxScore_Label.string = '' + UserMaxScore;
+        cc.log('结算时的排名:'+ScoreSelectRankings);
         this.ranking_Label.string = '' + ScoreSelectRankings;
     },
 

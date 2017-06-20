@@ -80,9 +80,10 @@ cc.Class({
         {
             this.unschedule(this.getSelfCB,this);
             cc.log(SelfRankings);
-            this.rankingSelf_Node.getChildByName('Ranking').getComponent(cc.Label).string = SelfRankings.data.maxRanking;
-            this.rankingSelf_Node.getChildByName('UserName').getComponent(cc.Label).string = "自己";
-            // this.rankingSelf_Node.getChildByName('GameOverTime').getComponent(cc.Label).string = this.timeDispose();
+            this.rankingSelf_Node.getChildByName('Ranking').getComponent(cc.Label).string = SelfRankings.data.maxRanking.maxRanking;
+            this.rankingSelf_Node.getChildByName('UserName').getComponent(cc.Label).string = SelfRankings.data.maxRanking.userScoreId;
+            this.rankingSelf_Node.getChildByName('Score').getComponent(cc.Label).string = SelfRankings.data.maxRanking.scoreNum;
+            this.rankingSelf_Node.getChildByName('GameOverTime').getComponent(cc.Label).string = SelfRankings.data.maxRanking.createTime;
         }
         this.showSelfMaxScore();
         this.schedule(this.getSelfCB2,0.1);
