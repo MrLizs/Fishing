@@ -3391,7 +3391,7 @@
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5,
+      "x": 0,
       "y": 0.5
     },
     "_contentSize": {
@@ -3473,7 +3473,7 @@
     "tag": 0,
     "_offset": {
       "__type__": "cc.Vec2",
-      "x": 0,
+      "x": -94.5,
       "y": 0
     },
     "_size": {
@@ -3543,8 +3543,8 @@
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
+      "x": 0,
+      "y": 0.2
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -3625,8 +3625,8 @@
     "tag": 0,
     "_offset": {
       "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
+      "x": -81.5,
+      "y": 36.5
     },
     "_size": {
       "__type__": "cc.Size",
@@ -3826,8 +3826,8 @@
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
+      "x": 0.4,
+      "y": 0.8
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -3908,8 +3908,8 @@
     "tag": 0,
     "_offset": {
       "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
+      "x": -12.4,
+      "y": -39.3
     },
     "_size": {
       "__type__": "cc.Size",
@@ -3978,8 +3978,8 @@
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
+      "x": 0.1,
+      "y": 0.4
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -4060,8 +4060,8 @@
     "tag": 0,
     "_offset": {
       "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
+      "x": -132.8,
+      "y": 11.4
     },
     "_size": {
       "__type__": "cc.Size",
@@ -4130,8 +4130,8 @@
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
+      "x": 0.1,
+      "y": 0.3
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -4212,8 +4212,8 @@
     "tag": 0,
     "_offset": {
       "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
+      "x": -55.2,
+      "y": 28.8
     },
     "_size": {
       "__type__": "cc.Size",
@@ -4282,8 +4282,8 @@
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0.5,
-      "y": 0.5
+      "x": 0.1,
+      "y": 0.2
     },
     "_contentSize": {
       "__type__": "cc.Size",
@@ -4364,8 +4364,8 @@
     "tag": 0,
     "_offset": {
       "__type__": "cc.Vec2",
-      "x": 0,
-      "y": 0
+      "x": -98,
+      "y": 38.7
     },
     "_size": {
       "__type__": "cc.Size",
