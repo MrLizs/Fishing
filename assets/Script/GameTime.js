@@ -52,6 +52,12 @@ cc.Class({
                     self.TimeUiBg_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
                 });
             }
+            if(this.TimeUiBg_Node.getChildByName('UI_time_Shadow').getComponent(cc.Sprite).spriteFrame.name != 'Gameing/UI_time_red_2'){
+                var self = this;
+                cc.loader.loadRes('Gameing/UI_time_red_2',cc.SpriteFrame,function(err,spriteFrame){
+                    self.TimeUiBg_Node.getChildByName('UI_time_Shadow').getComponent(cc.Sprite).spriteFrame = spriteFrame;
+                });
+            }
         }
         else if(MinTime > MaxTime*0.334 && MinTime < MaxTime*0.667)
         {
@@ -59,6 +65,12 @@ cc.Class({
                 var self = this;
                 cc.loader.loadRes('Gameing/UI_time_yellow',cc.SpriteFrame,function(err,spriteFrame){
                     self.TimeUiBg_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+                });
+            }
+            if(this.TimeUiBg_Node.getChildByName('UI_time_Shadow').getComponent(cc.Sprite).spriteFrame.name != 'Gameing/UI_time_yellow_2'){
+                var self = this;
+                cc.loader.loadRes('Gameing/UI_time_yellow_2',cc.SpriteFrame,function(err,spriteFrame){
+                    self.TimeUiBg_Node.getChildByName('UI_time_Shadow').getComponent(cc.Sprite).spriteFrame = spriteFrame;
                 });
             }
         }
@@ -80,6 +92,7 @@ cc.Class({
         else
         {
             this.TimeUiBg_Node.width -= (294 / MaxTime);
+            this.TimeUiBg_Node.getChildByName('UI_time_Shadow').width -= (294 / MaxTime);
         }
     },
     updatime_hour:function(){

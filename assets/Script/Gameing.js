@@ -143,14 +143,8 @@ cc.Class({
     },
 
     pauseStart:function(){
-        var self = this;
-        cc.loader.loadRes('Gameing/UI_pause_click',cc.SpriteFrame,function(err,spriteFrame){
-            self.pauseBtn_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
-        });
-    },
-    pauseEnd:function(){
         // var self = this;
-        // cc.loader.loadRes('Gameing/UI_pause',cc.SpriteFrame,function(err,spriteFrame){
+        // cc.loader.loadRes('Gameing/UI_pause_click',cc.SpriteFrame,function(err,spriteFrame){
         //     self.pauseBtn_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
         // });
         if(cc.director.isPaused())
@@ -158,11 +152,22 @@ cc.Class({
             //这里须恢复.
             cc.director.resume();
         }
-        else
+        this.resumeBtn_Node.active = false;
+        this.pauseBtn_Node.active = true;
+    },
+    pauseEnd:function(){
+        // var self = this;
+        // cc.loader.loadRes('Gameing/UI_pause',cc.SpriteFrame,function(err,spriteFrame){
+        //     self.pauseBtn_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+        // });
+        if(!cc.director.isPaused())
         {
             //这里须暂停.
             cc.director.pause();
         }
+        this.resumeBtn_Node.active = true;
+        this.pauseBtn_Node.active = false;
+
     },
     
     boatTouchControl:function(event){
