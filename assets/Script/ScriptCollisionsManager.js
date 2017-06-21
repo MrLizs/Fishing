@@ -1,5 +1,5 @@
 var MinFishesNums = 0;//最小鱼数量
-var MaxFishesNums = 30;
+var MaxFishesNums = 20;
 var PushFrequencyNums = 1;
 window.theFishes = [];//鱼群
 window.FishNum = 0;
@@ -284,7 +284,6 @@ var ScriptCollisionsManager = cc.Class({
                     return;
             }
         }
-
     },
     /**
      * 在什么阶段刷什么内容
@@ -316,11 +315,11 @@ var ScriptCollisionsManager = cc.Class({
     fishMomentSwitch:function(moment){
         switch (moment) {
             case 1:
-                return 48;
+                return MaxFishesNums * 0.8;
             case 2:
-                return 39;
+                return MaxFishesNums * 0.65;
             case 3:
-                return 30;
+                return MaxFishesNums * 0.5;
         }
     },
     /**
@@ -329,11 +328,11 @@ var ScriptCollisionsManager = cc.Class({
     garbageMomentSwitch:function(moment){
         switch (moment) {
             case 1:
-                return 12;
+                return MaxFishesNums * 0.2;
             case 2:
-                return 21;
+                return MaxFishesNums * 0.35;
             case 3:
-                return 30;
+                return MaxFishesNums * 0.5;
         }
     },
     timePlusPlus:function(){

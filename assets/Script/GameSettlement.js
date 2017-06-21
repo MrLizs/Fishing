@@ -30,14 +30,18 @@ cc.Class({
             default:null,
             type:cc.Label,
         },
+        HistoryHightest_Anim:{
+            default:null,
+            type:cc.Node,
+        },
     },
 
     onLoad: function () {
         this.shadow_Node.active = true;
-        this.node.getChildByName('UI_basis_bottom').getChildByName('UI_account_back').on(cc.Node.EventType.TOUCH_START,this.backMainSceneClick,this);
-        this.node.getChildByName('UI_basis_bottom').getChildByName('UI_account_back').on(cc.Node.EventType.TOUCH_END,this.backMainScene,this);
-        this.node.getChildByName('UI_basis_bottom').getChildByName('UI_account_again').on(cc.Node.EventType.TOUCH_START,this.gameAgainClick,this);
-        this.node.getChildByName('UI_basis_bottom').getChildByName('UI_account_again').on(cc.Node.EventType.TOUCH_END,this.gameAgain,this);
+        // this.node.getChildByName('UI_basis_bottom').getChildByName('UI_account_back').on(cc.Node.EventType.TOUCH_START,this.backMainSceneClick,this);
+        // this.node.getChildByName('UI_basis_bottom').getChildByName('UI_account_back').on(cc.Node.EventType.TOUCH_END,this.backMainScene,this);
+        // this.node.getChildByName('UI_basis_bottom').getChildByName('UI_account_again').on(cc.Node.EventType.TOUCH_START,this.gameAgainClick,this);
+        // this.node.getChildByName('UI_basis_bottom').getChildByName('UI_account_again').on(cc.Node.EventType.TOUCH_END,this.gameAgain,this);
         
         this.viewItemsNums();
         this.score_Label.string = this.targetScore_Node.string;
@@ -45,6 +49,14 @@ cc.Class({
         this.MaxScore_Label.string = '' + UserMaxScore;
         cc.log('结算时的排名:'+ScoreSelectRankings);
         this.ranking_Label.string = '' + ScoreSelectRankings;
+
+        if(parseInt(this.targetScore_Node.string) === UserMaxScore){
+            this.HistoryHightest_Anim.active = true;
+            this.HistoryHightest_Anim.getComponent(cc.Animation).play();
+        }
+        else{
+            this.HistoryHightest_Anim.active = false;
+        }
     },
 
     backMainSceneClick:function(){
@@ -70,9 +82,9 @@ cc.Class({
     },
     gameAgain:function(){
         var self = this;
-        cc.loader.loadRes('GameSettlement/UI_account_again',cc.Sprite,function(err,spriteFrame){
-            self.node.getChildByName('UI_basis_bottom').getChildByName('UI_account_again').getComponent(cc.Sprite).spriteFrame = spriteFrame;
-        });
+        // cc.loader.loadRes('GameSettlement/UI_account_again',cc.Sprite,function(err,spriteFrame){
+        //     self.node.getChildByName('UI_basis_bottom').getChildByName('UI_account_again').getComponent(cc.Sprite).spriteFrame = spriteFrame;
+        // });
         TimeIsOver = false;
         this.shadow_Node.active = false;
         this.node.active = false;
@@ -81,7 +93,7 @@ cc.Class({
     viewItemsNums:function(){
             this.fishNum_parentNode.getChildByName('nums1').getComponent(cc.Label).string = FishScore[0];
             this.fishNum_parentNode.getChildByName('nums2').getComponent(cc.Label).string = FishScore[1];
-            this.fishNum_parentNode.getChildByName('nums3').getComponent(cc.Label).string = FishScore[2];
+            this.fishNum_parentNode.getChildByName('nums3').getComponent(cc.Label).string = FishScore[3];
             
             this.fishNum_parentNode.getChildByName('nums4').getComponent(cc.Label).string = FishScore[4];
             this.fishNum_parentNode.getChildByName('nums5').getComponent(cc.Label).string = FishScore[5];

@@ -10,7 +10,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "Item",
+    "_name": "rankingItem",
     "_objFlags": 0,
     "_opacity": 255,
     "_color": {
@@ -83,9 +83,9 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 126,
+      "g": 86,
+      "b": 35,
       "a": 255
     },
     "_cascadeOpacityEnabled": true,
@@ -99,8 +99,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 22.25,
-      "height": 40
+      "width": 26.7,
+      "height": 48
     },
     "_children": [],
     "_rotationX": 0,
@@ -109,7 +109,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 34,
+      "x": 45,
       "y": -37
     },
     "_skewX": 0,
@@ -139,12 +139,13 @@
     },
     "_enabled": true,
     "_useOriginalSize": false,
-    "_actualFontSize": 40,
-    "_fontSize": 40,
-    "_lineHeight": 40,
+    "_actualFontSize": 48,
+    "_fontSize": 48,
+    "_lineHeight": 48,
     "_enableWrapText": true,
     "_N$file": null,
     "_isSystemFontUsed": true,
+    "_spacingX": 0,
     "_N$string": "1",
     "_N$horizontalAlign": 0,
     "_N$verticalAlign": 1,
@@ -168,9 +169,9 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 126,
+      "g": 86,
+      "b": 35,
       "a": 255
     },
     "_cascadeOpacityEnabled": true,
@@ -184,8 +185,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 97.87,
-      "height": 40
+      "width": 89.41,
+      "height": 36
     },
     "_children": [],
     "_rotationX": 0,
@@ -194,7 +195,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 362,
+      "x": 360,
       "y": -35
     },
     "_skewX": 0,
@@ -224,12 +225,13 @@
     },
     "_enabled": true,
     "_useOriginalSize": false,
-    "_actualFontSize": 40,
-    "_fontSize": 40,
-    "_lineHeight": 40,
+    "_actualFontSize": 36.54,
+    "_fontSize": 36.54,
+    "_lineHeight": 36.54,
     "_enableWrapText": true,
     "_N$file": null,
     "_isSystemFontUsed": true,
+    "_spacingX": 0,
     "_N$string": "Label",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
@@ -253,9 +255,9 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 126,
+      "g": 86,
+      "b": 35,
       "a": 255
     },
     "_cascadeOpacityEnabled": true,
@@ -269,8 +271,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 97.87,
-      "height": 40
+      "width": 117.45,
+      "height": 48
     },
     "_children": [],
     "_rotationX": 0,
@@ -279,7 +281,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 670,
+      "x": 652,
       "y": -35
     },
     "_skewX": 0,
@@ -309,12 +311,13 @@
     },
     "_enabled": true,
     "_useOriginalSize": false,
-    "_actualFontSize": 40,
-    "_fontSize": 40,
-    "_lineHeight": 40,
+    "_actualFontSize": 48,
+    "_fontSize": 48,
+    "_lineHeight": 48,
     "_enableWrapText": true,
     "_N$file": null,
     "_isSystemFontUsed": true,
+    "_spacingX": 0,
     "_N$string": "Label",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
@@ -338,9 +341,9 @@
     "_opacity": 255,
     "_color": {
       "__type__": "cc.Color",
-      "r": 255,
-      "g": 255,
-      "b": 255,
+      "r": 126,
+      "g": 86,
+      "b": 35,
       "a": 255
     },
     "_cascadeOpacityEnabled": true,
@@ -354,8 +357,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 304.69,
-      "height": 40
+      "width": 255.02,
+      "height": 33
     },
     "_children": [],
     "_rotationX": 0,
@@ -364,7 +367,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 1122,
+      "x": 1109,
       "y": -36
     },
     "_skewX": 0,
@@ -394,12 +397,13 @@
     },
     "_enabled": true,
     "_useOriginalSize": false,
-    "_actualFontSize": 40,
-    "_fontSize": 40,
-    "_lineHeight": 40,
+    "_actualFontSize": 33.48,
+    "_fontSize": 33.48,
+    "_lineHeight": 33.48,
     "_enableWrapText": true,
     "_N$file": null,
     "_isSystemFontUsed": true,
+    "_spacingX": 0,
     "_N$string": "2021-9-21  10:00",
     "_N$horizontalAlign": 2,
     "_N$verticalAlign": 1,
@@ -449,7 +453,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 558,
+      "x": 564,
       "y": -65
     },
     "_skewX": 0,

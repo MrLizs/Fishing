@@ -1,3 +1,19 @@
+/**
+ * 下标定义:
+ * 0河豚
+ * 1蓝鱼
+ * 2螃蟹
+ * 3热带鱼
+ * 4小红鱼
+ * 5墨鱼
+ * 6黄鱼
+ * 7可乐
+ * 8骨头
+ * 9垃圾盒
+ * 10鱼骨头
+ * 11臭袜子
+ * 12鞋子
+ */
 window.FishScore={};
 
 cc.Class({
@@ -36,64 +52,28 @@ cc.Class({
 
     // },
 
+    /**
+     * 取消碰撞消失,改到收鱼线的时候
+     */
     onCollisionEnter: function (other, self) {
-        if(this.barb_Node.childrenCount > 1)
-        {
-            var _fishes =this.barb_Node.children;
-            var whatAnim1,whatAnim2=0;
-            for(var i = 0 ; i < _fishes.length ; i++)
-            {
-                if(this.switchSpriteName(_fishes[i].name) < 7)
-                {
-                    whatAnim1++;
-                }
-                else
-                {
-                    whatAnim2++;
-                }
-                
-            }
-            if(whatAnim1 > 0 && whatAnim2 > 0)
-            {
-                this.piggy_Node.getComponent(cc.Animation).play('piggy');
-            }
-            else if(whatAnim1 > 0){
-                this.piggy_Node.getComponent(cc.Animation).play('piggy2');
-            }
-            else if(whatAnim2 > 0){
-                this.piggy_Node.getComponent(cc.Animation).play('piggy3');
-            }
-        }
-        else
-        {
-            if(this.switchSpriteName(other.node.name) < 7)
-            {
-                this.piggy_Node.getComponent(cc.Animation).play('piggy2');
-            }
-            else
-            {
-                this.piggy_Node.getComponent(cc.Animation).play('piggy3');
-            }
-        }
-
-        for (var i = 0; i < theFishes.length; i++) {
-            if(theFishes[i].node === other.node)
-            {
-                var MyScore = theFishes[i].Floor * theFishes[i].nodeClass;
-                this.score.getComponent(cc.Label).string = parseInt(this.score.getComponent(cc.Label).string) + MyScore;
-                // var spriteName = theFishes[i].node.getComponent(cc.Sprite).spriteFrame.name;
-                var switchNum = this.switchSpriteName(theFishes[i].node.name);
-                FishScore[switchNum] += 1;
-                if(switchNum < 7)
-                {
-                    FishNum--;
-                }
-                else
-                {
-                    GarbageNum--;
-                }
-            }
-        }
+        // for (var i = 0; i < theFishes.length; i++) {
+        //     if(theFishes[i].node === other.node)
+        //     {
+        //         var MyScore = theFishes[i].Floor * theFishes[i].nodeClass;
+        //         this.score.getComponent(cc.Label).string = parseInt(this.score.getComponent(cc.Label).string) + MyScore;
+        //         // var spriteName = theFishes[i].node.getComponent(cc.Sprite).spriteFrame.name;
+        //         var switchNum = this.switchSpriteName(theFishes[i].node.name);
+        //         FishScore[switchNum] += 1;
+        //         if(switchNum < 7)
+        //         {
+        //             FishNum--;
+        //         }
+        //         else
+        //         {
+        //             GarbageNum--;
+        //         }
+        //     }
+        // }
     },
     switchSpriteName:function(spriteName){
         if(spriteName == 'hetun'){

@@ -50,7 +50,8 @@ cc.Class({
                     }
                 }
             }
-            if(this.switchSpriteName(this.node.name) < 7)
+            var switchNum = this.switchSpriteName(this.node.name);
+            if(switchNum < 7 && switchNum != 3)
             {
                 if(this.sroll == 'right'){
                     if(this.node.rotation != -90)
@@ -90,6 +91,7 @@ cc.Class({
 
     /**
      * 鱼本体碰撞
+     * 销毁鱼节点
      */
     onCollisionEnter: function (other, self) {
         if(other.node.name == 'DH_barb')
@@ -101,11 +103,22 @@ cc.Class({
             self.node.x = 0;
             self.node.y = 0;
         }
-        if(other.node.name == 'DH_boat')
-        {
-            self.node.parent = null;
-            self.node.destroy();
-        }
+        //清理一下数组
+        // for (var i = 0; i < theFishes.length; i++) {
+        //     var element = theFishes[i];
+        //     if(element.node == other.node)
+        //     {
+        //         theFishes[i] = null;
+        //     }
+        // }
+        /**
+         * 碰撞改到鱼钩收起时
+         */
+        // if(other.node.name == 'DH_boat')
+        // {
+        //     self.node.parent = null;
+        //     self.node.destroy();
+        // }
     },
 
     /**

@@ -36,17 +36,17 @@ cc.Class({
 
     // use this for initialization
     onLoad: function () {
-        this.start_Node.on(cc.Node.EventType.TOUCH_START,this.clickStartBtn,this);
-        this.start_Node.on(cc.Node.EventType.TOUCH_END,this.clickEndStartBtn,this);
+        // this.start_Node.on(cc.Node.EventType.TOUCH_START,this.clickStartBtn,this);
+        // this.start_Node.on(cc.Node.EventType.TOUCH_END,this.clickEndStartBtn,this);
 
-        this.rule_Node.on(cc.Node.EventType.TOUCH_START,this.ruleClickStart,this);
-        this.rule_Node.on(cc.Node.EventType.TOUCH_END,this.ruleClickEnd,this);
+        // this.rule_Node.on(cc.Node.EventType.TOUCH_START,this.ruleClickStart,this);
+        // this.rule_Node.on(cc.Node.EventType.TOUCH_END,this.ruleClickEnd,this);
 
-        this.RankList_Node.on(cc.Node.EventType.TOUCH_START,this.RanklistStart,this);
-        this.RankList_Node.on(cc.Node.EventType.TOUCH_END,this.RanklistEnd,this);
+        // this.RankList_Node.on(cc.Node.EventType.TOUCH_START,this.RanklistStart,this);
+        // this.RankList_Node.on(cc.Node.EventType.TOUCH_END,this.RanklistEnd,this);
 
-        this.gameExitBtn_Node.on(cc.Node.EventType.TOUCH_START,this.ExitClick,this);
-        this.gameExitBtn_Node.on(cc.Node.EventType.TOUCH_END,this.ExitGame,this);
+        // this.gameExitBtn_Node.on(cc.Node.EventType.TOUCH_START,this.ExitClick,this);
+        // this.gameExitBtn_Node.on(cc.Node.EventType.TOUCH_END,this.ExitGame,this);
 
     },
 
@@ -64,9 +64,9 @@ cc.Class({
     },
     clickEndStartBtn:function(){
         var self = this;
-        cc.loader.loadRes('Login/UI_home_start',cc.SpriteFrame,function(err,spriteFrame){
-            self.start_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
-        });
+        // cc.loader.loadRes('Login/UI_home_start',cc.SpriteFrame,function(err,spriteFrame){
+        //     self.start_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+        // });
         cc.director.loadScene('FishingGame');
     },
 
@@ -78,9 +78,9 @@ cc.Class({
     },
     ruleClickEnd:function(){
         var self = this;
-        cc.loader.loadRes('Login/UI_home_rule',cc.SpriteFrame,function(err,spriteFrame){
-            self.rule_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
-        });
+        // cc.loader.loadRes('Login/UI_home_rule',cc.SpriteFrame,function(err,spriteFrame){
+        //     self.rule_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+        // });
         this.shadow_Node.active = true;
         this.RegulationBg_Node.active = true;
     },
@@ -97,9 +97,9 @@ cc.Class({
     },
     RanklistEnd:function(){
         var self = this;
-        cc.loader.loadRes('Login/UI_home_ranking',cc.SpriteFrame,function(err,spriteFrame){
-            self.RankList_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
-        });
+        // cc.loader.loadRes('Login/UI_home_ranking',cc.SpriteFrame,function(err,spriteFrame){
+        //     self.RankList_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+        // });
         this.shadow_Node.active = true;
         this.selectRankings();
     },
@@ -115,10 +115,11 @@ cc.Class({
         });
     },
     ExitGame:function(){
-        var self = this;
-        cc.loader.loadRes('Login/UI_home_exit',cc.SpriteFrame,function(err,spriteFrame){
-            self.gameExitBtn_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
-        });
+        cc.game.end();
+        // var self = this;
+        // cc.loader.loadRes('Login/UI_home_exit',cc.SpriteFrame,function(err,spriteFrame){
+        //     self.gameExitBtn_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+        // });
     },
     selectRankings:function(){
         var cb = {
