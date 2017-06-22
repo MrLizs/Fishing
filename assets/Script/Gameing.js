@@ -63,6 +63,7 @@ cc.Class({
             default:null,
             type:cc.Node,
         },
+        BoatVec2:null,
     },
     
     // use this for initialization
@@ -170,10 +171,14 @@ cc.Class({
 
     },
     
+    /**
+     * 控制渔船
+     */
     boatTouchControl:function(event){
         if(!cc.director.isPaused())
         {
             var touchVec = event.getDelta();
+            this.BoatVec2 = event.getDelta().x;
             if(touchVec.x > 0)
             {
                 this.rightMove(touchVec);
@@ -182,10 +187,11 @@ cc.Class({
             {
                 this.leftMove(touchVec);
             }
-            if(touchVec.x > 2 || touchVec.x < -2)
-            {
-                this.angling = false;
-            }
+            // 移动渔船收线
+            // if(touchVec.x > 2 || touchVec.x < -2)
+            // {
+            //     this.angling = false;
+            // }
         }
     },
     
@@ -215,7 +221,7 @@ cc.Class({
             this.angling = true;
         }
     },
-    ChangeStatus:function(){
+    ChangeStatus:function(event){
         this.angling = false;
     },
     //上钩 

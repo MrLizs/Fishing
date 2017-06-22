@@ -61,13 +61,13 @@ cc.Class({
 
     backMainSceneClick:function(){
         var self = this;
-        cc.loader.loadRes('GameSettlement/UI_account_back_click',cc.Sprite,function(err,spriteFrame){
+        cc.loader.loadRes('GameSettlement/UI_account_back_click',cc.SpriteFrame,function(err,spriteFrame){
             self.node.getChildByName('UI_basis_bottom').getChildByName('UI_account_back').getComponent(cc.Sprite).spriteFrame = spriteFrame;
         });
     },
     backMainScene:function(){
         var self = this;
-        cc.loader.loadRes('GameSettlement/UI_account_back',cc.Sprite,function(err,spriteFrame){
+        cc.loader.loadRes('GameSettlement/UI_account_back',cc.SpriteFrame,function(err,spriteFrame){
             self.node.getChildByName('UI_basis_bottom').getChildByName('UI_account_back').getComponent(cc.Sprite).spriteFrame = spriteFrame;
         });
         this.shadow_Node.active = false;
@@ -76,13 +76,13 @@ cc.Class({
     },
     gameAgainClick:function(){
         var self = this;
-        cc.loader.loadRes('GameSettlement/UI_account_again_click',cc.Sprite,function(err,spriteFrame){
+        cc.loader.loadRes('GameSettlement/UI_account_again_click',cc.SpriteFrame,function(err,spriteFrame){
             self.node.getChildByName('UI_basis_bottom').getChildByName('UI_account_again').getComponent(cc.Sprite).spriteFrame = spriteFrame;
         });
     },
     gameAgain:function(){
         var self = this;
-        // cc.loader.loadRes('GameSettlement/UI_account_again',cc.Sprite,function(err,spriteFrame){
+        // cc.loader.loadRes('GameSettlement/UI_account_again',cc.SpriteFrame,function(err,spriteFrame){
         //     self.node.getChildByName('UI_basis_bottom').getChildByName('UI_account_again').getComponent(cc.Sprite).spriteFrame = spriteFrame;
         // });
         TimeIsOver = false;

@@ -19,8 +19,20 @@ cc.Class({
 
     onLoad: function () {
         this.speed = Math.random() * 3;
-        this.sroll = 'right';
+        if(this.node.x < 0){
+            this.sroll = 'right';
+        }
+        else{
+            this.sroll = 'left';
+            this.node.width = -this.node.width;
+        }
         this.Catchup = false;
+        
+        // this.node.getComponent(cc.BoxCollider).size = this.node.size;
+        // this.node.getComponent(cc.BoxCollider).offset = new cc.Vec2(this.node.width / 2, 0);
+        // cc.log(this.node.getComponent(cc.BoxCollider).size);
+        // cc.log(this.node.getComponent(cc.BoxCollider).offset);
+
         // this.randFishSpriteFrame();
         // this.animationSwitch();
         // this.node.addComponent(cc.Animation).play();
@@ -50,8 +62,9 @@ cc.Class({
                     }
                 }
             }
+            //旋转鱼节点
             var switchNum = this.switchSpriteName(this.node.name);
-            if(switchNum < 7 && switchNum != 3)
+            if(switchNum < 7)
             {
                 if(this.sroll == 'right'){
                     if(this.node.rotation != -90)
@@ -63,6 +76,7 @@ cc.Class({
                     }
                 }
             }
+
         }
     },
     /**
@@ -94,6 +108,7 @@ cc.Class({
      * 销毁鱼节点
      */
     onCollisionEnter: function (other, self) {
+        var self = this;
         if(other.node.name == 'DH_barb')
         {
             this.Catchup = true;
@@ -102,6 +117,50 @@ cc.Class({
             self.node.parent = other.node;
             self.node.x = 0;
             self.node.y = 0;
+        }
+        
+        var switchNum = this.switchSpriteName(this.node.name);
+        if(switchNum < 7)
+        {
+            self.node.getComponent(cc.Animation).stop();
+        }
+        
+        switch (switchNum) {
+            case 0:
+                cc.loader.loadRes('DeadFishes/DH_agouti',cc.SpriteFrame,function(err,spriteFrame){
+                    self.node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+                });
+                break;
+            case 1:
+                cc.loader.loadRes('DeadFishes/DH_bluefishi',cc.SpriteFrame,function(err,spriteFrame){
+                    self.node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+                });
+                break;
+            case 2:
+                // cc.loader.loadRes('DeadFishes/',cc.SpriteFrame,function(err,spriteFrame){
+                //     self.node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+                // });
+                break;
+            case 3:
+                cc.loader.loadRes('DeadFishes/DH_inkfish',cc.SpriteFrame,function(err,spriteFrame){
+                    self.node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+                });
+                break;
+            case 4:
+                cc.loader.loadRes('DeadFishes/DH_redfishi',cc.SpriteFrame,function(err,spriteFrame){
+                    self.node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+                });
+                break;
+            case 5:
+                cc.loader.loadRes('DeadFishes/DH_tropicalfish',cc.SpriteFrame,function(err,spriteFrame){
+                    self.node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+                });
+                break;
+            case 6:
+                cc.loader.loadRes('DeadFishes/DH_yellowfish',cc.SpriteFrame,function(err,spriteFrame){
+                    self.node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+                });
+                break;
         }
         //清理一下数组
         // for (var i = 0; i < theFishes.length; i++) {
@@ -143,6 +202,7 @@ cc.Class({
             }
         }
     },
+
     switchSpriteName:function(spriteName){
         if(spriteName == 'hetun'){
             return 0;

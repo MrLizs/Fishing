@@ -135,7 +135,7 @@ var ScriptCollisionsManager = cc.Class({
                     theFishes[_length].nodeClass = 100
                 }
                 theFishes[_length].node.active = true;
-                this.fishFun(Math.random() * 3,_length);
+                this.fishFun(Math.random() * 6,_length);
                 scene.addChild(theFishes[_length].node);
             }
         }
@@ -143,24 +143,42 @@ var ScriptCollisionsManager = cc.Class({
 
     fishFun:function(rnum,i){
         // this.randFishSpriteFrame(theFishes[i]);
+        var randY = -5 + Math.random()*10;
+        // cc.log(randY);
         if(theFishes[i].fishCollisions === false)
         {
-            //theFishes[i].node.name = ""+i;
-            //theFishes[i].node.addComponent(cc.Sprite);
             if (rnum <= 1) {
                 theFishes[i].node.x = -300;
-                theFishes[i].node.y = 400;
+                theFishes[i].node.y = 400 + randY;
                 theFishes[i].Floor = 1;
             }
             else if (rnum > 1 && rnum <= 2) {
                 theFishes[i].node.x = -300;
-                theFishes[i].node.y = 250;
+                theFishes[i].node.y = 250 + randY;
                 theFishes[i].Floor = 1.2;
             }
-            else {
+            else if(rnum > 2 && rnum <= 3){
                 theFishes[i].node.x = -300;
-                theFishes[i].node.y = 100;
+                theFishes[i].node.y = 100 + randY;
                 theFishes[i].Floor = 1.5;
+            }
+            else if(rnum > 3 && rnum <= 4){
+                theFishes[i].node.x = 1950;
+                theFishes[i].node.y = 400 + randY;
+                theFishes[i].Floor = 1;
+                theFishes[i].sroll = false;
+            }
+            else if(rnum > 4 && rnum <= 5){
+                theFishes[i].node.x = 1950;
+                theFishes[i].node.y = 250 + randY;
+                theFishes[i].Floor = 1.2;
+                theFishes[i].sroll = false;
+            }
+            else if(rnum > 5 && rnum <= 6){
+                theFishes[i].node.x = 1950;
+                theFishes[i].node.y = 100 + randY;
+                theFishes[i].Floor = 1.5;
+                theFishes[i].sroll = false;
             }
             theFishes[i].speed = rnum;
         }
