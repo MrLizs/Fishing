@@ -126,9 +126,9 @@ cc.Class({
     GameSettlementLayoutOpen:function(){
         this.shadow_Node.active = true;
         this.GameSettlementLayout_Node.active = true;
-        // theFishes.forEach(function(element) {
-        //     if(element.node) element.node.destroy();
-        // }, this);
+        theFishes.forEach(function(element) {
+            if(element) if(element.node) element.node.destroy();
+        }, this);
         if(this.barb_Node.childrenCount > 0 )
         this.barb_Node.removeAllChildren();
         theFishes = {};
