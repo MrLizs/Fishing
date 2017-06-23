@@ -94,12 +94,12 @@ cc.Class({
         if(this.node.x >= 2000)
         {
             this.sroll = 'left';
-            cc.log(this.node.getComponent(cc.BoxCollider).offset.x);
+            // cc.log(this.node.getComponent(cc.BoxCollider).offset.x);
         }
         if(this.node.x <= -500)
         {
             this.sroll = 'right';
-            cc.log(this.node.getComponent(cc.BoxCollider).offset.x);
+            // cc.log(this.node.getComponent(cc.BoxCollider).offset.x);
         }
         if(this.sroll == 'right')
         {

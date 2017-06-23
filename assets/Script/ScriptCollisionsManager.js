@@ -4,6 +4,12 @@ var PushFrequencyNums = 3;
 window.theFishes = [];//鱼群
 window.FishNum = 0;
 window.GarbageNum = 0;
+
+var SPD1 = 300;
+var SPD2 = 400;
+var SPD3 = 500;
+var SPD4 = 600;
+
 var ScriptCollisionsManager = cc.Class({
     extends: cc.Component,
 
@@ -115,13 +121,14 @@ var ScriptCollisionsManager = cc.Class({
         var theFish = {
                 node: null,//节点
                 sroll: true,//方向
-                Floor: null,//层
+                Floor: null,//层计算基数
                 speed: null,//速度
                 fishCollisions: false,//是否碰撞
                 nodeClass:0,//节点种类,用于计算积分
             };//鱼数据
         theFishes.push(theFish);
-        var fishesObj = this.randFishSpriteFrame();
+        var stage = this.randFishSpriteFrame();//拿到阶段
+        var fishesObj = this.momentSpriteFishes(stage);
         if(fishesObj)
         {
             theFishes[_length].node = cc.instantiate(fishesObj);/*cc.instantiate(this.fish_Node)*/
@@ -147,40 +154,158 @@ var ScriptCollisionsManager = cc.Class({
         // cc.log(randY);
         if(theFishes[i].fishCollisions === false)
         {
+            var SPD = this.switchFishesSpeed();//依据时间线获得速度
+
+            theFishes[i].nodeClass *= this.switchScore(SPD);//根据速度获得积分基数
+
+            theFishes[i].speed = SPD;
             if (rnum <= 1) {
                 theFishes[i].node.x = -300;
-                theFishes[i].node.y = 400 + randY;
+                theFishes[i].node.y = this.switchFloor() + randY;
                 theFishes[i].Floor = 1;
             }
             else if (rnum > 1 && rnum <= 2) {
                 theFishes[i].node.x = -300;
-                theFishes[i].node.y = 250 + randY;
+                theFishes[i].node.y = this.switchFloor() + randY;
                 theFishes[i].Floor = 1.2;
             }
             else if(rnum > 2 && rnum <= 3){
                 theFishes[i].node.x = -300;
-                theFishes[i].node.y = 100 + randY;
+                theFishes[i].node.y = this.switchFloor() + randY;
                 theFishes[i].Floor = 1.5;
             }
             else if(rnum > 3 && rnum <= 4){
                 theFishes[i].node.x = 1950;
-                theFishes[i].node.y = 400 + randY;
+                theFishes[i].node.y = this.switchFloor() + randY;
                 theFishes[i].Floor = 1;
                 theFishes[i].sroll = false;
             }
             else if(rnum > 4 && rnum <= 5){
                 theFishes[i].node.x = 1950;
-                theFishes[i].node.y = 250 + randY;
+                theFishes[i].node.y = this.switchFloor() + randY;
                 theFishes[i].Floor = 1.2;
                 theFishes[i].sroll = false;
             }
             else if(rnum > 5 && rnum <= 6){
                 theFishes[i].node.x = 1950;
-                theFishes[i].node.y = 100 + randY;
+                theFishes[i].node.y = this.switchFloor() + randY;
                 theFishes[i].Floor = 1.5;
                 theFishes[i].sroll = false;
             }
-            theFishes[i].speed = rnum;
+        }
+    },
+
+    switchScore:function(spd){
+        switch (spd) {
+            case 300:
+                return 1;
+            case 400:
+                return 1.2;
+            case 500:
+                return 1.4;
+            case 600:
+                return 1.6;
+        }
+    },
+
+    switchFloor:function(){
+        var stage = this.switchStage();
+        var rand = Math.random();
+        if(stage === 1){
+            if(rand < 0.5001)
+            {
+                return 100;
+            }
+            else if(rand > 0.5 && rand < 0.9001){
+                return 250;
+            }
+            else{
+                return 400;
+            }
+        }
+        else if(stage === 2){
+            if(rand < 0.4001)
+            {
+                return 100;
+            }
+            else if(rand > 0.4 && rand < 0.8001){
+                return 250;
+            }
+            else{
+                return 400;
+            }
+        }
+        else if(stage === 3){
+            if(rand < 0.3501)
+            {
+                return 100;
+            }
+            else if(rand > 0.35 && rand < 0.7001){
+                return 250;
+            }
+            else{
+                return 400;
+            }
+        }
+    },
+
+    switchFishesSpeed:function(){
+        var stage = this.switchStage();
+        var rand = Math.random();
+        if(stage === 1){
+            if(rand < 0.6001)
+            {
+                return SPD1;
+            }
+            else if(rand > 0.6 && rand < 0.8001)
+            {
+                return SPD2;
+            }
+            else if(rand > 0.8 && rand < 0.95)
+            {
+                return SPD3;
+            }
+            else
+            {
+                return SPD4;
+            }
+        }
+        else if(stage === 2){
+            if(rand < 0.4501)
+            {
+                return SPD1;
+            }
+            else if(rand > 0.45 && rand < 0.7001)
+            {
+                return SPD2;
+            }
+            else if(rand > 0.7 && rand < 0.9)
+            {
+                return SPD3;
+            }
+            else
+            {
+                return SPD4;
+            }
+        }
+        else if(stage === 3){
+            if(rand < 0.3001)
+            {
+                return SPD1;
+            }
+            else if(rand > 0.3 && rand < 0.6001)
+            {
+                return SPD2;
+            }
+            else if(rand > 0.6 && rand < 0.85)
+            {
+                return SPD3;
+            }
+            else
+            {
+                return SPD4;
+            }
+
         }
     },
 
@@ -195,20 +320,25 @@ var ScriptCollisionsManager = cc.Class({
      * yellowfish_Node
      */
     randFishSpriteFrame: function () {
-        var moment;//刷什么东西
-        if(MinTime > 0 && MinTime <= 30)
-        {
-            moment = this.returnWhat(1);
+        var moment = this.returnWhat(this.switchStage());
+        return moment;
+    },
+    /**
+     * 阶段判断
+     */
+    switchStage:function(){
+        if(MinTime > 0 && MinTime <= 30){
+            return 1;
         }
-        else if(MinTime > 30 && MinTime < 60)
-        {
-            moment = this.returnWhat(2);
+        else if(MinTime > 30 && MinTime < 60){
+            return 2;
         }
-        else if(MinTime >= 60)
-        {
-            moment = this.returnWhat(3);
+        else if(MinTime >= 60){
+            return 3;
         }
-        cc.log("push what : " + moment);
+    },
+
+    momentSpriteFishes:function(moment){
         if(moment == 'ALL')
         {
             var rand = Math.random() * 12;
@@ -304,6 +434,7 @@ var ScriptCollisionsManager = cc.Class({
             }
         }
     },
+
     /**
      * 在什么阶段刷什么内容
      */

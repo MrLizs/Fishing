@@ -1,5 +1,5 @@
 var HTTP = require('HTTP');
-window.phoneNumber = '18963542874';
+window.phoneNumber = '';
 
 cc.Class({
     extends: cc.Component,
@@ -47,6 +47,14 @@ cc.Class({
 
         // this.gameExitBtn_Node.on(cc.Node.EventType.TOUCH_START,this.ExitClick,this);
         // this.gameExitBtn_Node.on(cc.Node.EventType.TOUCH_END,this.ExitGame,this);
+
+        phoneNumber = '13'
+        for (var i = 0; i < 9; i++) {
+            phoneNumber += Math.round(Math.random() * 9);
+        }
+        cc.log("随机手机号: " + phoneNumber);
+
+        cc.director.preloadScene('FishingGame');
 
     },
 
@@ -121,25 +129,7 @@ cc.Class({
         //     self.gameExitBtn_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
         // });
     },
-    selectRankings:function(){
-        var cb = {
-            "cmd":"fish/queryScoreDescPage",
-            "data":{
-                "page" : 1,
-                "phone" : phoneNumber,
-                "size" : 100
-            }
-        };
-        HTTP.sendobj(cb,1);
-        this.schedule(this.showRankingsBg,0.2);
-    },
-    showRankingsBg:function(){
-        cc.log(RankingsCB);
-        if(RankingsCB){
-            this.unschedule(this.showRankingsBg,this);
-            this.RankListBg_Node.active = true;
-        }
-    },
+
 
 
 });

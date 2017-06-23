@@ -19,14 +19,46 @@ cc.Class({
             default:null,
             type:cc.Node,
         },
+        shadow_Node:{
+            default:null,
+            type:cc.Node,
+        },
     },
 
     // use this for initialization
     onLoad: function () {
-        this.sendMessage();
-        this.viewSelfRankings();
+        
     },
 
+    requestRanklist:function(){
+        var self = this;
+        // cc.loader.loadRes('Login/UI_home_ranking',cc.SpriteFrame,function(err,spriteFrame){
+        //     self.RankList_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
+        // });
+        this.shadow_Node.active = true;
+        this.selectRankings();
+    },
+    selectRankings:function(){
+        var cb = {
+            "cmd":"fish/queryScoreRankingDescPage",
+            "data":{
+                "page" : 1,
+                "phone" : phoneNumber,
+                "size" : 100
+            }
+        };
+        HTTP.sendobj(cb,1);
+        this.schedule(this.showRankingsBg,0.2);
+    },
+    showRankingsBg:function(){
+        cc.log(RankingsCB);
+        if(RankingsCB){
+            this.unschedule(this.showRankingsBg,this);
+            this.node.active = true;
+            this.sendMessage();
+            this.viewSelfRankings();
+        }
+    },
     // called every frame, uncomment this function to activate update callback
     // update: function (dt) {
     // },
@@ -57,7 +89,7 @@ cc.Class({
     },
     sendRequestSelfCB:function(){
         var cb = {
-            "cmd":"fish/queryScoreRankingDescPage",
+            "cmd":"fish/queryScoreDescPage",
             "data":{
                 "page" : 1,
                 "phone" : phoneNumber,
@@ -80,8 +112,12 @@ cc.Class({
         {
             this.unschedule(this.getSelfCB,this);
             cc.log(SelfRankings);
+            var phoneStr = '' +SelfRankings.data.maxRanking.phone.slice(0,3);
+            phoneStr += '****' + SelfRankings.data.maxRanking.phone.slice(7);
+            cc.log('隐藏手机号' + phoneStr);
+
             this.rankingSelf_Node.getChildByName('Ranking').getComponent(cc.Label).string = SelfRankings.data.maxRanking.maxRanking;
-            this.rankingSelf_Node.getChildByName('UserName').getComponent(cc.Label).string = SelfRankings.data.maxRanking.userScoreId;
+            this.rankingSelf_Node.getChildByName('UserName').getComponent(cc.Label).string = phoneStr;
             this.rankingSelf_Node.getChildByName('Score').getComponent(cc.Label).string = SelfRankings.data.maxRanking.scoreNum;
             this.rankingSelf_Node.getChildByName('GameOverTime').getComponent(cc.Label).string = SelfRankings.data.maxRanking.createTime;
         }
