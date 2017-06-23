@@ -18,7 +18,7 @@ cc.Class({
     },
 
     onLoad: function () {
-        this.speed = Math.random() * 3;
+        this.speed = 1 + Math.random() * 2;
         if(this.node.x < 0){
             this.sroll = 'right';
         }
@@ -29,7 +29,15 @@ cc.Class({
         this.Catchup = false;
         
         // this.node.getComponent(cc.BoxCollider).size = this.node.size;
-        // this.node.getComponent(cc.BoxCollider).offset = new cc.Vec2(this.node.width / 2, 0);
+        // if(this.switchSpriteName(this.node.name) < 7)
+        // {
+        //     if(this.sroll == 'left')
+        //     this.node.getComponent(cc.BoxCollider).offset.x = (this.node.width / 2);
+        // }
+        // this.node.getComponent(cc.BoxCollider).offset.y = this.node.height / 2;
+        
+        // this.node.getComponent(cc.BoxCollider).size.width = this.node.width;
+        // this.node.getComponent(cc.BoxCollider).size.height = this.node.height;
         // cc.log(this.node.getComponent(cc.BoxCollider).size);
         // cc.log(this.node.getComponent(cc.BoxCollider).offset);
 
@@ -86,20 +94,30 @@ cc.Class({
         if(this.node.x >= 2000)
         {
             this.sroll = 'left';
+            cc.log(this.node.getComponent(cc.BoxCollider).offset.x);
         }
         if(this.node.x <= -500)
         {
             this.sroll = 'right';
+            cc.log(this.node.getComponent(cc.BoxCollider).offset.x);
         }
         if(this.sroll == 'right')
         {
             this.node.x += this.speed * walkSpeed;
             this.node.width = -1 * Math.abs(this.node.width);
+            if(this.switchSpriteName(this.node.name) < 7)
+            {
+                this.node.getComponent(cc.BoxCollider).offset.x = -1 * Math.abs(this.node.width / 2);
+            }
         }
         if(this.sroll == 'left')
         {
             this.node.x -= this.speed * walkSpeed;
             this.node.width = Math.abs(this.node.width);
+            if(this.switchSpriteName(this.node.name) < 7)
+            {
+                this.node.getComponent(cc.BoxCollider).offset.x = Math.abs(this.node.width / 2);
+            }
         }
     },
 

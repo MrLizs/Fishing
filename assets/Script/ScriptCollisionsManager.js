@@ -1,6 +1,6 @@
 var MinFishesNums = 0;//最小鱼数量
-var MaxFishesNums = 20;
-var PushFrequencyNums = 1;
+var MaxFishesNums = 25;
+var PushFrequencyNums = 3;
 window.theFishes = [];//鱼群
 window.FishNum = 0;
 window.GarbageNum = 0;
@@ -198,16 +198,17 @@ var ScriptCollisionsManager = cc.Class({
         var moment;//刷什么东西
         if(MinTime > 0 && MinTime <= 30)
         {
-            moment = this.returnWaht(1);
+            moment = this.returnWhat(1);
         }
         else if(MinTime > 30 && MinTime < 60)
         {
-            moment = this.returnWaht(2);
+            moment = this.returnWhat(2);
         }
         else if(MinTime >= 60)
         {
-            moment = this.returnWaht(3);
+            moment = this.returnWhat(3);
         }
+        cc.log("push what : " + moment);
         if(moment == 'ALL')
         {
             var rand = Math.random() * 12;
@@ -306,7 +307,7 @@ var ScriptCollisionsManager = cc.Class({
     /**
      * 在什么阶段刷什么内容
      */
-    returnWaht:function(moment){
+    returnWhat:function(moment){
         if(FishNum+GarbageNum < this.fishMomentSwitch(moment) + this.garbageMomentSwitch(moment))
         {
             if(FishNum < this.fishMomentSwitch(moment) && GarbageNum < this.garbageMomentSwitch(moment))
@@ -333,11 +334,11 @@ var ScriptCollisionsManager = cc.Class({
     fishMomentSwitch:function(moment){
         switch (moment) {
             case 1:
-                return MaxFishesNums * 0.8;
+                return MaxFishesNums * 0.9;
             case 2:
-                return MaxFishesNums * 0.65;
+                return MaxFishesNums * 0.85;
             case 3:
-                return MaxFishesNums * 0.5;
+                return MaxFishesNums * 0.75;
         }
     },
     /**
@@ -346,11 +347,11 @@ var ScriptCollisionsManager = cc.Class({
     garbageMomentSwitch:function(moment){
         switch (moment) {
             case 1:
-                return MaxFishesNums * 0.2;
+                return MaxFishesNums * 0.1;
             case 2:
-                return MaxFishesNums * 0.35;
+                return MaxFishesNums * 0.15;
             case 3:
-                return MaxFishesNums * 0.5;
+                return MaxFishesNums * 0.25;
         }
     },
     timePlusPlus:function(){
@@ -362,7 +363,7 @@ var ScriptCollisionsManager = cc.Class({
             else{
                 self.unschedule(self.timePlusPlus,self);
             }
-        }, 2000);
+        }, 1000);
     },
     switchSpriteName:function(spriteName){
         if(spriteName == 'hetun'){
