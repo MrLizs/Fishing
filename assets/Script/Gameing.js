@@ -12,8 +12,8 @@ var piggy = null;
 var fishingRods = null;
 var piggyFeet = null;
 
-window.UserMaxScore = null;
-window.ScoreSelectRankings = null;
+window.UserMaxScore = null;//用户最大分
+window.ScoreSelectRankings = null;//依据分数查询的排行
 
 /**
  * 0可以收线放线
@@ -175,7 +175,6 @@ cc.Class({
         }
         this.resumeBtn_Node.active = true;
         this.pauseBtn_Node.active = false;
-
     },
     
     /**

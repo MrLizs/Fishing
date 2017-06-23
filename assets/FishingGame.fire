@@ -7605,8 +7605,8 @@
     "_scaleY": 0.45,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 142,
-      "y": 54
+      "x": -41,
+      "y": -56
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -7761,8 +7761,8 @@
     "_scaleY": 0.5,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -41,
-      "y": -56
+      "x": 142,
+      "y": 47
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -10623,7 +10623,7 @@
     "_tag": -1,
     "_opacityModifyRGB": false,
     "_id": "73e2dcZbiFMdba/YfYxTgaz",
-    "_active": true,
+    "_active": false,
     "_components": [
       {
         "__id__": 292
@@ -10888,7 +10888,7 @@
         "__uuid__": "84210863-b0ba-46e9-89da-20276ab5caea"
       }
     ],
-    "playOnLoad": false
+    "playOnLoad": true
   },
   {
     "__type__": "cc.Sprite",

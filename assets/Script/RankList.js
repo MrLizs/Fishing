@@ -116,7 +116,12 @@ cc.Class({
             phoneStr += '****' + SelfRankings.data.maxRanking.phone.slice(7);
             cc.log('隐藏手机号' + phoneStr);
 
-            this.rankingSelf_Node.getChildByName('Ranking').getComponent(cc.Label).string = SelfRankings.data.maxRanking.maxRanking;
+            if(SelfRankings.data.maxRanking.maxRanking > 1000){
+                this.rankingSelf_Node.getChildByName('Ranking').getComponent(cc.Label).string = "千名之外";
+            }
+            else{
+                this.rankingSelf_Node.getChildByName('Ranking').getComponent(cc.Label).string = SelfRankings.data.maxRanking.maxRanking;
+            }
             this.rankingSelf_Node.getChildByName('UserName').getComponent(cc.Label).string = phoneStr;
             this.rankingSelf_Node.getChildByName('Score').getComponent(cc.Label).string = SelfRankings.data.maxRanking.scoreNum;
             this.rankingSelf_Node.getChildByName('GameOverTime').getComponent(cc.Label).string = SelfRankings.data.maxRanking.createTime;

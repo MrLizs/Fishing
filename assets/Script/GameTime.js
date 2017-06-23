@@ -119,17 +119,30 @@ cc.Class({
         HTTP.sendobj(cb,2);
     },
 
+    
     sendRequestSelfCB:function(){
         var score = this.score_Label.string;
         cc.log('现在分数:'+score);
         var cb = {
             "cmd":"fish/queryBigThenThisScoreNum",
             "data":{
-                "scoreNum": score
+                "scoreNum": score,
+                "phone": phoneNumber
             }
         };
         HTTP.sendobj(cb,4);
     },
+    // sendRequestSelfCB:function(){
+    //     var score = this.score_Label.string;
+    //     cc.log('现在分数:'+score);
+    //     var cb = {
+    //         "cmd":"fish/queryBigThenThisScoreNum",
+    //         "data":{
+    //             "scoreNum": score
+    //         }
+    //     };
+    //     HTTP.sendobj(cb,4);
+    // },
     // showSelfRankings:function(){
     //     console.log("showSelfRankings");
     //     //cc.log('showSelfRankings: ' + ScoreSelectRankings);
