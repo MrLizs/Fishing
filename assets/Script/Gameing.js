@@ -1,4 +1,4 @@
-var boatMoveSpeed = 1000;//船移动速度
+var boatMoveSpeed = 650;//船移动速度
 var fishesRodsStringLength = 800;//钩子可下潜深度
 var offStringSpeeds = 500;//放线的速度
 var onStringSpeeds = 500;//收线的速度
@@ -74,7 +74,7 @@ cc.Class({
         this.touchLayout.on(cc.Node.EventType.TOUCH_END,this.ChangeStatus,this);
         this.touchLayout.on(cc.Node.EventType.TOUCH_MOVE,this.boatTouchControl,this);
         this.touchLayout.on("touchmove",function(event){
-            if(self.fishline_Node.rotation > -90 && self.fishline_Node.rotation < 90)
+            if(self.fishline_Node.rotation > -90 && self.fishline_Node.rotation < 90 && !cc.director.isPaused())
             self.fishline_Node.rotation += (event.getDelta().x/24);
         },this);
         
@@ -120,7 +120,7 @@ cc.Class({
         }
         if(TimeIsOver === true)
         {
-            if(UserMaxScore && ScoreSelectRankings)
+            // if(UserMaxScore && ScoreSelectRankings)
             this.GameSettlementLayoutOpen();
             
         }

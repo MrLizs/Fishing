@@ -116,7 +116,10 @@ cc.Class({
                 "scoreNum" : scorenum
             }
         };
-        HTTP.sendobj(cb,2);
+        if(scorenum > 0 && phoneNumber != '')
+        {
+            HTTP.sendobj(cb,2);
+        }
     },
 
     

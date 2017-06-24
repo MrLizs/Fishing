@@ -1,4 +1,5 @@
-var url = 'http://192.168.3.191:8080/game-collection-server/ws/rest';
+var url = 'http://192.168.3.157:8080/game-collection-server/ws/rest';
+// var url = 'http://118.190.87.31:8080/game-collection-server/ws/rest';
 
 module.exports = {
     sendobj:function(msg,type){
@@ -17,7 +18,7 @@ module.exports = {
             cc.log('当前不支持ajax');
         }
         else{
-            xhr.open('POST',url);            
+            xhr.open('POST',url,true);            
             xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
             xhr.setRequestHeader("token",md52);
             var strValue="paramString="+param;

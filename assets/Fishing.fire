@@ -1709,7 +1709,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 133.66,
+      "width": 0,
       "height": 36
     },
     "_children": [],
@@ -1756,7 +1756,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "Ranking",
+    "_N$string": "",
     "_N$horizontalAlign": 0,
     "_N$verticalAlign": 1,
     "_N$overflow": 0
@@ -1795,7 +1795,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 89.14,
+      "width": 0,
       "height": 36
     },
     "_children": [],
@@ -1842,7 +1842,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "Label",
+    "_N$string": "",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$overflow": 0
@@ -1881,7 +1881,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 89.14,
+      "width": 0,
       "height": 36
     },
     "_children": [],
@@ -1928,7 +1928,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "Label",
+    "_N$string": "",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$overflow": 0
@@ -1967,7 +1967,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 277.49,
+      "width": 0,
       "height": 36
     },
     "_children": [],
@@ -2014,7 +2014,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "2021-9-21  10:00",
+    "_N$string": "",
     "_N$horizontalAlign": 2,
     "_N$verticalAlign": 1,
     "_N$overflow": 0
@@ -2641,7 +2641,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "Ver 0.9.16",
+    "_N$string": "Ver 0.9.26",
     "_N$horizontalAlign": 0,
     "_N$verticalAlign": 1,
     "_N$overflow": 0

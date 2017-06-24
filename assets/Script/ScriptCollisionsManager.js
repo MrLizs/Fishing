@@ -1,5 +1,5 @@
 var MinFishesNums = 0;//最小鱼数量
-var MaxFishesNums = 25;
+var MaxFishesNums = 20;
 var PushFrequencyNums = 3;
 window.theFishes = [];//鱼群
 window.FishNum = 0;
@@ -108,7 +108,10 @@ var ScriptCollisionsManager = cc.Class({
     update: function (dt) {
         if((FishNum+GarbageNum) < MaxFishesNums)
         {
-            this.GameingAddFish();
+            if(TimeIsOver === false)
+            {
+                this.GameingAddFish();
+            }
         }
     },
 

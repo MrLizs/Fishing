@@ -34,10 +34,14 @@ cc.Class({
             default:null,
             type:cc.Node,
         },
+        subtraction_Node:{
+            default:null,
+            type:cc.Node,
+        },
     },
 
     onLoad: function () {
-        this.shadow_Node.active = true;
+        // this.shadow_Node.active = true;
         // this.node.getChildByName('UI_basis_bottom').getChildByName('UI_account_back').on(cc.Node.EventType.TOUCH_START,this.backMainSceneClick,this);
         // this.node.getChildByName('UI_basis_bottom').getChildByName('UI_account_back').on(cc.Node.EventType.TOUCH_END,this.backMainScene,this);
         // this.node.getChildByName('UI_basis_bottom').getChildByName('UI_account_again').on(cc.Node.EventType.TOUCH_START,this.gameAgainClick,this);
@@ -57,6 +61,7 @@ cc.Class({
         else{
             this.HistoryHightest_Anim.active = false;
         }
+        this.subtraction_Node.active = false;
     },
 
     backMainSceneClick:function(){
@@ -91,20 +96,27 @@ cc.Class({
         cc.director.loadScene('FishingGame');
     },
     viewItemsNums:function(){
-            this.fishNum_parentNode.getChildByName('nums1').getComponent(cc.Label).string = FishScore[0];
-            this.fishNum_parentNode.getChildByName('nums2').getComponent(cc.Label).string = FishScore[1];
-            this.fishNum_parentNode.getChildByName('nums3').getComponent(cc.Label).string = FishScore[3];
-            
-            this.fishNum_parentNode.getChildByName('nums4').getComponent(cc.Label).string = FishScore[4];
-            this.fishNum_parentNode.getChildByName('nums5').getComponent(cc.Label).string = FishScore[5];
-            this.fishNum_parentNode.getChildByName('nums6').getComponent(cc.Label).string = FishScore[6];
+        if(parseInt(this.score_Label.string) < 0){
+            this.subtraction_Node.active = true;
+        }
+        else{
+            this.subtraction_Node.active = false;
+        }
 
-            this.garbNum_parentNode.getChildByName('nums1').getComponent(cc.Label).string = FishScore[7];
-            this.garbNum_parentNode.getChildByName('nums2').getComponent(cc.Label).string = FishScore[8];
-            this.garbNum_parentNode.getChildByName('nums3').getComponent(cc.Label).string = FishScore[9];
-            this.garbNum_parentNode.getChildByName('nums4').getComponent(cc.Label).string = FishScore[10];
-            this.garbNum_parentNode.getChildByName('nums5').getComponent(cc.Label).string = FishScore[11];
-            this.garbNum_parentNode.getChildByName('nums6').getComponent(cc.Label).string = FishScore[12];
+        this.fishNum_parentNode.getChildByName('nums1').getComponent(cc.Label).string = FishScore[0];
+        this.fishNum_parentNode.getChildByName('nums2').getComponent(cc.Label).string = FishScore[1];
+        this.fishNum_parentNode.getChildByName('nums3').getComponent(cc.Label).string = FishScore[3];
+        
+        this.fishNum_parentNode.getChildByName('nums4').getComponent(cc.Label).string = FishScore[4];
+        this.fishNum_parentNode.getChildByName('nums5').getComponent(cc.Label).string = FishScore[5];
+        this.fishNum_parentNode.getChildByName('nums6').getComponent(cc.Label).string = FishScore[6];
+
+        this.garbNum_parentNode.getChildByName('nums1').getComponent(cc.Label).string = FishScore[7];
+        this.garbNum_parentNode.getChildByName('nums2').getComponent(cc.Label).string = FishScore[8];
+        this.garbNum_parentNode.getChildByName('nums3').getComponent(cc.Label).string = FishScore[9];
+        this.garbNum_parentNode.getChildByName('nums4').getComponent(cc.Label).string = FishScore[10];
+        this.garbNum_parentNode.getChildByName('nums5').getComponent(cc.Label).string = FishScore[11];
+        this.garbNum_parentNode.getChildByName('nums6').getComponent(cc.Label).string = FishScore[12];
     },
 
 });

@@ -36,6 +36,7 @@ cc.Class({
         //     self.RankList_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
         // });
         this.shadow_Node.active = true;
+        this.node.active = true;
         this.selectRankings();
     },
     selectRankings:function(){
@@ -48,26 +49,20 @@ cc.Class({
             }
         };
         HTTP.sendobj(cb,1);
-        this.schedule(this.showRankingsBg,0.2);
+        this.schedule(this.showRankingsBg,0.5);
     },
     showRankingsBg:function(){
         cc.log(RankingsCB);
         if(RankingsCB){
             this.unschedule(this.showRankingsBg,this);
-            this.node.active = true;
-            this.sendMessage();
-            this.viewSelfRankings();
+            this.sendRequestSelfCB();
+            this.loadDataBase();
         }
     },
     // called every frame, uncomment this function to activate update callback
     // update: function (dt) {
     // },
-    sendMessage:function(){
-        if(RankingsCB != null){
-            this.unschedule(this.sendMessage,this);
-            this.loadDataBase();
-        }
-    },
+
     loadDataBase:function(){
         if(RankingsCB.data != null)
         {
@@ -83,10 +78,7 @@ cc.Class({
             }
         }
     },
-    viewSelfRankings:function(){
-        this.sendRequestSelfCB();
-        this.schedule(this.getSelfCB,0.1);
-    },
+
     sendRequestSelfCB:function(){
         var cb = {
             "cmd":"fish/queryScoreDescPage",
@@ -97,6 +89,7 @@ cc.Class({
             }
         };
         HTTP.sendobj(cb,2);
+        this.schedule(this.getSelfCB,0.5);
     },
     showSelfMaxScore:function(){
         var userMaxScore = {
@@ -108,7 +101,7 @@ cc.Class({
         HTTP.sendobj(userMaxScore,5);
     },
     getSelfCB:function(){
-        if(SelfRankings !=null)
+        if(SelfRankings !=null && SelfRankings.data.length > 0)
         {
             this.unschedule(this.getSelfCB,this);
             cc.log(SelfRankings);
@@ -133,7 +126,16 @@ cc.Class({
         if(UserMaxScore != null)
         {
             this.unschedule(this.getSelfCB,this);
-            this.rankingSelf_Node.getChildByName('Score').getComponent(cc.Label).string = '' + UserMaxScore;
+            if(phoneNumber == '' || UserMaxScore === 0)
+            {
+                this.rankingSelf_Node.getChildByName('Ranking').getComponent(cc.Label).string = '';
+                this.rankingSelf_Node.getChildByName('UserName').getComponent(cc.Label).string = '';
+                this.rankingSelf_Node.getChildByName('Score').getComponent(cc.Label).string = '';
+                this.rankingSelf_Node.getChildByName('GameOverTime').getComponent(cc.Label).string = '';
+            }
+            if(UserMaxScore != 0){
+                this.rankingSelf_Node.getChildByName('Score').getComponent(cc.Label).string = '' + UserMaxScore;
+            }
         }
     },
 

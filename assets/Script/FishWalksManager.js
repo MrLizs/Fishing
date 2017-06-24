@@ -179,6 +179,8 @@ cc.Class({
                     self.node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
                 });
                 break;
+            default:
+                break;
         }
         //清理一下数组
         // for (var i = 0; i < theFishes.length; i++) {
