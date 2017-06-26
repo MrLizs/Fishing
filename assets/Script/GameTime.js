@@ -1,7 +1,7 @@
 var HTTP = require('HTTP');
 window.TimeIsOver = false;
 window.MinTime = 0;
-window.MaxTime = 90;
+window.MaxTime = 15;
 
 cc.Class({
     extends: cc.Component,

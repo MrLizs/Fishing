@@ -196,13 +196,13 @@ var ScriptCollisionsManager = cc.Class({
                 theFishes[i].sroll = false;
             }
             switch (floor) {
-                case 190:
+                case floorOne:
                     theFishes[i].Floor = 1.0;
                     break;
-                case 370:
+                case floorTwo:
                     theFishes[i].Floor = 1.2;
                     break;
-                case 550:
+                case floorThree:
                     theFishes[i].Floor = 1.4;
                     break;
             }

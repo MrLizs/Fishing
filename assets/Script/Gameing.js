@@ -125,7 +125,7 @@ cc.Class({
         }
         if(TimeIsOver === true)
         {
-            // if(UserMaxScore && ScoreSelectRankings)
+            if(UserMaxScore!=null || ScoreSelectRankings!=null)
             this.GameSettlementLayoutOpen();
             
         }

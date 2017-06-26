@@ -61,7 +61,7 @@ cc.Class({
         else{
             this.HistoryHightest_Anim.active = false;
         }
-        this.subtraction_Node.active = false;
+        // this.subtraction_Node.active = false;
     },
 
     backMainSceneClick:function(){
@@ -96,7 +96,7 @@ cc.Class({
         cc.director.loadScene('FishingGame');
     },
     viewItemsNums:function(){
-        if(parseInt(this.score_Label.string) < 0){
+        if(this.targetScore_Node.string < 0){
             this.subtraction_Node.active = true;
         }
         else{
