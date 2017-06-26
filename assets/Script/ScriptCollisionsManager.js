@@ -4,9 +4,9 @@ var PushFrequencyNums = 3;
 window.theFishes = [];//鱼群
 window.FishNum = 0;
 window.GarbageNum = 0;
-var floorOne = 190/1080 * cc.director.getWinSizeInPixels().height;
-var floorTwo = 370/1080 * cc.director.getWinSizeInPixels().height;
-var floorThree = 550/1080 * cc.director.getWinSizeInPixels().height;
+var floorOne = 650/1080 * cc.director.getWinSizeInPixels().height;
+var floorTwo = 420/1080 * cc.director.getWinSizeInPixels().height;
+var floorThree = 190/1080 * cc.director.getWinSizeInPixels().height;
 
 var SPD1 = 300;
 var SPD2 = 400;
