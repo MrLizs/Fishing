@@ -4,6 +4,9 @@ var PushFrequencyNums = 3;
 window.theFishes = [];//鱼群
 window.FishNum = 0;
 window.GarbageNum = 0;
+var floorOne = 190/1080 * cc.director.getWinSizeInPixels().height;
+var floorTwo = 370/1080 * cc.director.getWinSizeInPixels().height;
+var floorThree = 550/1080 * cc.director.getWinSizeInPixels().height;
 
 var SPD1 = 300;
 var SPD2 = 400;
@@ -70,38 +73,35 @@ var ScriptCollisionsManager = cc.Class({
             default:null,
             type:cc.Node,
         },
+        pushTime:null,
     },
     onLoad: function () {
         //鱼群初始化
         theFishes = null;
         theFishes = new Array();
-        //this.initFish(MinFishesNums)
+        // this.initFish(MinFishesNums)
         MinFishesNums = 0;
         FishNum = 0;
         GarbageNum = 0;
         this.schedule(this.timePlusPlus,1);
 
+        cc.log("场景高度: "+cc.director.getWinSizeInPixels().height);
+        cc.log("1:"+floorOne);
+        cc.log("2:"+floorTwo);
+        cc.log("3:"+floorThree);
+
     },
 
     /**
-     * 未使用
+     * 初始化鱼群
+     * 已使用
      */
     initFish:function(addFishNum){
-        for (var i = 0; i < addFishNum; i++) {
-            var scene = cc.director.getScene();
-            var theFish = {
-                node: null,//节点
-                sroll: true,//方向
-                Floor: null,//层
-                speed: null,//速度
-                fishCollisions: false,//是否碰撞
-                nodeClass:0,//节点种类
-            };//鱼数据
-            theFishes.push(theFish);
-            theFishes[i].node = cc.instantiate(this.randFish());
-            theFishes[i].node.active = true;
-            this.fishFun(Math.random() * 3,i);
-            scene.addChild(theFishes[i].node);
+        for (; (FishNum+GarbageNum) < MaxFishesNums; ) {
+            if(TimeIsOver === false)
+            {
+                this.GameingAddFish();
+            }
         }
     },
 
@@ -110,7 +110,12 @@ var ScriptCollisionsManager = cc.Class({
         {
             if(TimeIsOver === false)
             {
-                this.GameingAddFish();
+                this.pushTime +=cc.director.getDeltaTime();
+                if(this.pushTime >= 0.34)
+                {
+                    this.GameingAddFish();
+                    this.pushTime = 0;
+                }
             }
         }
     },
@@ -153,7 +158,7 @@ var ScriptCollisionsManager = cc.Class({
 
     fishFun:function(rnum,i){
         // this.randFishSpriteFrame(theFishes[i]);
-        var randY = -5 + Math.random()*10;
+        var randY = Math.random() * 90;
         // cc.log(randY);
         if(theFishes[i].fishCollisions === false)
         {
@@ -162,38 +167,44 @@ var ScriptCollisionsManager = cc.Class({
             theFishes[i].nodeClass *= this.switchScore(SPD);//根据速度获得积分基数
 
             theFishes[i].speed = SPD;
+            var floor = this.switchFloor();
             if (rnum <= 1) {
                 theFishes[i].node.x = -300;
-                theFishes[i].node.y = this.switchFloor() + randY;
-                theFishes[i].Floor = 1;
+                theFishes[i].node.y = floor + randY;
             }
             else if (rnum > 1 && rnum <= 2) {
                 theFishes[i].node.x = -300;
-                theFishes[i].node.y = this.switchFloor() + randY;
-                theFishes[i].Floor = 1.2;
+                theFishes[i].node.y = floor + randY;
             }
             else if(rnum > 2 && rnum <= 3){
                 theFishes[i].node.x = -300;
-                theFishes[i].node.y = this.switchFloor() + randY;
-                theFishes[i].Floor = 1.5;
+                theFishes[i].node.y = floor + randY;
             }
             else if(rnum > 3 && rnum <= 4){
                 theFishes[i].node.x = 1950;
-                theFishes[i].node.y = this.switchFloor() + randY;
-                theFishes[i].Floor = 1;
+                theFishes[i].node.y = floor + randY;
                 theFishes[i].sroll = false;
             }
             else if(rnum > 4 && rnum <= 5){
                 theFishes[i].node.x = 1950;
-                theFishes[i].node.y = this.switchFloor() + randY;
-                theFishes[i].Floor = 1.2;
+                theFishes[i].node.y = floor + randY;
                 theFishes[i].sroll = false;
             }
             else if(rnum > 5 && rnum <= 6){
                 theFishes[i].node.x = 1950;
-                theFishes[i].node.y = this.switchFloor() + randY;
-                theFishes[i].Floor = 1.5;
+                theFishes[i].node.y = floor + randY;
                 theFishes[i].sroll = false;
+            }
+            switch (floor) {
+                case 190:
+                    theFishes[i].Floor = 1.0;
+                    break;
+                case 370:
+                    theFishes[i].Floor = 1.2;
+                    break;
+                case 550:
+                    theFishes[i].Floor = 1.4;
+                    break;
             }
         }
     },
@@ -217,37 +228,37 @@ var ScriptCollisionsManager = cc.Class({
         if(stage === 1){
             if(rand < 0.5001)
             {
-                return 100;
+                return floorOne;
             }
             else if(rand > 0.5 && rand < 0.9001){
-                return 250;
+                return floorTwo;
             }
             else{
-                return 400;
+                return floorThree;
             }
         }
         else if(stage === 2){
             if(rand < 0.4001)
             {
-                return 100;
+                return floorOne;
             }
             else if(rand > 0.4 && rand < 0.8001){
-                return 250;
+                return floorTwo;
             }
             else{
-                return 400;
+                return floorThree;
             }
         }
         else if(stage === 3){
             if(rand < 0.3501)
             {
-                return 100;
+                return floorOne;
             }
             else if(rand > 0.35 && rand < 0.7001){
-                return 250;
+                return floorTwo;
             }
             else{
-                return 400;
+                return floorThree;
             }
         }
     },

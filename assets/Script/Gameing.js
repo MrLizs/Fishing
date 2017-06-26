@@ -73,20 +73,25 @@ cc.Class({
         this.touchLayout.on(cc.Node.EventType.TOUCH_START,this.Angling,this);
         this.touchLayout.on(cc.Node.EventType.TOUCH_END,this.ChangeStatus,this);
         this.touchLayout.on(cc.Node.EventType.TOUCH_MOVE,this.boatTouchControl,this);
+        if(cc.director.isPaused())
+        {
+            //这里须恢复.
+            cc.director.resume();
+        }
         this.touchLayout.on("touchmove",function(event){
-            if(self.fishline_Node.rotation > -90 && self.fishline_Node.rotation < 90 && !cc.director.isPaused())
-            self.fishline_Node.rotation += (event.getDelta().x/24);
+            cc.log(!cc.director.isPaused());
+            cc.log('旋转前'+self.fishline_Node.rotation);
+            if(self.fishline_Node.rotation > -90 && self.fishline_Node.rotation < 90 && !cc.director.isPaused()){
+                self.fishline_Node.rotation += (event.getDelta().x/24);
+                cc.log('旋转后'+self.fishline_Node.rotation);
+            }
         },this);
         
         // this.pauseBtn_Node.on(cc.Node.EventType.TOUCH_START,this.pauseStart,this);
         // this.pauseBtn_Node.on(cc.Node.EventType.TOUCH_END,this.pauseEnd,this);
-        if(cc.director.isPaused())
-        {
-            //这里须暂停.
-            cc.director.resume();
-        }
+        
         piggy = this.node.getChildByName('piggy');
-        fishingRods = this.node.getChildByName('fishingRods');
+        fishingRods = this.node.getChildByName('DH_boat').getChildByName('fishingRods');
         piggyFeet = this.node.getChildByName('piggyFeet');
 
         UserMaxScore = null;
@@ -217,8 +222,8 @@ cc.Class({
     universal:function(moveSpeed){
             this.boat_Node.x += moveSpeed;
             piggy.x += moveSpeed;
-            fishingRods.x += moveSpeed;
-            piggyFeet.x += moveSpeed;
+            // fishingRods.x += moveSpeed;
+            // piggyFeet.x += moveSpeed;
     },
 
     //钓鱼
