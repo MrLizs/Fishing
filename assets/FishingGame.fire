@@ -11348,7 +11348,10 @@
     "prop6_Node": {
       "__id__": 156
     },
-    "pushTime": null
+    "pushTime": null,
+    "Canvas_Node": {
+      "__id__": 2
+    }
   },
   {
     "__type__": "cc.Widget",

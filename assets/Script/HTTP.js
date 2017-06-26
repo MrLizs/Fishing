@@ -46,8 +46,8 @@ module.exports = {
                 if(type === 3){
                 }
                 if(type === 4){
-                    // ScoreSelectRankings = null;
-                    ScoreSelectRankings = response.data;
+                    ScoreSelectRankings = null;
+                    ScoreSelectRankings = response;
                     cc.log("ScoreSelectRankings:"+ScoreSelectRankings);
                 }
                 if(type === 5){

@@ -18,7 +18,7 @@ cc.Class({
     },
 
     onLoad: function () {
-        this.speed = 1 + Math.random() * 2;
+        // this.speed = 1 + Math.random() * 2;
         if(this.node.x < 0){
             this.sroll = 'right';
         }
@@ -44,6 +44,21 @@ cc.Class({
         // this.randFishSpriteFrame();
         // this.animationSwitch();
         // this.node.addComponent(cc.Animation).play();
+        for (var i = 0; i < theFishes.length; i++) {
+            var element = theFishes[i];
+            if(element)
+            {
+                if(element.node)
+                {
+                    if(element.node == this.node)
+                    {
+                        this.speed = element.speed;
+                    }
+                }
+            }
+            
+        }
+        cc.log("本大爷的速度" + this.speed);
     },
 
     update:function(){
@@ -103,7 +118,7 @@ cc.Class({
         }
         if(this.sroll == 'right')
         {
-            this.node.x += this.speed * walkSpeed;
+            this.node.x += this.speed * cc.director.getDeltaTime();
             this.node.width = -1 * Math.abs(this.node.width);
             if(this.switchSpriteName(this.node.name) < 7)
             {
@@ -112,7 +127,7 @@ cc.Class({
         }
         if(this.sroll == 'left')
         {
-            this.node.x -= this.speed * walkSpeed;
+            this.node.x -= this.speed * cc.director.getDeltaTime();
             this.node.width = Math.abs(this.node.width);
             if(this.switchSpriteName(this.node.name) < 7)
             {

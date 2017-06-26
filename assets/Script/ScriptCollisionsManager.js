@@ -4,9 +4,9 @@ var PushFrequencyNums = 3;
 window.theFishes = [];//鱼群
 window.FishNum = 0;
 window.GarbageNum = 0;
-var floorOne = 650/1080 * cc.director.getWinSizeInPixels().height;
-var floorTwo = 420/1080 * cc.director.getWinSizeInPixels().height;
-var floorThree = 190/1080 * cc.director.getWinSizeInPixels().height;
+var floorOne = 450;
+var floorTwo = 320;
+var floorThree = 140;
 
 var SPD1 = 300;
 var SPD2 = 400;
@@ -74,6 +74,7 @@ var ScriptCollisionsManager = cc.Class({
             type:cc.Node,
         },
         pushTime:null,
+        Canvas_Node:cc.Node,
     },
     onLoad: function () {
         //鱼群初始化
@@ -85,7 +86,10 @@ var ScriptCollisionsManager = cc.Class({
         GarbageNum = 0;
         this.schedule(this.timePlusPlus,1);
 
-        cc.log("场景高度: "+cc.director.getWinSizeInPixels().height);
+        cc.log("场景高度: "+ this.Canvas_Node.height);
+        floorOne = floorOne/1080 * this.Canvas_Node.height;
+        floorTwo = floorTwo/1080 * this.Canvas_Node.height;
+        floorThree = floorThree/1080 * this.Canvas_Node.height;
         cc.log("1:"+floorOne);
         cc.log("2:"+floorTwo);
         cc.log("3:"+floorThree);
@@ -164,9 +168,11 @@ var ScriptCollisionsManager = cc.Class({
         {
             var SPD = this.switchFishesSpeed();//依据时间线获得速度
 
-            theFishes[i].nodeClass *= this.switchScore(SPD);//根据速度获得积分基数
+            theFishes[i].nodeClass = theFishes[i].nodeClass * this.switchScore(SPD);//根据速度获得积分基数
+            cc.log("依据速度调整了积分后积分是:"+theFishes[i].nodeClass);
 
             theFishes[i].speed = SPD;
+            cc.log(theFishes[i].speed);
             var floor = this.switchFloor();
             if (rnum <= 1) {
                 theFishes[i].node.x = -300;
@@ -203,7 +209,7 @@ var ScriptCollisionsManager = cc.Class({
                     theFishes[i].Floor = 1.2;
                     break;
                 case floorThree:
-                    theFishes[i].Floor = 1.4;
+                    theFishes[i].Floor = 1.5;
                     break;
             }
         }

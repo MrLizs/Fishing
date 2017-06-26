@@ -79,11 +79,8 @@ cc.Class({
             cc.director.resume();
         }
         this.touchLayout.on("touchmove",function(event){
-            cc.log(!cc.director.isPaused());
-            cc.log('旋转前'+self.fishline_Node.rotation);
             if(self.fishline_Node.rotation > -90 && self.fishline_Node.rotation < 90 && !cc.director.isPaused()){
                 self.fishline_Node.rotation += (event.getDelta().x/24);
-                cc.log('旋转后'+self.fishline_Node.rotation);
             }
         },this);
         
@@ -125,7 +122,7 @@ cc.Class({
         }
         if(TimeIsOver === true)
         {
-            if(UserMaxScore!=null || ScoreSelectRankings!=null)
+            if(UserMaxScore!=null && ScoreSelectRankings!=null)
             this.GameSettlementLayoutOpen();
             
         }
@@ -318,7 +315,9 @@ cc.Class({
                     if(theFishes[y] == null) continue;
                     if(barbChildren == theFishes[y].node)
                     {
-                        var MyScore = theFishes[y].Floor * theFishes[y].nodeClass;
+                        var MyScore = (theFishes[y].nodeClass * theFishes[y].Floor);
+                        // MyScore = Math.round(MyScore);
+                        cc.log("本大爷的分数:"+MyScore);
                         this.score.getComponent(cc.Label).string = parseInt(this.score.getComponent(cc.Label).string) + MyScore;
                         var switchNum = this.switchSpriteName(barbChildren.name);
                         FishScore[switchNum] += 1;

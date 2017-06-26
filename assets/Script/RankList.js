@@ -64,17 +64,23 @@ cc.Class({
     // },
 
     loadDataBase:function(){
-        if(RankingsCB.data != null)
+        if(RankingsCB.data)
         {
-            this.rankListContent_Node.height = RankingsCB.data.length * 80;
-            for (var i = 0; i < RankingsCB.data.length; i++) {
+            var cb = RankingsCB.data.scoreDescPage.records;
+            this.rankListContent_Node.height = cb.length * 80;
+            for (var i = 0; i < cb.length; i++) {
                 var itme = cc.instantiate(this.rankContentItem_Prefab);
                 itme.y = -(i * 80);
                 this.rankListContent_Node.addChild(itme);
                 itme.getChildByName('Ranking').getComponent(cc.Label).string = '' +(i+1);
-                itme.getChildByName('UserName').getComponent(cc.Label).string = '' + RankingsCB.data[i].userScoreId;
-                itme.getChildByName('Score').getComponent(cc.Label).string = '' + RankingsCB.data[i].scoreNum;
-                itme.getChildByName('GameOverTime').getComponent(cc.Label).string = '' + RankingsCB.data[i].createTime;
+                
+                var phoneStr = '' +cb[i].phone.slice(0,3);
+                phoneStr += '****' + cb[i].phone.slice(7);
+                cc.log('隐藏手机号' + phoneStr);
+
+                itme.getChildByName('UserName').getComponent(cc.Label).string = '' + phoneStr;
+                itme.getChildByName('Score').getComponent(cc.Label).string = '' + cb[i].scoreNum;
+                itme.getChildByName('GameOverTime').getComponent(cc.Label).string = '' + cb[i].createTime;
             }
         }
     },

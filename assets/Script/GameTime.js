@@ -1,7 +1,7 @@
 var HTTP = require('HTTP');
 window.TimeIsOver = false;
 window.MinTime = 0;
-window.MaxTime = 90;
+window.MaxTime = 20;
 
 cc.Class({
     extends: cc.Component,
@@ -83,8 +83,13 @@ cc.Class({
         {
             cc.log('游戏结束2');
             this.GameClearing();
-            this.sendRequestSelfCB();
-            this.requestMaxScore();
+            var self = this;
+            setTimeout(function() {
+                self.sendRequestSelfCB();
+            }, 100);
+            setTimeout(function() {
+                self.requestMaxScore();
+            }, 500);
             // this.schedule(this.showSelfRankings,0.1);
             // this.schedule(this.responesMaxScore,0.1);
             TimeIsOver = true;
@@ -129,8 +134,8 @@ cc.Class({
         var cb = {
             "cmd":"fish/queryBigThenThisScoreNum",
             "data":{
-                "scoreNum": score,
-                "phone": phoneNumber
+                "scoreNum": score//,
+                // "phone": phoneNumber
             }
         };
         HTTP.sendobj(cb,4);
