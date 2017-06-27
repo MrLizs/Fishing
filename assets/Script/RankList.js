@@ -109,19 +109,19 @@ cc.Class({
         if(SelfRankings !=null && SelfRankings.data.length > 0)
         {
             cc.log(SelfRankings);
-            var phoneStr = '' +SelfRankings.data.maxRanking.phone.slice(0,3);
-            phoneStr += '****' + SelfRankings.data.maxRanking.phone.slice(7);
+            var phoneStr = '' +SelfRankings.data[0].phone.slice(0,3);
+            phoneStr += '****' + SelfRankings.data[0].phone.slice(7);
             cc.log('隐藏手机号' + phoneStr);
 
-            if(SelfRankings.data.maxRanking.maxRanking > 1000){
+            if(SelfRankings.data[0].maxRanking > 1000){
                 this.rankingSelf_Node.getChildByName('Ranking').getComponent(cc.Label).string = "千名之外";
             }
             else{
-                this.rankingSelf_Node.getChildByName('Ranking').getComponent(cc.Label).string = SelfRankings.data.maxRanking.maxRanking;
+                this.rankingSelf_Node.getChildByName('Ranking').getComponent(cc.Label).string = SelfRankings.data[0].maxRanking;
             }
             this.rankingSelf_Node.getChildByName('UserName').getComponent(cc.Label).string = phoneStr;
-            this.rankingSelf_Node.getChildByName('Score').getComponent(cc.Label).string = SelfRankings.data.maxRanking.scoreNum;
-            this.rankingSelf_Node.getChildByName('GameOverTime').getComponent(cc.Label).string = SelfRankings.data.maxRanking.createTime;
+            this.rankingSelf_Node.getChildByName('Score').getComponent(cc.Label).string = SelfRankings.data[0].scoreNum;
+            this.rankingSelf_Node.getChildByName('GameOverTime').getComponent(cc.Label).string = SelfRankings.data[0].createTime;
         }
         clearInterval(timeSchedule);
         this.showSelfMaxScore();
@@ -130,6 +130,10 @@ cc.Class({
             self.getSelfCB2(timeSchedule2);
         },200)
     },
+
+    /**
+     * 查询最高分
+     */
     showSelfMaxScore:function(){
         var userMaxScore = {
             "cmd":"fish/findUserMaxScore",
@@ -141,12 +145,12 @@ cc.Class({
     },
     getSelfCB2:function(timeSchedule){
         clearInterval(timeSchedule);
-        cc.log(UserMaxScore);
+        cc.log("最高分:"+UserMaxScore);
         if(UserMaxScore)
         {
             // this.rankingSelf_Node.getChildByName('UserName').getComponent(cc.Label).string = '' + phoneNumber;
             this.rankingSelf_Node.getChildByName('Score').getComponent(cc.Label).string = '' + UserMaxScore;
-
+            this.sendRequestSelfRankings(UserMaxScore);
         }
         else{
             // if(phoneNumber == '' || UserMaxScore === 0)
@@ -158,7 +162,29 @@ cc.Class({
             // }
         }
     },
-
+    /**
+     * 查询最高分的排名
+     */
+    sendRequestSelfRankings:function(score){
+        var cb = {
+            "cmd":"fish/queryBigThenThisScoreNum",
+            "data":{
+                "scoreNum": score
+            }
+        };
+        HTTP.sendobj(cb,4);
+        var self = this;
+        var timeSchedule = setInterval(function(){
+            self.viewSelfRankings(timeSchedule);
+        },200);
+    },
+    viewSelfRankings:function(timeSchedule){
+        if(ScoreSelectRankings)
+        {
+            clearInterval(timeSchedule);
+            this.rankingSelf_Node.getChildByName('Ranking').getComponent(cc.Label).string = ScoreSelectRankings.data - 1;
+        }
+    },
     /**
      * 未使用
      */
