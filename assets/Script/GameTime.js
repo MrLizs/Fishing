@@ -2,7 +2,7 @@ var HTTP = require('HTTP');
 window.insertFishUserScore = null;
 window.TimeIsOver = false;
 window.MinTime = 0;
-window.MaxTime = 30;
+window.MaxTime = 90;
 
 cc.Class({
     extends: cc.Component,
