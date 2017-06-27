@@ -57,7 +57,7 @@ cc.Class({
         },200);
     },
     showRankingsBg:function(timeSchedule){
-        cc.log(RankingsCB);
+        cc.log("自己的排行:"+RankingsCB);
         if(RankingsCB){
             clearInterval(timeSchedule);
             this.sendRequestSelfCB();
@@ -108,7 +108,6 @@ cc.Class({
     getSelfCB:function(timeSchedule){
         if(SelfRankings !=null && SelfRankings.data.length > 0)
         {
-            clearInterval(timeSchedule);
             cc.log(SelfRankings);
             var phoneStr = '' +SelfRankings.data.maxRanking.phone.slice(0,3);
             phoneStr += '****' + SelfRankings.data.maxRanking.phone.slice(7);
@@ -124,9 +123,11 @@ cc.Class({
             this.rankingSelf_Node.getChildByName('Score').getComponent(cc.Label).string = SelfRankings.data.maxRanking.scoreNum;
             this.rankingSelf_Node.getChildByName('GameOverTime').getComponent(cc.Label).string = SelfRankings.data.maxRanking.createTime;
         }
+        clearInterval(timeSchedule);
         this.showSelfMaxScore();
-        var timeSchedule = setInterval(function(){
-            self.getSelfCB2(timeSchedule);
+        var self = this;
+        var timeSchedule2 = setInterval(function(){
+            self.getSelfCB2(timeSchedule2);
         },200)
     },
     showSelfMaxScore:function(){
@@ -139,20 +140,22 @@ cc.Class({
         HTTP.sendobj(userMaxScore,5);
     },
     getSelfCB2:function(timeSchedule){
-        if(UserMaxScore != null)
+        clearInterval(timeSchedule);
+        cc.log(UserMaxScore);
+        if(UserMaxScore)
         {
-            clearInterval(timeSchedule);
-            if(phoneNumber == '' || UserMaxScore === 0)
-            {
-                this.rankingSelf_Node.getChildByName('Ranking').getComponent(cc.Label).string = '';
-                this.rankingSelf_Node.getChildByName('UserName').getComponent(cc.Label).string = '';
-                this.rankingSelf_Node.getChildByName('Score').getComponent(cc.Label).string = '';
-                this.rankingSelf_Node.getChildByName('GameOverTime').getComponent(cc.Label).string = '';
-            }
-            if(UserMaxScore != 0){
-                this.rankingSelf_Node.getChildByName('UserName').getComponent(cc.Label).string = '' + phoneNumber;
-                this.rankingSelf_Node.getChildByName('Score').getComponent(cc.Label).string = '' + UserMaxScore;
-            }
+            // this.rankingSelf_Node.getChildByName('UserName').getComponent(cc.Label).string = '' + phoneNumber;
+            this.rankingSelf_Node.getChildByName('Score').getComponent(cc.Label).string = '' + UserMaxScore;
+
+        }
+        else{
+            // if(phoneNumber == '' || UserMaxScore === 0)
+            // {
+            //     this.rankingSelf_Node.getChildByName('Ranking').getComponent(cc.Label).string = '';
+            //     this.rankingSelf_Node.getChildByName('UserName').getComponent(cc.Label).string = '';
+            //     this.rankingSelf_Node.getChildByName('Score').getComponent(cc.Label).string = '';
+            //     this.rankingSelf_Node.getChildByName('GameOverTime').getComponent(cc.Label).string = '';
+            // }
         }
     },
 

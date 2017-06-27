@@ -57,6 +57,7 @@ cc.Class({
         if(parseInt(this.targetScore_Node.string) > UserMaxScore){
             this.HistoryHightest_Anim.active = true;
             this.HistoryHightest_Anim.getComponent(cc.Animation).play();
+            this.MaxScore_Label.string = '' + parseInt(this.targetScore_Node.string);
         }
         else{
             this.HistoryHightest_Anim.active = false;

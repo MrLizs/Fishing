@@ -9875,8 +9875,8 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 573,
-      "y": 259
+      "x": 579,
+      "y": 262
     },
     "_skewX": 0,
     "_skewY": 0,
@@ -9885,7 +9885,7 @@
     "_tag": -1,
     "_opacityModifyRGB": false,
     "_id": "d201b+5WvlLf7typC4vSzsm",
-    "_active": false,
+    "_active": true,
     "_components": [
       {
         "__id__": 274
@@ -9931,7 +9931,9 @@
       "__id__": 273
     },
     "_enabled": true,
-    "_defaultClip": null,
+    "_defaultClip": {
+      "__uuid__": "84210863-b0ba-46e9-89da-20276ab5caea"
+    },
     "_clips": [
       {
         "__uuid__": "84210863-b0ba-46e9-89da-20276ab5caea"
