@@ -48,12 +48,12 @@ cc.Class({
         // this.gameExitBtn_Node.on(cc.Node.EventType.TOUCH_START,this.ExitClick,this);
         // this.gameExitBtn_Node.on(cc.Node.EventType.TOUCH_END,this.ExitGame,this);
 
-        // phoneNumber = '13'
-        // for (var i = 0; i < 9; i++) {
-        //     phoneNumber += Math.round(Math.random() * 9);
-        // }
-        // cc.log("随机手机号: " + phoneNumber);
-        phoneNumber = '13419695310';
+        phoneNumber = '13'
+        for (var i = 0; i < 9; i++) {
+            phoneNumber += Math.round(Math.random() * 9);
+        }
+        cc.log("随机手机号: " + phoneNumber);
+        // phoneNumber = '13419695310';
 
         cc.director.preloadScene('FishingGame');
 
