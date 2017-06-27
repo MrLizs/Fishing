@@ -120,7 +120,7 @@ cc.Class({
                 this.fishline_Node.rotation  =0;
             }
         }
-        if(TimeIsOver === true)
+        if(MinTime >= MaxTime)
         {
             if(UserMaxScore!=null && ScoreSelectRankings!=null)
             this.GameSettlementLayoutOpen();
@@ -134,16 +134,23 @@ cc.Class({
     },
 
     GameSettlementLayoutOpen:function(){
-        this.shadow_Node.active = true;
-        this.GameSettlementLayout_Node.active = true;
-        theFishes.forEach(function(element) {
-            if(element) if(element.node) element.node.destroy();
-        }, this);
+        if(!this.GameSettlementLayout_Node.activeInHierarchy)
+        {
+            this.shadow_Node.active = true;
+            this.GameSettlementLayout_Node.active = true;
+        }
+        if(theFishes.length > 0)
+        {
+            theFishes.forEach(function(element) {
+                if(element) if(element.node) element.node.destroy();
+            }, this);
+            theFishes = {};
+        }
+
         if(this.barb_Node.childrenCount > 0 )
         this.barb_Node.removeAllChildren();
-        theFishes = {};
         //这里须暂停.
-        cc.director.pause();
+        // cc.director.pause();
     },
 
     //返回主场景

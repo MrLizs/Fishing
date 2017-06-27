@@ -2,7 +2,7 @@ var HTTP = require('HTTP');
 window.insertFishUserScore = null;
 window.TimeIsOver = false;
 window.MinTime = 0;
-window.MaxTime = 20;
+window.MaxTime = 30;
 
 cc.Class({
     extends: cc.Component,
@@ -84,15 +84,19 @@ cc.Class({
         {
             cc.log('游戏结束2');
             this.GameClearing();
-            var self = this;
-            setTimeout(function() {
-                self.sendRequestSelfCB();
-            }, 100);
-            setTimeout(function() {
-                self.requestMaxScore();
-            }, 500);
+            this.sendRequestSelfCB();
+
+
+            // var self = this;
+            // setTimeout(function() {
+            //     self.sendRequestSelfCB();
+            // }, 100);
+            // setTimeout(function() {
+            //     self.requestMaxScore();
+            // }, 500);
             // this.schedule(this.showSelfRankings,0.1);
             // this.schedule(this.responesMaxScore,0.1);
+
             TimeIsOver = true;
         }
         else
@@ -140,6 +144,11 @@ cc.Class({
             }
         };
         HTTP.sendobj(cb,4);
+        var self = this;
+        var maxScoreSchedule = setInterval(function(){
+            if(ScoreSelectRankings)
+            self.requestMaxScore(maxScoreSchedule);
+        },100);
     },
     // sendRequestSelfCB:function(){
     //     var score = this.score_Label.string;
@@ -161,7 +170,8 @@ cc.Class({
     //         this.ranking_Label.string = '' + ScoreSelectRankings;
     //     }
     // },
-    requestMaxScore:function(){
+    requestMaxScore:function(maxScoreSchedule){
+        clearInterval(maxScoreSchedule);
         var cb = {
             "cmd":"fish/findUserMaxScore",
             "data":{

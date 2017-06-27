@@ -52,17 +52,26 @@ cc.Class({
 
         this.MaxScore_Label.string = '' + UserMaxScore;
         cc.log('结算时的排名:'+ScoreSelectRankings.data);
-        this.ranking_Label.string = '' + ScoreSelectRankings.data;
+        this.ranking_Label.string = '' + ScoreSelectRankings.data-1;
 
-        if(parseInt(this.targetScore_Node.string) > UserMaxScore){
+        // if(parseInt(this.targetScore_Node.string) > UserMaxScore){
             this.HistoryHightest_Anim.active = true;
             this.HistoryHightest_Anim.getComponent(cc.Animation).play();
             this.MaxScore_Label.string = '' + parseInt(this.targetScore_Node.string);
-        }
-        else{
-            this.HistoryHightest_Anim.active = false;
-        }
+        // }
+        // else{
+        //     this.HistoryHightest_Anim.active = false;
+        // }
         // this.subtraction_Node.active = false;
+    },
+    update: function (dt){
+        if(this.HistoryHightest_Anim.activeInHierarchy)
+        {
+            if(this.HistoryHightest_Anim.getComponent(cc.Animation).getAnimationState('HistoryHightest').isPlaying === false)
+            {
+                cc.director.pause();
+            }
+        }
     },
 
     backMainSceneClick:function(){

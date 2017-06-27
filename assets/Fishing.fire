@@ -1704,12 +1704,12 @@
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
-      "x": 0,
+      "x": 0.5,
       "y": 0.5
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 0,
+      "width": 20.26,
       "height": 36
     },
     "_children": [],
@@ -1719,7 +1719,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": -567,
+      "x": -506,
       "y": -2
     },
     "_skewX": 0,
@@ -1756,8 +1756,8 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "",
-    "_N$horizontalAlign": 0,
+    "_N$string": "1",
+    "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$overflow": 0
   },
@@ -1891,7 +1891,7 @@
     "_scaleY": 1,
     "_position": {
       "__type__": "cc.Vec2",
-      "x": 100,
+      "x": 96,
       "y": 0
     },
     "_skewX": 0,
@@ -2641,7 +2641,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "Ver 0.9.42",
+    "_N$string": "Ver 0.9.45",
     "_N$horizontalAlign": 0,
     "_N$verticalAlign": 1,
     "_N$overflow": 0
