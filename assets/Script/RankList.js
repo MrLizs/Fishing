@@ -38,6 +38,7 @@ cc.Class({
         this.shadow_Node.active = true;
         this.node.active = true;
         this.selectRankings();
+        
     },
     selectRankings:function(){
         var cb = {
@@ -49,12 +50,16 @@ cc.Class({
             }
         };
         HTTP.sendobj(cb,1);
-        this.schedule(this.showRankingsBg,0.5);
+        //this.schedule(this.showRankingsBg,0.5);
+        var self = this;
+        var timeSchedule = setInterval(function(){
+            self.showRankingsBg(timeSchedule);
+        },200);
     },
-    showRankingsBg:function(){
+    showRankingsBg:function(timeSchedule){
         cc.log(RankingsCB);
         if(RankingsCB){
-            this.unschedule(this.showRankingsBg,this);
+            clearInterval(timeSchedule);
             this.sendRequestSelfCB();
             this.loadDataBase();
         }
@@ -95,21 +100,15 @@ cc.Class({
             }
         };
         HTTP.sendobj(cb,2);
-        this.schedule(this.getSelfCB,0.5);
+        var self = this;
+        var timeSchedule = setInterval(function(){
+            self.getSelfCB(timeSchedule);
+        },200)
     },
-    showSelfMaxScore:function(){
-        var userMaxScore = {
-            "cmd":"fish/findUserMaxScore",
-            "data":{
-                "phone":phoneNumber
-            }
-        }
-        HTTP.sendobj(userMaxScore,5);
-    },
-    getSelfCB:function(){
+    getSelfCB:function(timeSchedule){
         if(SelfRankings !=null && SelfRankings.data.length > 0)
         {
-            this.unschedule(this.getSelfCB,this);
+            clearInterval(timeSchedule);
             cc.log(SelfRankings);
             var phoneStr = '' +SelfRankings.data.maxRanking.phone.slice(0,3);
             phoneStr += '****' + SelfRankings.data.maxRanking.phone.slice(7);
@@ -126,12 +125,23 @@ cc.Class({
             this.rankingSelf_Node.getChildByName('GameOverTime').getComponent(cc.Label).string = SelfRankings.data.maxRanking.createTime;
         }
         this.showSelfMaxScore();
-        this.schedule(this.getSelfCB2,0.1);
+        var timeSchedule = setInterval(function(){
+            self.getSelfCB2(timeSchedule);
+        },200)
     },
-    getSelfCB2:function(){
+    showSelfMaxScore:function(){
+        var userMaxScore = {
+            "cmd":"fish/findUserMaxScore",
+            "data":{
+                "phone":phoneNumber
+            }
+        }
+        HTTP.sendobj(userMaxScore,5);
+    },
+    getSelfCB2:function(timeSchedule){
         if(UserMaxScore != null)
         {
-            this.unschedule(this.getSelfCB,this);
+            clearInterval(timeSchedule);
             if(phoneNumber == '' || UserMaxScore === 0)
             {
                 this.rankingSelf_Node.getChildByName('Ranking').getComponent(cc.Label).string = '';
@@ -140,6 +150,7 @@ cc.Class({
                 this.rankingSelf_Node.getChildByName('GameOverTime').getComponent(cc.Label).string = '';
             }
             if(UserMaxScore != 0){
+                this.rankingSelf_Node.getChildByName('UserName').getComponent(cc.Label).string = '' + phoneNumber;
                 this.rankingSelf_Node.getChildByName('Score').getComponent(cc.Label).string = '' + UserMaxScore;
             }
         }

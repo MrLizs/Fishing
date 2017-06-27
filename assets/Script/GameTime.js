@@ -1,4 +1,5 @@
 var HTTP = require('HTTP');
+window.insertFishUserScore = null;
 window.TimeIsOver = false;
 window.MinTime = 0;
 window.MaxTime = 20;

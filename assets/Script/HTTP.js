@@ -44,6 +44,9 @@ module.exports = {
                     cc.log("SelfRankings:"+SelfRankings);
                 }
                 if(type === 3){
+                    insertFishUserScore = null;
+                    insertFishUserScore = response;
+                    cc.log("insertFishUserScore:"+insertFishUserScore);
                 }
                 if(type === 4){
                     ScoreSelectRankings = null;
