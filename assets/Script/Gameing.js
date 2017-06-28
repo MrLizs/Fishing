@@ -123,8 +123,11 @@ cc.Class({
         }
         if(MinTime >= MaxTime)
         {
-            if(UserMaxScore!=null && ScoreSelectRankings!=null)
-            this.GameSettlementLayoutOpen();
+            this.removeAllFishes();
+            if(UserMaxScore!=null || ScoreSelectRankings!=null)
+            {
+                this.GameSettlementLayoutOpen();
+            }
             
         }
         //cc.fishesManager.updatefish(theFishes);
@@ -140,6 +143,8 @@ cc.Class({
             this.shadow_Node.active = true;
             this.GameSettlementLayout_Node.active = true;
         }
+    },
+    removeAllFishes:function(){
         if(theFishes.length > 0)
         {
             theFishes.forEach(function(element) {
@@ -150,8 +155,6 @@ cc.Class({
 
         if(this.barb_Node.childrenCount > 0 )
         this.barb_Node.removeAllChildren();
-        //这里须暂停.
-        // cc.director.pause();
     },
 
     //返回主场景

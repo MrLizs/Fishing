@@ -130,16 +130,18 @@ var ScriptCollisionsManager = cc.Class({
      * 未使用
      */
     initFish:function(addFishNum){
-        for (; (FishNum+GarbageNum) < MaxFishesNums; ){
-            if(TimeIsOver === false){
-                this.GameingAddFish();
+        if(TimeIsOver === false){
+            if(MinTime < MaxTime){
+                for (; (FishNum+GarbageNum) < MaxFishesNums; ){
+                    this.GameingAddFish();
+                }
             }
         }
     },
 
     update: function (dt) {
-        if((FishNum+GarbageNum) < MaxFishesNums){
-            if(TimeIsOver === false){
+        if(TimeIsOver === false && MinTime < MaxTime){
+            if((FishNum+GarbageNum) < MaxFishesNums){
                 this.pushTime +=cc.director.getDeltaTime();
                 if(this.pushTime >= 0.33){
                     this.GameingAddFish();

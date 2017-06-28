@@ -10,7 +10,7 @@ cc.Class({
     },
     closeTips:function(){
         this.node.active = false;
-        this.shadow_Node.active = false;
+        // this.shadow_Node.active = false;
         isPrintPhone = 1;
     },
     clickPhone:function(){

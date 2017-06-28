@@ -2,7 +2,7 @@ var HTTP = require('HTTP');
 window.insertFishUserScore = null;
 window.TimeIsOver = false;
 window.MinTime = 0;
-window.MaxTime = 90;
+window.MaxTime = 20;
 var isSendEnd = false//是否发送结算消息
 window.isPrintPhone = 0;//0没弹出,1输入正确,2输入错误
 
@@ -104,6 +104,7 @@ cc.Class({
                         phoneNumber = '';
                     }
                     if(isPrintPhone == 1){
+                        this.phoneTips.active = true;
                         this.GameClearing();
                         this.sendRequestSelfCB();
                         TimeIsOver = true;
@@ -161,36 +162,16 @@ cc.Class({
                 // "phone": phoneNumber
             }
         };
-        if(phoneNumber != '')
-        {
+        // if(phoneNumber != '')
+        // {
             HTTP.sendobj(cb,4);
-        }
+        // }
         var self = this;
         var maxScoreSchedule = setInterval(function(){
             if(ScoreSelectRankings)
             self.requestMaxScore(maxScoreSchedule);
         },100);
     },
-    // sendRequestSelfCB:function(){
-    //     var score = this.score_Label.string;
-    //     cc.log('现在分数:'+score);
-    //     var cb = {
-    //         "cmd":"fish/queryBigThenThisScoreNum",
-    //         "data":{
-    //             "scoreNum": score
-    //         }
-    //     };
-    //     HTTP.sendobj(cb,4);
-    // },
-    // showSelfRankings:function(){
-    //     console.log("showSelfRankings");
-    //     //cc.log('showSelfRankings: ' + ScoreSelectRankings);
-    //     if(ScoreSelectRankings != null){
-    //         this.unschedule(this.showSelfRankings,this);
-    //         cc.log("这个分数排行:" + ScoreSelectRankings);
-    //         this.ranking_Label.string = '' + ScoreSelectRankings;
-    //     }
-    // },
     requestMaxScore:function(maxScoreSchedule){
         clearInterval(maxScoreSchedule);
         var cb = {
@@ -201,12 +182,4 @@ cc.Class({
         };
         HTTP.sendobj(cb,5)
     },
-    // responesMaxScore:function(){
-    //     cc.log('UserMaxScore: ' + UserMaxScore)
-    //     if(UserMaxScore != null)
-    //     {
-    //         this.unschedule(this.responesMaxScore,this);
-    //         this.MaxScore_Label.string = ''+ UserMaxScore;
-    //     }
-    // },
 });
