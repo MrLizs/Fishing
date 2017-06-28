@@ -1709,7 +1709,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 20.26,
+      "width": 0,
       "height": 36
     },
     "_children": [],
@@ -1756,7 +1756,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "1",
+    "_N$string": "",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$overflow": 0
@@ -2354,9 +2354,9 @@
       "__id__": 63
     },
     "_enabled": true,
-    "isAlignOnce": true,
+    "isAlignOnce": false,
     "_target": null,
-    "_alignFlags": 18,
+    "_alignFlags": 45,
     "_left": 0,
     "_right": 0,
     "_top": 0,
@@ -2369,8 +2369,8 @@
     "_isAbsBottom": true,
     "_isAbsHorizontalCenter": true,
     "_isAbsVerticalCenter": true,
-    "_originalWidth": 0,
-    "_originalHeight": 0
+    "_originalWidth": 1920,
+    "_originalHeight": 1080
   },
   {
     "__type__": "cc.Button",
@@ -2593,7 +2593,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 145.89,
+      "width": 128.09,
       "height": 32
     },
     "_children": [],
@@ -2641,7 +2641,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "Ver 0.9.45",
+    "_N$string": "Ver 0.9.5",
     "_N$horizontalAlign": 0,
     "_N$verticalAlign": 1,
     "_N$overflow": 0
@@ -2916,7 +2916,7 @@
       "height": 1080
     },
     "_fitWidth": true,
-    "_fitHeight": true
+    "_fitHeight": false
   },
   {
     "__type__": "f53df2EicRHW5kVuCGOD4Tc",

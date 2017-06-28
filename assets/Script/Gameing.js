@@ -1,5 +1,5 @@
 var boatMoveSpeed = 650;//船移动速度
-var fishesRodsStringLength = 800;//钩子可下潜深度
+var fishesRodsStringLength = 950;//钩子可下潜深度
 var offStringSpeeds = 500;//放线的速度
 var onStringSpeeds = 500;//收线的速度
 var boatVec = null;
@@ -64,6 +64,7 @@ cc.Class({
             type:cc.Node,
         },
         BoatVec2:null,
+        phoneTips:cc.Node,
     },
     
     // use this for initialization

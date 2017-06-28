@@ -1,4 +1,4 @@
-var walkSpeed = 2;
+var theisWhat = null;
 cc.Class({
     extends: cc.Component,
 
@@ -18,6 +18,7 @@ cc.Class({
     },
 
     onLoad: function () {
+        theisWhat = this.switchSpriteName(this.node.name);
         // this.speed = 1 + Math.random() * 2;
         if(this.node.x < 0){
             this.sroll = 'right';
@@ -27,23 +28,7 @@ cc.Class({
             this.node.width = -this.node.width;
         }
         this.Catchup = false;
-        
-        // this.node.getComponent(cc.BoxCollider).size = this.node.size;
-        // if(this.switchSpriteName(this.node.name) < 7)
-        // {
-        //     if(this.sroll == 'left')
-        //     this.node.getComponent(cc.BoxCollider).offset.x = (this.node.width / 2);
-        // }
-        // this.node.getComponent(cc.BoxCollider).offset.y = this.node.height / 2;
-        
-        // this.node.getComponent(cc.BoxCollider).size.width = this.node.width;
-        // this.node.getComponent(cc.BoxCollider).size.height = this.node.height;
-        // cc.log(this.node.getComponent(cc.BoxCollider).size);
-        // cc.log(this.node.getComponent(cc.BoxCollider).offset);
 
-        // this.randFishSpriteFrame();
-        // this.animationSwitch();
-        // this.node.addComponent(cc.Animation).play();
         for (var i = 0; i < theFishes.length; i++) {
             var element = theFishes[i];
             if(element)
@@ -56,13 +41,16 @@ cc.Class({
                     }
                 }
             }
-            
         }
-        cc.log("本大爷的速度" + this.speed);
+        // cc.log("本大爷的速度" + this.speed);
     },
 
     update:function(){
         this.fishMove();
+        if(TimeIsOver === true)
+        {
+            this.node.destroy();
+        }
     },
 
     /**
@@ -109,11 +97,13 @@ cc.Class({
         if(this.node.x >= 2000)
         {
             this.sroll = 'left';
+            this.destroySelf();
             // cc.log(this.node.getComponent(cc.BoxCollider).offset.x);
         }
         if(this.node.x <= -500)
         {
             this.sroll = 'right';
+            this.destroySelf();
             // cc.log(this.node.getComponent(cc.BoxCollider).offset.x);
         }
         if(this.sroll == 'right')
@@ -135,6 +125,17 @@ cc.Class({
             }
         }
     },
+    /**
+     * 删除自己
+     */
+     destroySelf:function(){
+        if(theisWhat < 7){
+            --FishNum;
+        }else if(theisWhat > 6 && theisWhat < 13){
+            --GarbageNum;
+        }
+        this.node.destroy();
+     },
 
     /**
      * 鱼本体碰撞
@@ -197,22 +198,6 @@ cc.Class({
             default:
                 break;
         }
-        //清理一下数组
-        // for (var i = 0; i < theFishes.length; i++) {
-        //     var element = theFishes[i];
-        //     if(element.node == other.node)
-        //     {
-        //         theFishes[i] = null;
-        //     }
-        // }
-        /**
-         * 碰撞改到鱼钩收起时
-         */
-        // if(other.node.name == 'DH_boat')
-        // {
-        //     self.node.parent = null;
-        //     self.node.destroy();
-        // }
     },
 
     /**

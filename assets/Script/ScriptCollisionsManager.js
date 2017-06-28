@@ -1,12 +1,30 @@
 var MinFishesNums = 0;//最小鱼数量
-var MaxFishesNums = 20;
+var MaxFishesNums = 0;
 var PushFrequencyNums = 3;
 window.theFishes = [];//鱼群
-window.FishNum = 0;
-window.GarbageNum = 0;
-var floorOne = 450;
-var floorTwo = 320;
-var floorThree = 140;
+window.FishNum = 0;//刷出来的鱼数量
+var maxFishesNum1 = 16;
+var maxFishesNum2 = 12;
+var maxFishesNum3 = 8;
+var maxAccumulationFishesNum1 = 72;
+var maxAccumulationFishesNum2 = 54;
+var maxAccumulationFishesNum3 = 36;
+var AccumulationFishesNum1 = 0;
+var AccumulationFishesNum2 = 0;
+var AccumulationFishesNum3 = 0;
+window.GarbageNum = 0;//刷出来的垃圾数量
+var maxGarbageNum1 = 4;
+var maxGarbageNum2 = 8;
+var maxGarbageNum3 = 12;
+var maxAccumulationGarbageNum1 = 18;
+var maxAccumulationGarbageNum2 = 36;
+var maxAccumulationGarbageNum3 = 54;
+var AccumulationGarbageNum1 = 0;
+var AccumulationGarbageNum2 = 0;
+var AccumulationGarbageNum3 = 0;
+var floorOne = 550;
+var floorTwo = 370;
+var floorThree = 190;
 
 var SPD1 = 300;
 var SPD2 = 400;
@@ -75,6 +93,7 @@ var ScriptCollisionsManager = cc.Class({
         },
         pushTime:null,
         Canvas_Node:cc.Node,
+        boatMoveDelta:0,
     },
     onLoad: function () {
         //鱼群初始化
@@ -94,33 +113,48 @@ var ScriptCollisionsManager = cc.Class({
         cc.log("2:"+floorTwo);
         cc.log("3:"+floorThree);
 
+        /**
+         * 钓起鱼和垃圾的数量限制
+         */
+        AccumulationFishesNum1 = maxAccumulationFishesNum1;
+        AccumulationFishesNum2 = maxAccumulationFishesNum2;
+        AccumulationFishesNum3 = maxAccumulationFishesNum3;
+        AccumulationGarbageNum1 = maxAccumulationGarbageNum1;
+        AccumulationGarbageNum2 = maxAccumulationGarbageNum2;
+        AccumulationGarbageNum3 = maxAccumulationGarbageNum3;
+
     },
 
     /**
      * 初始化鱼群
-     * 已使用
+     * 未使用
      */
     initFish:function(addFishNum){
-        for (; (FishNum+GarbageNum) < MaxFishesNums; ) {
-            if(TimeIsOver === false)
-            {
+        for (; (FishNum+GarbageNum) < MaxFishesNums; ){
+            if(TimeIsOver === false){
                 this.GameingAddFish();
             }
         }
     },
 
     update: function (dt) {
-        if((FishNum+GarbageNum) < MaxFishesNums)
-        {
-            if(TimeIsOver === false)
-            {
+        if((FishNum+GarbageNum) < MaxFishesNums){
+            if(TimeIsOver === false){
                 this.pushTime +=cc.director.getDeltaTime();
-                if(this.pushTime >= 0.34)
-                {
+                if(this.pushTime >= 0.33){
                     this.GameingAddFish();
                     this.pushTime = 0;
                 }
             }
+        }
+        if(MinTime < MaxTime * 0.334){
+            MaxFishesNums = maxFishesNum1 + maxGarbageNum1;
+        }
+        else if(MinTime >= MaxTime*0.334 && MinTime <= MaxTime*0.667){
+            MaxFishesNums = maxFishesNum2 + maxGarbageNum2;
+        }
+        else if(MinTime > MaxTime*0.667 && MinTime <= MaxTime){
+            MaxFishesNums = maxFishesNum3 + maxGarbageNum3;
         }
     },
 
@@ -139,8 +173,8 @@ var ScriptCollisionsManager = cc.Class({
                 nodeClass:0,//节点种类,用于计算积分
             };//鱼数据
         theFishes.push(theFish);
-        var stage = this.randFishSpriteFrame();//拿到阶段
-        var fishesObj = this.momentSpriteFishes(stage);
+        
+        var fishesObj = this.momentSpriteFishes();
         if(fishesObj)
         {
             theFishes[_length].node = cc.instantiate(fishesObj);/*cc.instantiate(this.fish_Node)*/
@@ -161,18 +195,16 @@ var ScriptCollisionsManager = cc.Class({
     },
 
     fishFun:function(rnum,i){
-        // this.randFishSpriteFrame(theFishes[i]);
-        var randY = Math.random() * 90;
-        // cc.log(randY);
+        var randY = -80 + Math.random() * 160;
         if(theFishes[i].fishCollisions === false)
         {
             var SPD = this.switchFishesSpeed();//依据时间线获得速度
 
             theFishes[i].nodeClass = theFishes[i].nodeClass * this.switchScore(SPD);//根据速度获得积分基数
-            cc.log("依据速度调整了积分后积分是:"+theFishes[i].nodeClass);
+            // cc.log("依据速度调整了积分后积分是:"+theFishes[i].nodeClass);
 
             theFishes[i].speed = SPD;
-            cc.log(theFishes[i].speed);
+            // cc.log(theFishes[i].speed);
             var floor = this.switchFloor();
             if (rnum <= 1) {
                 theFishes[i].node.x = -300;
@@ -209,6 +241,7 @@ var ScriptCollisionsManager = cc.Class({
                     theFishes[i].Floor = 1.2;
                     break;
                 case floorThree:
+                    cc.log('刷了一条最底层的鱼,Y坐标:'+theFishes[i].node.y);
                     theFishes[i].Floor = 1.5;
                     break;
             }
@@ -216,7 +249,7 @@ var ScriptCollisionsManager = cc.Class({
     },
 
     switchScore:function(spd){
-        switch (spd) {
+        switch (spd){
             case 300:
                 return 1;
             case 400:
@@ -256,8 +289,7 @@ var ScriptCollisionsManager = cc.Class({
             }
         }
         else if(stage === 3){
-            if(rand < 0.3501)
-            {
+            if(rand < 0.3501){
                 return floorOne;
             }
             else if(rand > 0.35 && rand < 0.7001){
@@ -273,73 +305,54 @@ var ScriptCollisionsManager = cc.Class({
         var stage = this.switchStage();
         var rand = Math.random();
         if(stage === 1){
-            if(rand < 0.6001)
-            {
+            if(rand < 0.6001){
                 return SPD1;
             }
-            else if(rand > 0.6 && rand < 0.8001)
-            {
+            else if(rand > 0.6 && rand < 0.8001){
                 return SPD2;
             }
-            else if(rand > 0.8 && rand < 0.95)
-            {
+            else if(rand > 0.8 && rand < 0.95){
                 return SPD3;
             }
-            else
-            {
+            else{
                 return SPD4;
             }
         }
         else if(stage === 2){
-            if(rand < 0.4501)
-            {
+            if(rand < 0.4501){
                 return SPD1;
             }
-            else if(rand > 0.45 && rand < 0.7001)
-            {
+            else if(rand > 0.45 && rand < 0.7001){
                 return SPD2;
             }
-            else if(rand > 0.7 && rand < 0.9)
-            {
+            else if(rand > 0.7 && rand < 0.9){
                 return SPD3;
             }
-            else
-            {
+            else{
                 return SPD4;
             }
         }
         else if(stage === 3){
-            if(rand < 0.3001)
-            {
+            if(rand < 0.3001){
                 return SPD1;
             }
-            else if(rand > 0.3 && rand < 0.6001)
-            {
+            else if(rand > 0.3 && rand < 0.6001){
                 return SPD2;
             }
-            else if(rand > 0.6 && rand < 0.85)
-            {
+            else if(rand > 0.6 && rand < 0.85){
                 return SPD3;
             }
-            else
-            {
+            else{
                 return SPD4;
             }
-
         }
     },
 
     /**
-     * 加载已创建的鱼节点
-     * agouti_Node
-     * bluefish_Node
-     * crab_Node
-     * cuttlefish_Node
-     * redfish_Node
-     * tropicalfish_Node
-     * yellowfish_Node
+     * return
+     * ALL,Fish,Garbage
      */
-    randFishSpriteFrame: function () {
+    randFishSpriteFrame:function(){
         var moment = this.returnWhat(this.switchStage());
         return moment;
     },
@@ -347,93 +360,91 @@ var ScriptCollisionsManager = cc.Class({
      * 阶段判断
      */
     switchStage:function(){
-        if(MinTime > 0 && MinTime <= 30){
+        if(MinTime >= 0 && MinTime < MaxTime*0.334){
             return 1;
         }
-        else if(MinTime > 30 && MinTime < 60){
+        else if(MinTime >= MaxTime*0.334 && MinTime < MaxTime*0.667){
             return 2;
         }
-        else if(MinTime >= 60){
+        else if(MinTime >= MaxTime*0.667 && MinTime<=MaxTime){
             return 3;
         }
     },
-
-    momentSpriteFishes:function(moment){
+    momentSpriteFishes:function(){
+        var moment = this.randFishSpriteFrame();
         if(moment == 'ALL')
         {
-            var rand = Math.random() * 12;
-            switch (Math.round(rand)) {
-                case 0:
-                    FishNum++;
-                    return this.agouti_Node;
-                case 1:
-                    FishNum++;
-                    return this.bluefish_Node;
-                case 2:
-                    FishNum++;
-                    return this.crab_Node;
-                case 3:
-                    FishNum++;
-                    return this.cuttlefish_Node;
-                case 4:
-                    FishNum++;
-                    return this.redfish_Node;
-                case 5:
-                    FishNum++;
-                    return this.tropicalfish_Node;
-                case 6:
-                    FishNum++;
-                    return this.yellowfish_Node;
-                case 7:
-                    GarbageNum++;
-                    return this.prop1_Node;
-                case 8:
-                    GarbageNum++;
-                    return this.prop2_Node;
-                case 9:
-                    GarbageNum++;
-                    return this.prop3_Node;
-                case 10:
-                    GarbageNum++;
-                    return this.prop4_Node;
-                case 11:
-                    GarbageNum++;
-                    return this.prop5_Node;
-                case 12:
-                    GarbageNum++;
-                    return this.prop6_Node;
-                default:
-                    cc.log('返回了一个空对象0:'+Math.round(rand));
-                    return;
+            var stage = this.switchStage();
+            if(stage === 1){
+                var _rand = Math.random();
+                if(_rand <= 0.8){
+                    return this.pushtheFish();
+                }
+                else{
+                    return this.pushtheGarbage();
+                }
+            }
+            else if(stage === 2){
+                var _rand = Math.random();
+                if(_rand <= 0.6){
+                    return this.pushtheFish();
+                }
+                else{
+                    return this.pushtheGarbage();
+                }
+            }
+            else if(stage === 3){
+                var _rand = Math.random();
+                if(_rand <= 0.4){
+                    return this.pushtheFish();
+                }
+                else{
+                    return this.pushtheGarbage();
+                }
             }
         }
         else if(moment == 'Fish')
         {
-            FishNum++;
-            var rand = Math.random() * 6 + 1;
-            switch (Math.round(rand)) {
-                case 1:
-                    return this.agouti_Node;
-                case 2:
-                    return this.bluefish_Node;
-                case 3:
-                    return this.crab_Node;
-                case 4:
-                    return this.cuttlefish_Node;
-                case 5:
-                    return this.redfish_Node;
-                case 6:
-                    return this.tropicalfish_Node;
-                case 7:
-                    return this.yellowfish_Node;
-                default:
-                    cc.log('返回了一个空对象1:'+Math.round(rand));
-                    return;
-            }
+            return this.pushtheFish();
         }
         else if(moment == 'Garbage')
         {
-            GarbageNum++;
+            return this.pushtheGarbage();
+        }
+    },
+
+    pushtheFish:function(){
+        /*var stage = this.switchStage();
+        if(stage===1){
+
+        }
+        else if(stage===2){------------------------------------------------------------------------------------------------------------------------------------
+
+        }*/
+        FishNum++;
+        var rand = Math.random() * 6 + 1;
+        switch (Math.round(rand)) {
+            case 1:
+                return this.agouti_Node;
+            case 2:
+                return this.bluefish_Node;
+            case 3:
+                return this.crab_Node;
+            case 4:
+                return this.cuttlefish_Node;
+            case 5:
+                return this.redfish_Node;
+            case 6:
+                return this.tropicalfish_Node;
+            case 7:
+                return this.yellowfish_Node;
+            default:
+                cc.log('返回了一个空对象1:'+Math.round(rand));
+                return;
+        }
+    },
+    pushtheGarbage:function(){
+        GarbageNum++;
             var rand = Math.random() * 5 + 1;
             switch (Math.round(rand)) {
                 case 1:
@@ -452,34 +463,46 @@ var ScriptCollisionsManager = cc.Class({
                     cc.log('返回了一个空对象2:'+Math.round(rand));
                     return;
             }
-        }
     },
 
     /**
      * 在什么阶段刷什么内容
      */
     returnWhat:function(moment){
-        if(FishNum+GarbageNum < this.fishMomentSwitch(moment) + this.garbageMomentSwitch(moment))
-        {
-            if(FishNum < this.fishMomentSwitch(moment) && GarbageNum < this.garbageMomentSwitch(moment))
-            {
+        if(moment===1){
+            if(FishNum < maxFishesNum1 && GarbageNum < maxGarbageNum1){
                 return 'ALL';
             }
-            if(FishNum < this.fishMomentSwitch(moment))
-            {
+            else if(FishNum < maxFishesNum1){
                 return 'Fish';
             }
-            if(GarbageNum < this.garbageMomentSwitch(moment))
-            {
+            else if(GarbageNum < maxGarbageNum1){
+                return 'Garbage';
+            }
+        }else if(moment===2){
+            if(FishNum < maxFishesNum2 && GarbageNum < maxGarbageNum2){
+                return 'ALL';
+            }
+            else if(FishNum < maxFishesNum3){
+                return 'Fish';
+            }
+            else if(GarbageNum < maxGarbageNum3){
+                return 'Garbage';
+            }
+        }else if(moment===3){
+            if(FishNum < maxFishesNum3 && GarbageNum < maxGarbageNum3){
+                return 'ALL';
+            }
+            else if(FishNum < maxFishesNum3){
+                return 'Fish';
+            }
+            else if(GarbageNum < maxGarbageNum3){
                 return 'Garbage';
             }
         }
-        else
-        {
-            return;
-        }
     },
     /**
+     * 未使用
      * 返回不同阶段鱼的数量
      */
     fishMomentSwitch:function(moment){
@@ -493,6 +516,7 @@ var ScriptCollisionsManager = cc.Class({
         }
     },
     /**
+     * 未使用
      * 返回不同阶段垃圾数量
      */
     garbageMomentSwitch:function(moment){
@@ -509,7 +533,7 @@ var ScriptCollisionsManager = cc.Class({
         var self = this;
         setTimeout(function() {
             if(MinFishesNums < MaxFishesNums){
-                MinFishesNums += PushFrequencyNums;
+                MinFishesNums += PushFrequencyNums;//----------------------------------------------------------------------------------------------------------------------
             }
             else{
                 self.unschedule(self.timePlusPlus,self);

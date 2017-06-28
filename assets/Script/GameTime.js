@@ -3,6 +3,8 @@ window.insertFishUserScore = null;
 window.TimeIsOver = false;
 window.MinTime = 0;
 window.MaxTime = 90;
+var isSendEnd = false//是否发送结算消息
+window.isPrintPhone = 0;//0没弹出,1输入正确,2输入错误
 
 cc.Class({
     extends: cc.Component,
@@ -20,6 +22,8 @@ cc.Class({
             default:null,
             type:cc.Label,
         },
+        shadow_Node:cc.Node,
+        phoneTips:cc.Node,
     },
 
     // use this for initialization
@@ -30,7 +34,13 @@ cc.Class({
         clock_hour.rotation = -27;
         clock_minute.rotation = 117;
 
+        isPrintPhone = 0;
+
         TimeIsOver = false;
+        if(TimeIsOver === false)
+        {
+            isSendEnd = false;
+        }
 
         var self = this;
         cc.loader.loadRes('Gameing/UI_time_blue',cc.SpriteFrame,function(err,spriteFrame){
@@ -78,40 +88,49 @@ cc.Class({
     },
 
     updatime_minute:function(){
-        MinTime++;
-        clock_minute.rotation += 360 / 60;
-        if(MinTime >= MaxTime)//this.TimeUiBg_Node.width <= (294 / 60)
+        if(TimeIsOver === false)
         {
-            cc.log('游戏结束2');
-            this.GameClearing();
-            this.sendRequestSelfCB();
-
-
-            // var self = this;
-            // setTimeout(function() {
-            //     self.sendRequestSelfCB();
-            // }, 100);
-            // setTimeout(function() {
-            //     self.requestMaxScore();
-            // }, 500);
-            // this.schedule(this.showSelfRankings,0.1);
-            // this.schedule(this.responesMaxScore,0.1);
-
-            TimeIsOver = true;
-        }
-        else
-        {
-            this.TimeUiBg_Node.width -= (294 / MaxTime);
-            this.TimeUiBg_Node.getChildByName('UI_time_Shadow').width -= (294 / MaxTime);
+            MinTime++;
+            clock_minute.rotation += 360 / 60;
+            if(MinTime >= MaxTime)
+            {
+                cc.log('游戏结束2');
+                if(isSendEnd == false)
+                {
+                    if(isPrintPhone == 0){
+                        this.showPrintTips();
+                    }
+                    else if(isPrintPhone == 2){
+                        phoneNumber = '';
+                    }
+                    if(isPrintPhone == 1){
+                        this.GameClearing();
+                        this.sendRequestSelfCB();
+                        TimeIsOver = true;
+                    }
+                }
+            }
+            else
+            {
+                this.TimeUiBg_Node.width -= (294 / MaxTime);
+                this.TimeUiBg_Node.getChildByName('UI_time_Shadow').width -= (294 / MaxTime);
+            }
         }
     },
+    showPrintTips:function(){
+        this.shadow_Node.active = true;
+        this.phoneTips.active = true;
+    },
     updatime_hour:function(){
-        clock_hour.rotation += 360 / 12;
-        if(MinTime>=MaxTime)
+        if(TimeIsOver === false)
         {
-            cc.log('计时器结束回调');
-            this.unschedule(this.updatime_minute,this);
-            this.unschedule(this.updatime_hour,this);
+            clock_hour.rotation += 360 / 12;
+            if(MinTime>=MaxTime)
+            {
+                cc.log('计时器结束回调');
+                this.unschedule(this.updatime_minute,this);
+                this.unschedule(this.updatime_hour,this);
+            }
         }
     },
     /**
@@ -119,6 +138,7 @@ cc.Class({
      */
     GameClearing:function(){
         var scorenum = this.score_Label.string;
+        isSendEnd = true;
         var cb = {
             "cmd":"fish/insertFishUserScore",
             "data":{
@@ -131,8 +151,6 @@ cc.Class({
             HTTP.sendobj(cb,2);
         }
     },
-
-    
     sendRequestSelfCB:function(){
         var score = this.score_Label.string;
         cc.log('现在分数:'+score);
@@ -143,7 +161,10 @@ cc.Class({
                 // "phone": phoneNumber
             }
         };
-        HTTP.sendobj(cb,4);
+        if(phoneNumber != '')
+        {
+            HTTP.sendobj(cb,4);
+        }
         var self = this;
         var maxScoreSchedule = setInterval(function(){
             if(ScoreSelectRankings)
