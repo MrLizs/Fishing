@@ -104,11 +104,13 @@ cc.Class({
                         phoneNumber = '';
                     }
                     if(isPrintPhone == 1){
-                        this.phoneTips.active = true;
+                        this.phoneTips.active = false;
                         this.GameClearing();
                         this.sendRequestSelfCB();
                         TimeIsOver = true;
                     }
+                }
+                if(isSendEnd == true){
                 }
             }
             else
