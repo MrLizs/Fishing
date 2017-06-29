@@ -5285,7 +5285,8 @@
     "BoatVec2": null,
     "phoneTips": {
       "__id__": 25
-    }
+    },
+    "BoatDelta": 0
   },
   {
     "__type__": "cc.Node",
@@ -6903,7 +6904,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 167.5,
+      "width": 33.5,
       "height": 37
     },
     "_children": [],
@@ -6950,7 +6951,7 @@
     },
     "_isSystemFontUsed": false,
     "_spacingX": 0,
-    "_N$string": "00000",
+    "_N$string": "0",
     "_N$horizontalAlign": 0,
     "_N$verticalAlign": 1,
     "_N$overflow": 0

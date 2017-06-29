@@ -80,14 +80,13 @@ cc.Class({
             //这里须恢复.
             cc.director.resume();
         }
-        this.touchLayout.on("touchmove",function(event){
-            if(self.fishline_Node.rotation > -90 && self.fishline_Node.rotation < 90 && !cc.director.isPaused()){
-                if(this.BoatDelta == 1){
-                    self.fishline_Node.rotation += (event.getDelta().x/24);
-                }
-            }
-        },this);
-        
+        /** 
+         * 未使用
+         * 线的旋转
+        */
+        // this.touchLayout.on("touchmove",function(event){
+            
+        // },this);
         // this.pauseBtn_Node.on(cc.Node.EventType.TOUCH_START,this.pauseStart,this);
         // this.pauseBtn_Node.on(cc.Node.EventType.TOUCH_END,this.pauseEnd,this);
         
@@ -128,7 +127,7 @@ cc.Class({
         if(MinTime >= MaxTime)
         {
             this.removeAllFishes();
-            if(isPrintPhone === 1)
+            if(isPrintPhone === 1 || TimeIsOver == true)
             {
                 this.GameSettlementLayoutOpen();
             }
@@ -202,7 +201,6 @@ cc.Class({
         {
             var touchVec = event.getDelta();
 
-            // this.BoatVec2 = event.getDelta().x;
             if(touchVec.x > 0)
             {
                 this.rightMove();
@@ -211,11 +209,14 @@ cc.Class({
             {
                 this.leftMove();
             }
-            // 移动渔船收线
-            // if(touchVec.x > 2 || touchVec.x < -2)
-            // {
-            //     this.angling = false;
-            // }
+            this.fishlineNodeRotation(touchVec.x);
+        }
+    },
+    fishlineNodeRotation:function(moveDelta){
+        if(this.fishline_Node.rotation > -60 && this.fishline_Node.rotation < 60 && !cc.director.isPaused()){
+            if(this.BoatDelta == 1){
+                this.fishline_Node.rotation += moveDelta * this.computeFrame();
+            }
         }
     },
     
@@ -249,8 +250,7 @@ cc.Class({
     //钓鱼
     Angling:function(){
         // if(fishLineStatus != 2)
-        if(this.barb_Node.childrenCount === 0)
-        {
+        if(this.barb_Node.childrenCount == 0){
             this.angling = true;
         }
     },
@@ -270,6 +270,7 @@ cc.Class({
             this.playAnimation();
             this.destroyFishesCheckUp();
         }
+        
     },
     //下钩
     DownFishhook:function(){
@@ -281,6 +282,9 @@ cc.Class({
             fishLineStatus = 1;
             this.fishline_Node.height += offStringSpeeds * this.computeFrame();
             this.barb_Node.y = -this.fishline_Node.height;
+        }
+        if(this.barb_Node.childrenCount > 0){
+            this.angling = false;
         }
     },
 
@@ -352,7 +356,8 @@ cc.Class({
                         {
                             GarbageNum--;
                         }
-                        theFishes[y] = null;
+                        theFishes[y].node.destroy();
+                        theFishes.splice(y,1);
                     }
 
                 }

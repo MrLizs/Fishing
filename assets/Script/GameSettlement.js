@@ -53,8 +53,38 @@ cc.Class({
             self.showMaxScore(interval1)
         },200);
         this.viewItemsNums();
+        if(phoneNumber == '')
+        {
+            this.MaxScore_Label.string = this.targetScore_Node.string;
+            this.HistoryHightest_Anim.active = true;
+            this.HistoryHightest_Anim.getComponent(cc.Animation).play();
+        }
     },
-
+    sendRequestSelfCB:function(){
+        var score = this.targetScore_Node.string;
+        cc.log('现在分数:'+score);
+        var cb = {
+            "cmd":"fish/queryBigThenThisScoreNum",
+            "data":{
+                "scoreNum": score
+            }
+        };
+        if(score>0)
+        {
+            HTTP.sendobj(cb,4);
+        }
+    },
+    requestMaxScore:function(){
+        var cb = {
+            "cmd":"fish/findUserMaxScore",
+            "data":{
+                "phone": phoneNumber
+            }
+        };
+        if(phoneNumber != ''){
+            HTTP.sendobj(cb,5)
+        }
+    },
     showScoreAndRankings:function(interval){
         if(ScoreSelectRankings)
         {
@@ -70,14 +100,20 @@ cc.Class({
         {
             clearInterval(interval);
             this.MaxScore_Label.string = '' + UserMaxScore;
-            if(parseInt(this.targetScore_Node.string) > UserMaxScore){
+            if(parseInt(this.targetScore_Node.string) >= parseInt(this.MaxScore_Label.string)){
+                this.MaxScore_Label.string = '' + parseInt(this.targetScore_Node.string);
                 this.HistoryHightest_Anim.active = true;
                 this.HistoryHightest_Anim.getComponent(cc.Animation).play();
-                this.MaxScore_Label.string = '' + parseInt(this.targetScore_Node.string);
             }
             else{
                 this.HistoryHightest_Anim.active = false;
             }
+        }
+        if(UserMaxScore == 0){
+            clearInterval(interval);
+            this.MaxScore_Label.string = this.targetScore_Node.string;
+            this.HistoryHightest_Anim.active = true;
+            this.HistoryHightest_Anim.getComponent(cc.Animation).play();
         }
     },
 
@@ -146,29 +182,5 @@ cc.Class({
         this.garbNum_parentNode.getChildByName('nums5').getComponent(cc.Label).string = FishScore[11];
         this.garbNum_parentNode.getChildByName('nums6').getComponent(cc.Label).string = FishScore[12];
     },
-    sendRequestSelfCB:function(){
-        var score = this.score_Label.string;
-        cc.log('现在分数:'+score);
-        var cb = {
-            "cmd":"fish/queryBigThenThisScoreNum",
-            "data":{
-                "scoreNum": score
-            }
-        };
-        if(phoneNumber != '')
-        {
-            HTTP.sendobj(cb,4);
-        }
-    },
-    requestMaxScore:function(){
-        var cb = {
-            "cmd":"fish/findUserMaxScore",
-            "data":{
-                "phone": phoneNumber
-            }
-        };
-        if(phoneNumber != ''){
-            HTTP.sendobj(cb,5)
-        }
-    },
+
 });

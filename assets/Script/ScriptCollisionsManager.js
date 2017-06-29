@@ -1,5 +1,5 @@
 var MinFishesNums = 0;//最小鱼数量
-var MaxFishesNums = 0;
+var MaxFishesNums = 0;//最大鱼群数量
 var PushFrequencyNums = 3;
 window.theFishes = [];//鱼群
 window.FishNum = 0;//刷出来的鱼数量
@@ -99,19 +99,10 @@ var ScriptCollisionsManager = cc.Class({
         //鱼群初始化
         theFishes = null;
         theFishes = new Array();
-        // this.initFish(MinFishesNums)
         MinFishesNums = 0;
         FishNum = 0;
         GarbageNum = 0;
         this.schedule(this.timePlusPlus,1);
-
-        cc.log("场景高度: "+ this.Canvas_Node.height);
-        floorOne = floorOne/1080 * this.Canvas_Node.height;
-        floorTwo = floorTwo/1080 * this.Canvas_Node.height;
-        floorThree = floorThree/1080 * this.Canvas_Node.height;
-        cc.log("1:"+floorOne);
-        cc.log("2:"+floorTwo);
-        cc.log("3:"+floorThree);
 
         /**
          * 钓起鱼和垃圾的数量限制
@@ -125,25 +116,11 @@ var ScriptCollisionsManager = cc.Class({
 
     },
 
-    /**
-     * 初始化鱼群
-     * 未使用
-     */
-    initFish:function(addFishNum){
-        if(TimeIsOver === false){
-            if(MinTime < MaxTime){
-                for (; (FishNum+GarbageNum) < MaxFishesNums; ){
-                    this.GameingAddFish();
-                }
-            }
-        }
-    },
-
     update: function (dt) {
         if(TimeIsOver === false && MinTime < MaxTime){
-            if((FishNum+GarbageNum) < MaxFishesNums){
+            if((this.getFishesNums()+this.getGarbageNums()) < 20){
                 this.pushTime +=cc.director.getDeltaTime();
-                if(this.pushTime >= 0.33){
+                if(this.pushTime > 0.33){
                     this.GameingAddFish();
                     this.pushTime = 0;
                 }
@@ -152,14 +129,55 @@ var ScriptCollisionsManager = cc.Class({
         if(MinTime < MaxTime * 0.334){
             MaxFishesNums = maxFishesNum1 + maxGarbageNum1;
         }
-        else if(MinTime >= MaxTime*0.334 && MinTime <= MaxTime*0.667){
+        else if(MinTime > MaxTime*0.333 && MinTime < MaxTime*0.667){
             MaxFishesNums = maxFishesNum2 + maxGarbageNum2;
         }
-        else if(MinTime > MaxTime*0.667 && MinTime <= MaxTime){
+        else if(MinTime > MaxTime*0.667 && (MinTime < MaxTime || MinTime == MaxTime) ){
             MaxFishesNums = maxFishesNum3 + maxGarbageNum3;
         }
     },
 
+    /**
+     * 获取鱼数量
+     */
+    getFishesNums:function(){
+        var fishnum=0;
+        theFishes.forEach(function(element) {
+            if(element)
+            {
+                if(element.node){
+                    if(element.type == 'fish'){
+                        fishnum++;
+                    }
+                }
+                else{
+                    element = null;
+                }
+            }
+        }, this);
+        cc.log('当前鱼总数'+fishnum);
+        return fishnum;
+    },
+    /**
+     * 获取垃圾数量
+     */
+     getGarbageNums:function(){
+        var fishnum=0;
+        theFishes.forEach(function(element) {
+            if(element){
+                if(element.node){
+                    if(element.type == 'garbage'){
+                        fishnum++;
+                    }
+                }
+                else{
+                    element = null;
+                }
+            }
+        }, this);
+        cc.log('当前垃圾总数'+fishnum);
+        return fishnum;
+     },
     /**
      * 动态添加鱼
      */
@@ -173,6 +191,7 @@ var ScriptCollisionsManager = cc.Class({
                 speed: null,//速度
                 fishCollisions: false,//是否碰撞
                 nodeClass:0,//节点种类,用于计算积分
+                type:0,//类型
             };//鱼数据
         theFishes.push(theFish);
         
@@ -184,10 +203,12 @@ var ScriptCollisionsManager = cc.Class({
             {
                 if(this.switchSpriteName(theFishes[_length].node.name) > 6){
                     theFishes[_length].node.rotation += Math.random() * 360;
-                    theFishes[_length].nodeClass = -100
+                    theFishes[_length].nodeClass = -100;
+                    theFishes[_length].type = 'garbage';
                 }
                 else{
-                    theFishes[_length].nodeClass = 100
+                    theFishes[_length].nodeClass = 100;
+                    theFishes[_length].type = 'fish';
                 }
                 theFishes[_length].node.active = true;
                 this.fishFun(Math.random() * 6,_length);
@@ -243,7 +264,6 @@ var ScriptCollisionsManager = cc.Class({
                     theFishes[i].Floor = 1.2;
                     break;
                 case floorThree:
-                    cc.log('刷了一条最底层的鱼,Y坐标:'+theFishes[i].node.y);
                     theFishes[i].Floor = 1.5;
                     break;
             }
@@ -362,46 +382,105 @@ var ScriptCollisionsManager = cc.Class({
      * 阶段判断
      */
     switchStage:function(){
+        var stage = 0;
         if(MinTime >= 0 && MinTime < MaxTime*0.334){
-            return 1;
+            stage = 1;
         }
         else if(MinTime >= MaxTime*0.334 && MinTime < MaxTime*0.667){
-            return 2;
+            stage = 2;
         }
         else if(MinTime >= MaxTime*0.667 && MinTime<=MaxTime){
-            return 3;
+            stage = 3;
+        }
+        return stage;
+    },
+
+    /**
+     * 鱼塘剩余鱼和垃圾判断
+     */
+    fishpondControlSwitch:function(_moment){
+        var stage = this.switchStage();
+        if(_moment == 'ALL'){
+            return _moment;
+        }
+        else{
+            if(stage == 1){
+                if(AccumulationFishesNum1 == 0 && AccumulationGarbageNum1 == 0){
+                    return 'NoPush';
+                }
+                else if(AccumulationGarbageNum1 == 0){
+                    return 'fish';
+                }
+                else if(AccumulationFishesNum1 == 0){
+                    return 'garbage';
+                }
+                else{
+                    return _moment;
+                }
+            }
+            if(stage == 2){
+                if(AccumulationFishesNum2 == 0 && AccumulationGarbageNum2 == 0){
+                    return 'NoPush';
+                }
+                else if(AccumulationGarbageNum2 == 0){
+                    return 'fish';
+                }
+                else if(AccumulationFishesNum2 == 0){
+                    return 'garbage';
+                }
+                else{
+                    return _moment;
+                }
+            }
+            if(stage == 3){
+                if(AccumulationFishesNum3 == 0 && AccumulationGarbageNum3 == 0){
+                    return 'NoPush';
+                }
+                else if(AccumulationGarbageNum3 == 0){
+                    return 'fish';
+                }
+                else if(AccumulationFishesNum3 == 0){
+                    return 'garbage';
+                }
+                else{
+                    return _moment;
+                }
+            }
         }
     },
+
+
     momentSpriteFishes:function(){
         var moment = this.randFishSpriteFrame();
+        // moment = this.fishpondControlSwitch(moment);暂未使用
         if(moment == 'ALL')
         {
             var stage = this.switchStage();
             if(stage === 1){
                 var _rand = Math.random();
-                if(_rand <= 0.8){
-                    return this.pushtheFish();
+                if(_rand > 0.8){
+                    return this.pushtheGarbage();
                 }
                 else{
-                    return this.pushtheGarbage();
+                    return this.pushtheFish();
                 }
             }
             else if(stage === 2){
                 var _rand = Math.random();
-                if(_rand <= 0.6){
-                    return this.pushtheFish();
+                if(_rand > 0.4){
+                    return this.pushtheGarbage();
                 }
                 else{
-                    return this.pushtheGarbage();
+                    return this.pushtheFish();
                 }
             }
             else if(stage === 3){
                 var _rand = Math.random();
-                if(_rand <= 0.4){
-                    return this.pushtheFish();
+                if(_rand < 0.6){
+                    return this.pushtheGarbage();
                 }
                 else{
-                    return this.pushtheGarbage();
+                    return this.pushtheFish();
                 }
             }
         }
@@ -416,13 +495,6 @@ var ScriptCollisionsManager = cc.Class({
     },
 
     pushtheFish:function(){
-        /*var stage = this.switchStage();
-        if(stage===1){
-
-        }
-        else if(stage===2){------------------------------------------------------------------------------------------------------------------------------------
-
-        }*/
         FishNum++;
         var rand = Math.random() * 6 + 1;
         switch (Math.round(rand)) {
@@ -471,38 +543,39 @@ var ScriptCollisionsManager = cc.Class({
      * 在什么阶段刷什么内容
      */
     returnWhat:function(moment){
+        var what = 'ALL';
+        var _fishNum = this.getFishesNums();
+        var _garbageNum = this.getGarbageNums();
         if(moment===1){
-            if(FishNum < maxFishesNum1 && GarbageNum < maxGarbageNum1){
-                return 'ALL';
-            }
-            else if(FishNum < maxFishesNum1){
+            what = this.returnInWaht(_fishNum,_garbageNum,maxFishesNum1,maxGarbageNum1);
+        }
+        if(moment===2){
+            what = this.returnInWaht(_fishNum,_garbageNum,maxFishesNum2,maxGarbageNum2);
+        }
+        if(moment===3){
+            what = this.returnInWaht(_fishNum,_garbageNum,maxFishesNum3,maxGarbageNum3);
+        }
+        return what;
+    },
+
+    returnInWaht(_fishNum,_garbageNum,_maxfishNum,_maxgarbageNum){
+        if(_fishNum > _maxfishNum && _garbageNum > _maxgarbageNum){
+            return 'NoPush';
+        }
+        if(_fishNum < _maxfishNum && _garbageNum < _maxgarbageNum){
+            return 'ALL';
+        }
+        else{
+            if(_fishNum < _maxfishNum){
                 return 'Fish';
             }
-            else if(GarbageNum < maxGarbageNum1){
-                return 'Garbage';
-            }
-        }else if(moment===2){
-            if(FishNum < maxFishesNum2 && GarbageNum < maxGarbageNum2){
-                return 'ALL';
-            }
-            else if(FishNum < maxFishesNum3){
-                return 'Fish';
-            }
-            else if(GarbageNum < maxGarbageNum3){
-                return 'Garbage';
-            }
-        }else if(moment===3){
-            if(FishNum < maxFishesNum3 && GarbageNum < maxGarbageNum3){
-                return 'ALL';
-            }
-            else if(FishNum < maxFishesNum3){
-                return 'Fish';
-            }
-            else if(GarbageNum < maxGarbageNum3){
+            else if(_garbageNum < _maxgarbageNum){
                 return 'Garbage';
             }
         }
+        return 'NoPush';
     },
+
     /**
      * 未使用
      * 返回不同阶段鱼的数量

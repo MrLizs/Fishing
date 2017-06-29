@@ -2,7 +2,7 @@ var HTTP = require('HTTP');
 window.insertFishUserScore = null;
 window.TimeIsOver = false;
 window.MinTime = 0;
-window.MaxTime = 20;
+window.MaxTime = 90;
 window.isSendEnd = false//是否发送结算消息
 window.isPrintPhone = 0;//0没弹出,1输入正确,2输入错误
 
@@ -95,13 +95,13 @@ cc.Class({
             if(MinTime >= MaxTime && isSendEnd == false)
             {
                 cc.log('游戏结束2');
-                if(isPrintPhone == 0){
+                if(isPrintPhone == 0 && phoneNumber == ''){
                     this.showPrintTips();
                 }
                 else if(isPrintPhone == 2){
                     phoneNumber = '';
                 }
-                if(isPrintPhone == 1){
+                if(isPrintPhone == 1 || phoneNumber != ''){
                     this.phoneTips.active = false;
                     // this.sendRequestSelfCB();
                     TimeIsOver = true;

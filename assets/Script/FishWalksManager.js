@@ -1,4 +1,4 @@
-var theisWhat = null;
+
 cc.Class({
     extends: cc.Component,
 
@@ -17,8 +17,7 @@ cc.Class({
         },
     },
 
-    onLoad: function () {
-        theisWhat = this.switchSpriteName(this.node.name);
+    onLoad: function(){
         // this.speed = 1 + Math.random() * 2;
         if(this.node.x < 0){
             this.sroll = 'right';
@@ -31,12 +30,9 @@ cc.Class({
 
         for (var i = 0; i < theFishes.length; i++) {
             var element = theFishes[i];
-            if(element)
-            {
-                if(element.node)
-                {
-                    if(element.node == this.node)
-                    {
+            if(element){
+                if(element.node){
+                    if(element.node == this.node){
                         this.speed = element.speed;
                     }
                 }
@@ -47,10 +43,10 @@ cc.Class({
 
     update:function(){
         this.fishMove();
-        if(TimeIsOver === true)
-        {
-            this.node.destroy();
-        }
+        // if(TimeIsOver === true)
+        // {
+        //     this.node.destroy();
+        // }
     },
 
     /**
@@ -61,22 +57,17 @@ cc.Class({
         {
             this.resetMovePoint();
         }
-        else if(this.Catchup == true)
-        {
-            if(this.BarbNode)
-            {
-                if(this.node.parent)
-                {
-                    if(this.node.parent.name == 'DH_boat')
-                    {
+        else if(this.Catchup == true){
+            if(this.BarbNode){
+                if(this.node.parent){
+                    if(this.node.parent.name == 'DH_boat'){
                         this.node.x = this.node.parent.getPositionX();
                     }
                 }
             }
             //旋转鱼节点
             var switchNum = this.switchSpriteName(this.node.name);
-            if(switchNum < 7)
-            {
+            if(switchNum < 7){
                 if(this.sroll == 'right'){
                     if(this.node.rotation != -90)
                         this.node.rotation -= 15;
@@ -129,12 +120,23 @@ cc.Class({
      * 删除自己
      */
      destroySelf:function(){
-        if(theisWhat < 7){
-            --FishNum;
-        }else if(theisWhat > 6 && theisWhat < 13){
-            --GarbageNum;
+        for (var i = 0; i < theFishes.length; i++) {
+            var element = theFishes[i];
+            if(element.node == this.node){
+                this.node.destroy();
+                theFishes.splice(i,1);
+                break;
+            }
         }
-        this.node.destroy();
+     },
+
+     onDestroy(){
+        var theisWhat = this.switchSpriteName(this.node.name);
+        if(theisWhat > 6){
+            --GarbageNum;
+        }else{
+            --FishNum;
+        }
      },
 
     /**
