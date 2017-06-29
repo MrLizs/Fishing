@@ -1,3 +1,4 @@
+var HTTP = require('HTTP');
 cc.Class({
     extends: cc.Component,
 
@@ -41,29 +42,45 @@ cc.Class({
     },
 
     onLoad: function () {
-        // this.shadow_Node.active = true;
-        // this.node.getChildByName('UI_basis_bottom').getChildByName('UI_account_back').on(cc.Node.EventType.TOUCH_START,this.backMainSceneClick,this);
-        // this.node.getChildByName('UI_basis_bottom').getChildByName('UI_account_back').on(cc.Node.EventType.TOUCH_END,this.backMainScene,this);
-        // this.node.getChildByName('UI_basis_bottom').getChildByName('UI_account_again').on(cc.Node.EventType.TOUCH_START,this.gameAgainClick,this);
-        // this.node.getChildByName('UI_basis_bottom').getChildByName('UI_account_again').on(cc.Node.EventType.TOUCH_END,this.gameAgain,this);
-        
-        this.viewItemsNums();
+        this.sendRequestSelfCB();
+        this.requestMaxScore();
         this.score_Label.string = this.targetScore_Node.string;
-
-        this.MaxScore_Label.string = '' + UserMaxScore;
-        cc.log('结算时的排名:'+ScoreSelectRankings.data);
-        this.ranking_Label.string = '' + ScoreSelectRankings.data;
-
-        if(parseInt(this.targetScore_Node.string) > UserMaxScore){
-            this.HistoryHightest_Anim.active = true;
-            this.HistoryHightest_Anim.getComponent(cc.Animation).play();
-            this.MaxScore_Label.string = '' + parseInt(this.targetScore_Node.string);
-        }
-        else{
-            this.HistoryHightest_Anim.active = false;
-        }
-        // this.subtraction_Node.active = false;
+        var self = this;
+        var interval = setInterval(function(){
+            self.showScoreAndRankings(interval)
+        },200);
+        var interval1 = setInterval(function(){
+            self.showMaxScore(interval1)
+        },200);
+        this.viewItemsNums();
     },
+
+    showScoreAndRankings:function(interval){
+        if(ScoreSelectRankings)
+        {
+            clearInterval(interval);
+            if(ScoreSelectRankings.data){
+                cc.log('结算时的排名:'+ScoreSelectRankings.data.bigNum);
+                this.ranking_Label.string = '' + ScoreSelectRankings.data.bigNum;
+            }
+        }
+    },
+    showMaxScore:function(interval){
+        if(UserMaxScore)
+        {
+            clearInterval(interval);
+            this.MaxScore_Label.string = '' + UserMaxScore;
+            if(parseInt(this.targetScore_Node.string) > UserMaxScore){
+                this.HistoryHightest_Anim.active = true;
+                this.HistoryHightest_Anim.getComponent(cc.Animation).play();
+                this.MaxScore_Label.string = '' + parseInt(this.targetScore_Node.string);
+            }
+            else{
+                this.HistoryHightest_Anim.active = false;
+            }
+        }
+    },
+
     update: function (dt){
         if(this.HistoryHightest_Anim.activeInHierarchy)
         {
@@ -72,6 +89,7 @@ cc.Class({
                 cc.director.pause();
             }
         }
+        
     },
 
     backMainSceneClick:function(){
@@ -128,5 +146,29 @@ cc.Class({
         this.garbNum_parentNode.getChildByName('nums5').getComponent(cc.Label).string = FishScore[11];
         this.garbNum_parentNode.getChildByName('nums6').getComponent(cc.Label).string = FishScore[12];
     },
-
+    sendRequestSelfCB:function(){
+        var score = this.score_Label.string;
+        cc.log('现在分数:'+score);
+        var cb = {
+            "cmd":"fish/queryBigThenThisScoreNum",
+            "data":{
+                "scoreNum": score
+            }
+        };
+        if(phoneNumber != '')
+        {
+            HTTP.sendobj(cb,4);
+        }
+    },
+    requestMaxScore:function(){
+        var cb = {
+            "cmd":"fish/findUserMaxScore",
+            "data":{
+                "phone": phoneNumber
+            }
+        };
+        if(phoneNumber != ''){
+            HTTP.sendobj(cb,5)
+        }
+    },
 });

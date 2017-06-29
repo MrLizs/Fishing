@@ -3,7 +3,7 @@ window.insertFishUserScore = null;
 window.TimeIsOver = false;
 window.MinTime = 0;
 window.MaxTime = 20;
-var isSendEnd = false//是否发送结算消息
+window.isSendEnd = false//是否发送结算消息
 window.isPrintPhone = 0;//0没弹出,1输入正确,2输入错误
 
 cc.Class({
@@ -92,25 +92,19 @@ cc.Class({
         {
             MinTime++;
             clock_minute.rotation += 360 / 60;
-            if(MinTime >= MaxTime)
+            if(MinTime >= MaxTime && isSendEnd == false)
             {
                 cc.log('游戏结束2');
-                if(isSendEnd == false)
-                {
-                    if(isPrintPhone == 0){
-                        this.showPrintTips();
-                    }
-                    else if(isPrintPhone == 2){
-                        phoneNumber = '';
-                    }
-                    if(isPrintPhone == 1){
-                        this.phoneTips.active = false;
-                        this.GameClearing();
-                        this.sendRequestSelfCB();
-                        TimeIsOver = true;
-                    }
+                if(isPrintPhone == 0){
+                    this.showPrintTips();
                 }
-                if(isSendEnd == true){
+                else if(isPrintPhone == 2){
+                    phoneNumber = '';
+                }
+                if(isPrintPhone == 1){
+                    this.phoneTips.active = false;
+                    // this.sendRequestSelfCB();
+                    TimeIsOver = true;
                 }
             }
             else
@@ -136,24 +130,7 @@ cc.Class({
             }
         }
     },
-    /**
-     * 游戏结算消息接口
-     */
-    GameClearing:function(){
-        var scorenum = this.score_Label.string;
-        isSendEnd = true;
-        var cb = {
-            "cmd":"fish/insertFishUserScore",
-            "data":{
-                "phone" : phoneNumber,
-                "scoreNum" : scorenum
-            }
-        };
-        if(scorenum > 0 && phoneNumber != '')
-        {
-            HTTP.sendobj(cb,2);
-        }
-    },
+
     sendRequestSelfCB:function(){
         var score = this.score_Label.string;
         cc.log('现在分数:'+score);
@@ -168,11 +145,7 @@ cc.Class({
         // {
             HTTP.sendobj(cb,4);
         // }
-        var self = this;
-        var maxScoreSchedule = setInterval(function(){
-            if(ScoreSelectRankings)
-            self.requestMaxScore(maxScoreSchedule);
-        },100);
+
     },
     requestMaxScore:function(maxScoreSchedule){
         clearInterval(maxScoreSchedule);

@@ -1250,7 +1250,7 @@
       "b": 127,
       "a": 255
     },
-    "_N$maxLength": 13,
+    "_N$maxLength": 11,
     "_N$stayOnTop": false
   },
   {
@@ -1585,6 +1585,9 @@
     "_enabled": true,
     "shadow_Node": {
       "__id__": 21
+    },
+    "score_Label": {
+      "__id__": 13
     }
   },
   {

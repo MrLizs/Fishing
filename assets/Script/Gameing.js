@@ -65,6 +65,7 @@ cc.Class({
         },
         BoatVec2:null,
         phoneTips:cc.Node,
+        BoatDelta:0,
     },
     
     // use this for initialization
@@ -81,7 +82,9 @@ cc.Class({
         }
         this.touchLayout.on("touchmove",function(event){
             if(self.fishline_Node.rotation > -90 && self.fishline_Node.rotation < 90 && !cc.director.isPaused()){
-                self.fishline_Node.rotation += (event.getDelta().x/24);
+                if(this.BoatDelta == 1){
+                    self.fishline_Node.rotation += (event.getDelta().x/24);
+                }
             }
         },this);
         
@@ -110,25 +113,25 @@ cc.Class({
             this.UpFishhook();
         }
         if(this.fishline_Node.rotation >0){
-            this.fishline_Node.rotation -=dt*30;
+            this.fishline_Node.rotation -= dt*30;
             if(this.fishline_Node.rotation <0){
                 this.fishline_Node.rotation = 0;
             }
         }
         else if(this.fishline_Node.rotation <0){
-            this.fishline_Node.rotation +=dt*30;
+            this.fishline_Node.rotation += dt*30;
+
             if(this.fishline_Node.rotation >0){
-                this.fishline_Node.rotation  =0;
+                this.fishline_Node.rotation = 0;
             }
         }
         if(MinTime >= MaxTime)
         {
             this.removeAllFishes();
-            if(UserMaxScore!=null || ScoreSelectRankings!=null)
+            if(isPrintPhone === 1)
             {
                 this.GameSettlementLayoutOpen();
             }
-            
         }
         //cc.fishesManager.updatefish(theFishes);
     },
@@ -140,6 +143,7 @@ cc.Class({
     GameSettlementLayoutOpen:function(){
         if(!this.GameSettlementLayout_Node.activeInHierarchy)
         {
+            this.phoneTips.active = false;
             this.shadow_Node.active = true;
             this.GameSettlementLayout_Node.active = true;
         }
@@ -197,6 +201,7 @@ cc.Class({
         if(!cc.director.isPaused())
         {
             var touchVec = event.getDelta();
+
             // this.BoatVec2 = event.getDelta().x;
             if(touchVec.x > 0)
             {
@@ -215,21 +220,28 @@ cc.Class({
     },
     
     leftMove:function(){
-        if(this.boat_Node.x > 190)
-        {
+        if(this.boat_Node.x > 190){
+            this.BoatDelta = 1;
             this.universal(-boatMoveSpeed * this.computeFrame());
+        }
+        else{
+            this.BoatDelta = 0;
         }
     },
     rightMove:function(){
-        if(this.boat_Node.x < 1730)
-        {
+        if(this.boat_Node.x < 1730){
+            this.BoatDelta = 1;
             this.universal(boatMoveSpeed * this.computeFrame());
+        }
+        else{
+            this.BoatDelta = 0;
         }
     },
     
     universal:function(moveSpeed){
             this.boat_Node.x += moveSpeed;
             piggy.x += moveSpeed;
+            
             // fishingRods.x += moveSpeed;
             // piggyFeet.x += moveSpeed;
     },

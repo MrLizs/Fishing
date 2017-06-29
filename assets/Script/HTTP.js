@@ -18,7 +18,7 @@ module.exports = {
             cc.log('当前不支持ajax');
         }
         else{
-            xhr.open('POST',url,true);            
+            xhr.open('POST',url,true);
             xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
             xhr.setRequestHeader("token",md52);
             var strValue="paramString="+param;
