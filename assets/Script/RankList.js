@@ -43,7 +43,9 @@ cc.Class({
                 "size" : 100
             }
         };
-        HTTP.sendobj(cb,1);
+        if(phoneNumber != ''){
+            HTTP.sendobj(cb,1);
+        }
         //this.schedule(this.showRankingsBg,0.5);
         var self = this;
         var timeSchedule = setInterval(function(){

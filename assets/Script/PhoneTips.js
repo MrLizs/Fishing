@@ -35,7 +35,6 @@ cc.Class({
                 phoneNumber = printStr;
                 this.shadow_Node.active = false;
                 isPrintPhone = 1;
-                this.GameSettlement(phoneNumber);
             }
             cc.log("输入的是:"+printStr);
         }
@@ -48,22 +47,5 @@ cc.Class({
             return true
         }
     },
-    /**
-     * 游戏结算消息接口
-     */
-    GameSettlement:function(_phoneNumber){
-        var scorenum = this.score_Label.string;
-        isSendEnd = true;
-        var cb = {
-            "cmd":"fish/insertFishUserScore",
-            "data":{
-                "phone" : _phoneNumber,
-                "scoreNum" : scorenum
-            }
-        };
-        if(scorenum > 0 && phoneNumber != '')
-        {
-            HTTP.sendobj(cb,2);
-        }
-    },
+
 });

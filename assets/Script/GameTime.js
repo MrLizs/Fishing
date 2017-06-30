@@ -2,7 +2,7 @@ var HTTP = require('HTTP');
 window.insertFishUserScore = null;
 window.TimeIsOver = false;
 window.MinTime = 0;
-window.MaxTime = 90;
+window.MaxTime = 30;
 window.isSendEnd = false//是否发送结算消息
 window.isPrintPhone = 0;//0没弹出,1输入正确,2输入错误
 
@@ -105,6 +105,7 @@ cc.Class({
                     this.phoneTips.active = false;
                     // this.sendRequestSelfCB();
                     TimeIsOver = true;
+                    this.GameSettlement();
                 }
             }
             else
@@ -137,15 +138,10 @@ cc.Class({
         var cb = {
             "cmd":"fish/queryBigThenThisScoreNum",
             "data":{
-                "scoreNum": score//,
-                // "phone": phoneNumber
+                "scoreNum": score
             }
         };
-        // if(phoneNumber != '')
-        // {
             HTTP.sendobj(cb,4);
-        // }
-
     },
     requestMaxScore:function(maxScoreSchedule){
         clearInterval(maxScoreSchedule);
@@ -156,5 +152,23 @@ cc.Class({
             }
         };
         HTTP.sendobj(cb,5)
+    },
+    /**
+     * 游戏结算消息接口
+     */
+    GameSettlement:function(){
+        var scorenum = this.score_Label.string;
+        isSendEnd = true;
+        var cb = {
+            "cmd":"fish/insertFishUserScore",
+            "data":{
+                "phone" : phoneNumber,
+                "scoreNum" : scorenum
+            }
+        };
+        if(scorenum > 0 && phoneNumber != '')
+        {
+            HTTP.sendobj(cb,2);
+        }
     },
 });
