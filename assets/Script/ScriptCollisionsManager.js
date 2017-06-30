@@ -3,8 +3,8 @@ var MaxFishesNums = 0;//最大鱼群数量
 var PushFrequencyNums = 3;
 window.theFishes = [];//鱼群
 window.FishNum = 0;//刷出来的鱼数量
-var maxFishesNum1 = 16;
-var maxFishesNum2 = 12;
+var maxFishesNum1 = 13;
+var maxFishesNum2 = 11;
 var maxFishesNum3 = 8;
 var maxAccumulationFishesNum1 = 72;
 var maxAccumulationFishesNum2 = 54;
@@ -13,9 +13,9 @@ var AccumulationFishesNum1 = 0;
 var AccumulationFishesNum2 = 0;
 var AccumulationFishesNum3 = 0;
 window.GarbageNum = 0;//刷出来的垃圾数量
-var maxGarbageNum1 = 4;
-var maxGarbageNum2 = 8;
-var maxGarbageNum3 = 12;
+var maxGarbageNum1 = 3;
+var maxGarbageNum2 = 5;
+var maxGarbageNum3 = 8;
 var maxAccumulationGarbageNum1 = 18;
 var maxAccumulationGarbageNum2 = 36;
 var maxAccumulationGarbageNum3 = 54;
@@ -25,6 +25,7 @@ var AccumulationGarbageNum3 = 0;
 var floorOne = 550;
 var floorTwo = 370;
 var floorThree = 190;
+var MaxViewNums = 16;
 
 var SPD1 = 300;
 var SPD2 = 400;
@@ -118,7 +119,7 @@ var ScriptCollisionsManager = cc.Class({
 
     update: function (dt) {
         if(TimeIsOver === false && MinTime < MaxTime){
-            if((this.getFishesNums()+this.getGarbageNums()) < 20){
+            if((this.getFishesNums()+this.getGarbageNums()) < MaxViewNums){
                 this.pushTime +=cc.director.getDeltaTime();
                 if(this.pushTime > 0.33){
                     this.GameingAddFish();
