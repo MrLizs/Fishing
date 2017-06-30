@@ -39,6 +39,10 @@ cc.Class({
             default:null,
             type:cc.Node,
         },
+        subtraction2_Node:{
+            default:null,
+            type:cc.Node,
+        },
     },
 
     onLoad: function () {
@@ -99,6 +103,12 @@ cc.Class({
         if(UserMaxScore)
         {
             clearInterval(interval);
+            if(UserMaxScore < 0){
+                this.subtraction2_Node.active = true;
+            }
+            else{
+                this.subtraction2_Node.active = false;
+            }
             this.MaxScore_Label.string = '' + UserMaxScore;
             if(parseInt(this.targetScore_Node.string) >= parseInt(this.MaxScore_Label.string)){
                 this.MaxScore_Label.string = '' + parseInt(this.targetScore_Node.string);
