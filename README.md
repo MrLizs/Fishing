@@ -1,4 +1,7 @@
 # Fishing
+# Ver 0.9.62
+# 1.自定义字体里增加"-"符号
+# 2.solved a bug
 
 # Ver 0.9.61
 # 1.修复了一个BUG

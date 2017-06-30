@@ -35,14 +35,6 @@ cc.Class({
             default:null,
             type:cc.Node,
         },
-        subtraction_Node:{
-            default:null,
-            type:cc.Node,
-        },
-        subtraction2_Node:{
-            default:null,
-            type:cc.Node,
-        },
         thousandRanking_Node:cc.Node,
     },
 
@@ -74,10 +66,7 @@ cc.Class({
                 "scoreNum": score
             }
         };
-        if(score>0)
-        {
-            HTTP.sendobj(cb,4);
-        }
+        HTTP.sendobj(cb,4);
     },
     requestMaxScore:function(){
         var cb = {
@@ -91,20 +80,21 @@ cc.Class({
         }
     },
     showScoreAndRankings:function(interval){
+        cc.log(ScoreSelectRankings);
         if(ScoreSelectRankings)
         {
             clearInterval(interval);
             if(ScoreSelectRankings.data){
-                if(ScoreSelectRankings.data.bigNum > 999){
-                    this.ranking_Label.active = false;
-                    this.thousandRanking_Node.active = true;
-                }
-                else{
-                    this.ranking_Label.getComponent(cc.Label).string = '' + ScoreSelectRankings.data.bigNum;
-                }
+                this.ThousandRanking(parseInt(this.targetScore_Node.string));
+                this.ranking_Label.getComponent(cc.Label).string = '' + ScoreSelectRankings.data.bigNum;
             }
         }
     },
+
+    /**
+     * 接口
+     * fish/findUserMaxScore
+     */
     showMaxScore:function(interval){
         if(UserMaxScore)
         {
@@ -118,6 +108,7 @@ cc.Class({
             else{
                 this.HistoryHightest_Anim.active = false;
             }
+            this.ThousandRanking(UserMaxScore);
         }
         if(UserMaxScore == 0){
             clearInterval(interval);
@@ -125,14 +116,21 @@ cc.Class({
             this.HistoryHightest_Anim.active = true;
             this.HistoryHightest_Anim.getComponent(cc.Animation).play();
         }
-        if(parseInt(this.targetScore_Node.string) < 0){
+        if(phoneNumber == ''){
             clearInterval(interval);
-            this.subtraction2_Node.active = true;
+        }
+        
+    },
+    ThousandRanking:function(_score){
+        if(_score > 0){
+            this.ranking_Label.active = true;
+            this.thousandRanking_Node.active = false;
+        }
+        else{
             this.ranking_Label.active = false;
             this.thousandRanking_Node.active = true;
         }
     },
-
     update: function (dt){
         if(this.HistoryHightest_Anim.activeInHierarchy)
         {
@@ -176,12 +174,6 @@ cc.Class({
         cc.director.loadScene('FishingGame');
     },
     viewItemsNums:function(){
-        if(this.targetScore_Node.string < 0){
-            this.subtraction_Node.active = true;
-        }
-        else{
-            this.subtraction_Node.active = false;
-        }
 
         this.fishNum_parentNode.getChildByName('nums1').getComponent(cc.Label).string = FishScore[0];
         this.fishNum_parentNode.getChildByName('nums2').getComponent(cc.Label).string = FishScore[1];
