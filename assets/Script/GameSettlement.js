@@ -25,7 +25,7 @@ cc.Class({
         },
         ranking_Label:{
             default:null,
-            type:cc.Label,
+            type:cc.Node,
         },
         targetScore_Node:{
             default:null,
@@ -43,6 +43,7 @@ cc.Class({
             default:null,
             type:cc.Node,
         },
+        thousandRanking_Node:cc.Node,
     },
 
     onLoad: function () {
@@ -94,8 +95,13 @@ cc.Class({
         {
             clearInterval(interval);
             if(ScoreSelectRankings.data){
-                cc.log('结算时的排名:'+ScoreSelectRankings.data.bigNum);
-                this.ranking_Label.string = '' + ScoreSelectRankings.data.bigNum;
+                if(ScoreSelectRankings.data.bigNum > 999){
+                    this.ranking_Label.active = false;
+                    this.thousandRanking_Node.active = true;
+                }
+                else{
+                    this.ranking_Label.getComponent(cc.Label).string = '' + ScoreSelectRankings.data.bigNum;
+                }
             }
         }
     },
@@ -103,12 +109,6 @@ cc.Class({
         if(UserMaxScore)
         {
             clearInterval(interval);
-            if(UserMaxScore < 0){
-                this.subtraction2_Node.active = true;
-            }
-            else{
-                this.subtraction2_Node.active = false;
-            }
             this.MaxScore_Label.string = '' + UserMaxScore;
             if(parseInt(this.targetScore_Node.string) >= parseInt(this.MaxScore_Label.string)){
                 this.MaxScore_Label.string = '' + parseInt(this.targetScore_Node.string);
@@ -124,6 +124,12 @@ cc.Class({
             this.MaxScore_Label.string = this.targetScore_Node.string;
             this.HistoryHightest_Anim.active = true;
             this.HistoryHightest_Anim.getComponent(cc.Animation).play();
+        }
+        if(parseInt(this.targetScore_Node.string) < 0){
+            clearInterval(interval);
+            this.subtraction2_Node.active = true;
+            this.ranking_Label.active = false;
+            this.thousandRanking_Node.active = true;
         }
     },
 
