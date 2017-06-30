@@ -40,7 +40,7 @@ cc.Class({
             "data":{
                 "page" : 1,
                 "phone" : phoneNumber,
-                "size" : 100
+                "size" : 1000
             }
         };
         // if(phoneNumber != ''){

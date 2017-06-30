@@ -39,17 +39,23 @@ cc.Class({
     },
 
     onLoad: function () {
-        this.sendRequestSelfCB();
-        this.requestMaxScore();
-        this.score_Label.string = this.targetScore_Node.string;
         var self = this;
-        var interval = setInterval(function(){
-            self.showScoreAndRankings(interval)
-        },200);
+        this.score_Label.string = this.targetScore_Node.string;
+        
+        if(phoneNumber != ''){
+            this.requestMaxScore();
+        }
         var interval1 = setInterval(function(){
             self.showMaxScore(interval1)
         },200);
+
+        this.sendRequestSelfCB();
+        var interval = setInterval(function(){
+            self.showScoreAndRankings(interval)
+        },200);
+
         this.viewItemsNums();
+
         if(phoneNumber == '')
         {
             this.MaxScore_Label.string = this.targetScore_Node.string;
@@ -75,9 +81,7 @@ cc.Class({
                 "phone": phoneNumber
             }
         };
-        if(phoneNumber != ''){
-            HTTP.sendobj(cb,5)
-        }
+        HTTP.sendobj(cb,5)
     },
     showScoreAndRankings:function(interval){
         cc.log(ScoreSelectRankings);
