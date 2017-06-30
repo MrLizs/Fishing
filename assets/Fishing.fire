@@ -2593,7 +2593,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 128.09,
+      "width": 145.89,
       "height": 32
     },
     "_children": [],
@@ -2641,7 +2641,7 @@
     "_N$file": null,
     "_isSystemFontUsed": true,
     "_spacingX": 0,
-    "_N$string": "Ver 0.9.6",
+    "_N$string": "Ver 0.9.61",
     "_N$horizontalAlign": 0,
     "_N$verticalAlign": 1,
     "_N$overflow": 0
