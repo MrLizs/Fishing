@@ -292,7 +292,7 @@ var ScriptCollisionsManager = cc.Class({
             {
                 return floorOne;
             }
-            else if(rand > 0.5 && rand < 0.9001){
+            else if(rand > 0.5 && rand < 0.8501){
                 return floorTwo;
             }
             else{
@@ -304,7 +304,7 @@ var ScriptCollisionsManager = cc.Class({
             {
                 return floorOne;
             }
-            else if(rand > 0.4 && rand < 0.8001){
+            else if(rand > 0.4 && rand < 0.7501){
                 return floorTwo;
             }
             else{
@@ -312,10 +312,10 @@ var ScriptCollisionsManager = cc.Class({
             }
         }
         else if(stage === 3){
-            if(rand < 0.3501){
+            if(rand < 0.3001){
                 return floorOne;
             }
-            else if(rand > 0.35 && rand < 0.7001){
+            else if(rand > 0.3 && rand < 0.6501){
                 return floorTwo;
             }
             else{
@@ -328,13 +328,13 @@ var ScriptCollisionsManager = cc.Class({
         var stage = this.switchStage();
         var rand = Math.random();
         if(stage === 1){
-            if(rand < 0.6001){
+            if(rand < 0.4001){
                 return SPD1;
             }
-            else if(rand > 0.6 && rand < 0.8001){
+            else if(rand > 0.4 && rand < 0.7001){
                 return SPD2;
             }
-            else if(rand > 0.8 && rand < 0.95){
+            else if(rand > 0.7 && rand < 0.9001){
                 return SPD3;
             }
             else{
@@ -342,20 +342,6 @@ var ScriptCollisionsManager = cc.Class({
             }
         }
         else if(stage === 2){
-            if(rand < 0.4501){
-                return SPD1;
-            }
-            else if(rand > 0.45 && rand < 0.7001){
-                return SPD2;
-            }
-            else if(rand > 0.7 && rand < 0.9){
-                return SPD3;
-            }
-            else{
-                return SPD4;
-            }
-        }
-        else if(stage === 3){
             if(rand < 0.3001){
                 return SPD1;
             }
@@ -363,6 +349,20 @@ var ScriptCollisionsManager = cc.Class({
                 return SPD2;
             }
             else if(rand > 0.6 && rand < 0.85){
+                return SPD3;
+            }
+            else{
+                return SPD4;
+            }
+        }
+        else if(stage === 3){
+            if(rand < 0.2001){
+                return SPD1;
+            }
+            else if(rand > 0.2 && rand < 0.5001){
+                return SPD2;
+            }
+            else if(rand > 0.5 && rand < 0.8001){
                 return SPD3;
             }
             else{
@@ -468,7 +468,7 @@ var ScriptCollisionsManager = cc.Class({
             }
             else if(stage === 2){
                 var _rand = Math.random();
-                if(_rand > 0.4){
+                if(_rand > 0.3){
                     return this.pushtheGarbage();
                 }
                 else{
@@ -477,7 +477,7 @@ var ScriptCollisionsManager = cc.Class({
             }
             else if(stage === 3){
                 var _rand = Math.random();
-                if(_rand < 0.6){
+                if(_rand > 0.5){
                     return this.pushtheGarbage();
                 }
                 else{
