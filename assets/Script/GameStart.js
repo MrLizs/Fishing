@@ -55,7 +55,7 @@ cc.Class({
         // }
         // cc.log("随机手机号: " + phoneNumber);
         // phoneNumber = '13419695310';
-
+        this.loadPhone();
         
         cc.director.preloadScene('FishingGame');
     },
