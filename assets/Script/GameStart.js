@@ -75,7 +75,7 @@ cc.Class({
             if(phonenums.length == 11){
                 for (var i = 0; i < phonenums.length; i++) {
                     var element = phonenums.split('');
-                    if(this.isNumber(element) != true){
+                    if(this.isNumber(element) == true){
                         cc.log('phone is false')
                         break;
                     }
