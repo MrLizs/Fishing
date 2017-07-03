@@ -1,4 +1,5 @@
 var HTTP = require('HTTP');
+var friendsScrollViewContent=null;
 cc.Class({
     extends: cc.Component,
 
@@ -36,12 +37,17 @@ cc.Class({
             type:cc.Node,
         },
         thousandRanking_Node:cc.Node,
+        friendsScrollView_Node:cc.Node,
+        friendsScrollViewContent:cc.Node,
+        friendsStr_Node:cc.Node,
+        friend_prefab:cc.Prefab,
     },
 
     onLoad: function () {
         var self = this;
         this.score_Label.string = this.targetScore_Node.string;
-        
+
+
         if(phoneNumber != ''){
             this.requestMaxScore();
         }
@@ -66,12 +72,24 @@ cc.Class({
     sendRequestSelfCB:function(){
         var score = this.targetScore_Node.string;
         cc.log('现在分数:'+score);
-        var cb = {
-            "cmd":"fish/queryBigThenThisScoreNum",
-            "data":{
-                "scoreNum": score
-            }
-        };
+        var cb = null;
+        if(phoneNumber == ''){
+            cb = {
+                "cmd":"fish/queryBigThenThisScoreNum",
+                "data":{
+                    "scoreNum": score
+                }
+            };
+        }
+        else{
+            cb = {
+                "cmd":"fish/queryBigThenThisScoreNum",
+                "data":{
+                    "phone": phoneNumber,
+                    "scoreNum": score
+                }
+            };
+        }
         HTTP.sendobj(cb,4);
     },
     requestMaxScore:function(){
@@ -92,6 +110,25 @@ cc.Class({
                 this.ThousandRanking(parseInt(this.targetScore_Node.string));
                 this.ranking_Label.getComponent(cc.Label).string = '' + ScoreSelectRankings.data.bigNum;
             }
+            var friendsList = ScoreSelectRankings.data.list;
+            if(friendsList && friendsList.length > 0){
+                cc.log('超过 '+friendsList.length+' 个好友');
+                this.friendsScrollView_Node.active = true;
+                this.friendsStr_Node.active = false;
+                for (var i = 0; i < friendsList.length; i++) {
+                    var element = friendsList[i];
+                    var friend = cc.instantiate(this.friend_prefab);
+                    this.friendsScrollViewContent.addChild(friend);
+                    friend.x = -180 + 90*i;
+                    friend.getChildByName('New Sprite').getComponent(cc.Sprite).spriteFrame = element.toUserpic;
+                    cc.log(element);
+                }
+            }
+            else{
+                this.friendsScrollView_Node.active = false;
+                this.friendsStr_Node.active = true;
+            }
+
         }
     },
 
