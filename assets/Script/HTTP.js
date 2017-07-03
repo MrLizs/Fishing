@@ -1,5 +1,5 @@
 var url = 'http://192.168.3.191:8080/game-collection-server/ws/rest';
-// var url = 'http://118.190.87.31:8080/game-collection-server/ws/rest';
+//var url = 'http://118.190.87.31:8080/game-collection-server/ws/rest';
 module.exports = {
     sendobj:function(msg,type){
         var xhr = new XMLHttpRequest();
