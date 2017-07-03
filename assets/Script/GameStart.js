@@ -92,10 +92,8 @@ cc.Class({
     },
     friendSynchronization:function(){
         var cb = {
-            "cmd":"fish/synchroFriends",
-            "data":{
-                "phone" : phoneNumber
-            }
+        "cmd":"friend/synchroFriends",
+            "data":{"phone":phoneNumber}
         };
         if(phoneNumber != '')
         {
