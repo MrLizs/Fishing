@@ -1,4 +1,8 @@
 # Fishing
+
+# Ver 0.9.63
+# 1.增加获取GET请求的phone字段并且正则11位数字
+
 # Ver 0.9.62
 # 1.自定义字体里增加"-"符号
 # 2.solved a bug

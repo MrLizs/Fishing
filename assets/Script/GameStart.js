@@ -1,5 +1,6 @@
 var HTTP = require('HTTP');
 window.phoneNumber = '';
+window.synchroFriends = '';
 
 cc.Class({
     extends: cc.Component,
@@ -55,14 +56,52 @@ cc.Class({
         // cc.log("随机手机号: " + phoneNumber);
         // phoneNumber = '13419695310';
 
+        
         cc.director.preloadScene('FishingGame');
-
     },
 
     // called every frame, uncomment this function to activate update callback
     // update: function (dt) {
 
     // },
+
+    loadPhone:function(){
+        var nums=0;
+        var phonenums = window.location.search;
+        var phonestr = phonenums.split('=')[0].split('?')[1];
+        cc.log("phonestr:"+phonestr);
+        if(phonestr == 'phone'){
+            phonenums = phonenums.split('=')[1];
+            if(phonenums.length == 11){
+                for (var i = 0; i < phonenums.length; i++) {
+                    var element = phonenums.split('');
+                    if(this.isNumber(element) != true){
+                        cc.log('phone is false')
+                        break;
+                    }
+                    nums++;
+                }
+            }
+            if(nums == 11){
+                phoneNumber = phonenums;
+                console.log('phone input right : ' + phoneNumber);
+                this.friendSynchronization();
+            }
+            cc.log(phonenums);
+        }
+    },
+    friendSynchronization:function(){
+        var cb = {
+            "cmd":"fish/synchroFriends",
+            "data":{
+                "phone" : phoneNumber
+            }
+        };
+        if(phoneNumber != '')
+        {
+            HTTP.sendobj(cb,6);
+        }
+    },
     
     clickStartBtn:function(){
         var self = this;
@@ -72,7 +111,7 @@ cc.Class({
 
     },
     clickEndStartBtn:function(){
-        var self = this;
+        // var self = this;
         // cc.loader.loadRes('Login/UI_home_start',cc.SpriteFrame,function(err,spriteFrame){
         //     self.start_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
         // });
@@ -130,7 +169,12 @@ cc.Class({
         //     self.gameExitBtn_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
         // });
     },
-
-
-
+    isNumber :function(value) {
+        var patrn =  /^\+?[0-9]*$/;
+        if (patrn.exec(value) == null || value == "") {
+            return false
+        } else {
+            return true
+        }
+    },
 });

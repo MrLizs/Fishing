@@ -58,6 +58,11 @@ module.exports = {
                     UserMaxScore = response.data;
                     cc.log("UserMaxScore:"+UserMaxScore);
                 }
+                if(type == 6){
+                    synchroFriends = null;
+                    synchroFriends = response.data;
+                    cc.log('synchroFriends'+synchroFriends);
+                }
 
             };
         }
