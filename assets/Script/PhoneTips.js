@@ -22,6 +22,22 @@ cc.Class({
             var t=0;
             for (var i = 0; i < 11; i++) {
                 var element = printStr.split("")[i];
+                if(i == 0){
+                    if(element != 1){
+                        cc.log("错误的手机号");
+                        phoneNumber = '';
+                        break;
+                    }
+                }
+                if(i == 1){
+                    if(element > 2 && element < 9){
+                    }
+                    else{
+                        cc.log("错误的手机号");
+                        phoneNumber = '';
+                        break;
+                    }
+                }
                 if(this.isNumber(element) == false){
                     cc.log("输入错误:"+printStr);
                     isPrintPhone = 2;
@@ -35,6 +51,9 @@ cc.Class({
                 phoneNumber = printStr;
                 this.shadow_Node.active = false;
                 isPrintPhone = 1;
+            }
+            else{
+                phoneNumber = "";
             }
             cc.log("输入的是:"+printStr);
         }
