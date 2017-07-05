@@ -1,0 +1,30 @@
+{
+  "ver": "1.0.0",
+  "uuid": "9d969921-8446-49e5-8f39-c42da2657f83",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "subMetas": {
+    "weichart2": {
+      "ver": "1.0.3",
+      "uuid": "724c1298-8bf5-47a4-9eac-0fb4bbf76c74",
+      "rawTextureUuid": "9d969921-8446-49e5-8f39-c42da2657f83",
+      "trimType": "custom",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": 0,
+      "trimX": 0,
+      "trimY": 0,
+      "width": 84,
+      "height": 84,
+      "rawWidth": 84,
+      "rawHeight": 84,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

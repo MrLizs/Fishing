@@ -6,6 +6,7 @@ cc.Class({
     properties: {
         shadow_Node:cc.Node,
         score_Label:cc.Label,
+        TipsString_Node:cc.Node,
     },
     onLoad: function () {
 
@@ -53,6 +54,7 @@ cc.Class({
                 isPrintPhone = 1;
             }
             else{
+                this.TipsString();
                 phoneNumber = "";
             }
             cc.log("输入的是:"+printStr);
@@ -65,6 +67,12 @@ cc.Class({
         } else {
             return true
         }
+    },
+    TipsString:function(){
+        this.TipsString_Node.active = true;
+        setTimeout(function() {
+            this.TipsString_Node.active = false;
+        }, 2000);
     },
 
 });

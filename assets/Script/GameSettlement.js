@@ -41,6 +41,7 @@ cc.Class({
         friendsScrollViewContent:cc.Node,
         friendsStr_Node:cc.Node,
         friend_prefab:cc.Prefab,
+        share_Node:cc.Node,
     },
 
     onLoad: function () {
@@ -231,5 +232,11 @@ cc.Class({
         this.garbNum_parentNode.getChildByName('nums5').getComponent(cc.Label).string = FishScore[11];
         this.garbNum_parentNode.getChildByName('nums6').getComponent(cc.Label).string = FishScore[12];
     },
+    ShowShare:function(){
+        this.share_Node.active = true;
+    },
+    closeShare:function(){
+        this.share_Node.active = false;
+    }
 
 });
