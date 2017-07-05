@@ -59,6 +59,9 @@ cc.Class({
             }
             cc.log("输入的是:"+printStr);
         }
+        else{
+            this.TipsString();
+        }
     },
     isNumber :function(value) {
         var patrn =  /^\+?[0-9]*$/;
@@ -70,8 +73,9 @@ cc.Class({
     },
     TipsString:function(){
         this.TipsString_Node.active = true;
+        var self = this;
         setTimeout(function() {
-            this.TipsString_Node.active = false;
+            self.TipsString_Node.active = false;
         }, 2000);
     },
 
