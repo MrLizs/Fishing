@@ -42,6 +42,8 @@ cc.Class({
         friendsStr_Node:cc.Node,
         friend_prefab:cc.Prefab,
         share_Node:cc.Node,
+        share2_Node:cc.Node,
+        Reward_Node:cc.Node,
     },
 
     onLoad: function () {
@@ -69,6 +71,9 @@ cc.Class({
             this.HistoryHightest_Anim.active = true;
             this.HistoryHightest_Anim.getComponent(cc.Animation).play();
         }
+
+        this.share2_Node.active = true;
+        this.Reward_Node.active = true;
     },
     sendRequestSelfCB:function(){
         var score = this.targetScore_Node.string;
@@ -233,10 +238,16 @@ cc.Class({
         this.garbNum_parentNode.getChildByName('nums6').getComponent(cc.Label).string = FishScore[12];
     },
     ShowShare:function(){
+        this.share2_Node.active = true;
         this.share_Node.active = true;
     },
     closeShare:function(){
+        this.share2_Node.active = false;
         this.share_Node.active = false;
-    }
+    },
+    closeReward:function(){
+        this.share2_Node.active = false;
+        this.Reward_Node.active = false;
+    },
 
 });
