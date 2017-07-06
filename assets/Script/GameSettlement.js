@@ -72,8 +72,11 @@ cc.Class({
             this.HistoryHightest_Anim.getComponent(cc.Animation).play();
         }
 
-        this.share2_Node.active = true;
-        this.Reward_Node.active = true;
+        if(cc.sys == "ios" || cc.sys == "Android")
+        {
+            this.share2_Node.active = true;
+            this.Reward_Node.active = true;
+        }
     },
     sendRequestSelfCB:function(){
         var score = this.targetScore_Node.string;

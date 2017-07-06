@@ -23,7 +23,7 @@ cc.Class({
             type:cc.Label,
         },
         shadow_Node:cc.Node,
-        phoneTips:cc.Node,
+        phoneTips_Node:cc.Node,
     },
 
     // use this for initialization
@@ -96,13 +96,13 @@ cc.Class({
             {
                 cc.log('游戏结束2');
                 if(isPrintPhone == 0 && phoneNumber == ''){
-                    this.showPrintTips();
+                    // this.showPrintTips();
                 }
                 else if(isPrintPhone == 2){
                     phoneNumber = '';
                 }
                 if(isPrintPhone == 1 || phoneNumber != ''){
-                    this.phoneTips.active = false;
+                    this.phoneTips_Node.active = false;
                     // this.sendRequestSelfCB();
                     TimeIsOver = true;
                     this.GameSettlement();
@@ -115,9 +115,10 @@ cc.Class({
             }
         }
     },
+
     showPrintTips:function(){
         this.shadow_Node.active = true;
-        this.phoneTips.active = true;
+        this.phoneTips_Node.active = true;
     },
     updatime_hour:function(){
         if(TimeIsOver === false)
