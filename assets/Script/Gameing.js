@@ -64,7 +64,6 @@ cc.Class({
             type:cc.Node,
         },
         BoatVec2:null,
-        phoneTips:cc.Node,
         BoatDelta:0,
     },
     
@@ -142,7 +141,6 @@ cc.Class({
     GameSettlementLayoutOpen:function(){
         if(!this.GameSettlementLayout_Node.activeInHierarchy)
         {
-            this.phoneTips.active = false;
             this.shadow_Node.active = true;
             this.GameSettlementLayout_Node.active = true;
         }

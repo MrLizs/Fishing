@@ -1,5 +1,7 @@
 var HTTP = require('HTTP');
 var friendsScrollViewContent=null;
+window.CouponPage = null;
+
 cc.Class({
     extends: cc.Component,
 
@@ -71,13 +73,55 @@ cc.Class({
             this.HistoryHightest_Anim.active = true;
             this.HistoryHightest_Anim.getComponent(cc.Animation).play();
         }
-
-        if(cc.sys == "ios" || cc.sys == "Android")
+        else
         {
-            this.share2_Node.active = true;
-            this.Reward_Node.active = true;
+            this.requestRewardCouponPage();
+        }
+        
+        this.GameSettlement();
+
+    },
+    requestRewardCouponPage:function(){
+         var cb = {
+            "cmd":"fish/queryUserCouponPage",
+            "data":{
+                "page": 1,
+                "phone": phoneNumber,
+                "size": 10
+            }
+        };
+        if(phoneNumber != '')
+        {
+            HTTP.sendobj(cb,8);
+            var self = this;
+            var interval = setInterval(function(){
+                self.responseRewardCouponPage(interval);
+            },200);
         }
     },
+    responseRewardCouponPage:function(interval){
+        if(CouponPage)
+        {
+            clearInterval(interval)
+            cc.log(CouponPage);
+            if(CouponPage.data.total < 3)
+            {
+                this.ShowReward();
+            }
+        }
+    },
+    ShowReward:function(){
+        this.Reward_Node.active = true;
+        if(phoneNumber != ''){
+            this.Reward_Node.getChildByName("phoneNumberEditBox").active = false;
+            this.Reward_Node.getChildByName('receive1').x = 0; 
+        }
+        else{
+            this.Reward_Node.getChildByName("phoneNumberEditBox").active = true;
+            this.Reward_Node.getChildByName('receive1').x = 128;
+        }
+    },
+
     sendRequestSelfCB:function(){
         var score = this.targetScore_Node.string;
         cc.log('现在分数:'+score);
@@ -248,9 +292,56 @@ cc.Class({
         this.share2_Node.active = false;
         this.share_Node.active = false;
     },
-    closeReward:function(){
-        this.share2_Node.active = false;
-        this.Reward_Node.active = false;
+
+    QQShare:function(){
+        cc.log(this.getShareString());
+        cc.log(this.getShareURL());
+        cc.log(this.getShareIconURL());
+    },
+    WechatShare:function(){
+        cc.log(this.getShareString());
+        cc.log(this.getShareURL());
+        cc.log(this.getShareIconURL());
+    },
+    MicroShare:function(){
+        cc.log(this.getShareString());
+        cc.log(this.getShareURL());
+        cc.log(this.getShareIconURL());
     },
 
+
+    getShareString:function(){
+        //最大分
+        UserMaxScore
+        //排行
+        this.ranking_Label.getComponent(cc.Label).string
+        var shareStr = "我玩小猪钓鱼最高得分"+UserMaxScore+"，排名"+this.ranking_Label.getComponent(cc.Label).string+"，超越X%的玩家，有本事来战啊！";
+        return shareStr;
+    },
+    getShareURL:function(){
+        return "http://game.izxcs.com/diaoyu/index.html";
+    },
+
+    getShareIconURL:function(){
+        return "http://tsnrhapp.oss-cn-hangzhou.aliyuncs.com/game_mj/DY_ICON64.png";
+    },
+
+    /**
+     * 游戏结算消息接口
+     */
+    GameSettlement:function(){
+        var scorenum = this.score_Label.string;
+        isSendEnd = true;
+        var cb = {
+            "cmd":"fish/insertFishUserScore",
+            "data":{
+                "phone" : phoneNumber,
+                "scoreNum" : scorenum
+            }
+        };
+        if(scorenum > 0 && phoneNumber != '')
+        {
+            HTTP.sendobj(cb,2);
+        }
+    },
 });

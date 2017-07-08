@@ -2,7 +2,7 @@ var HTTP = require('HTTP');
 window.insertFishUserScore = null;
 window.TimeIsOver = false;
 window.MinTime = 0;
-window.MaxTime = 15;
+window.MaxTime = 90;
 window.isSendEnd = false//是否发送结算消息
 window.isPrintPhone = 0;//0没弹出,1输入正确,2输入错误
 
@@ -23,7 +23,6 @@ cc.Class({
             type:cc.Label,
         },
         shadow_Node:cc.Node,
-        phoneTips_Node:cc.Node,
     },
 
     // use this for initialization
@@ -95,18 +94,16 @@ cc.Class({
             if(MinTime >= MaxTime && isSendEnd == false)
             {
                 cc.log('游戏结束2');
-                if(isPrintPhone == 0 && phoneNumber == ''){
-                    // this.showPrintTips();
-                }
-                else if(isPrintPhone == 2){
-                    phoneNumber = '';
-                }
-                if(isPrintPhone == 1 || phoneNumber != ''){
-                    this.phoneTips_Node.active = false;
+                // if(isPrintPhone == 0 && phoneNumber == ''){
+                //     this.showPrintTips();
+                // }
+                // else if(isPrintPhone == 2){
+                //     phoneNumber = '';
+                // }
+                // if(isPrintPhone == 1 || phoneNumber != ''){
                     // this.sendRequestSelfCB();
                     TimeIsOver = true;
-                    this.GameSettlement();
-                }
+                // }
             }
             else
             {
@@ -116,10 +113,10 @@ cc.Class({
         }
     },
 
-    showPrintTips:function(){
-        this.shadow_Node.active = true;
-        this.phoneTips_Node.active = true;
-    },
+    // showPrintTips:function(){
+    //     this.shadow_Node.active = true;
+    //     this.phoneTips_Node.active = true;
+    // },
     updatime_hour:function(){
         if(TimeIsOver === false)
         {
@@ -154,22 +151,5 @@ cc.Class({
         };
         HTTP.sendobj(cb,5)
     },
-    /**
-     * 游戏结算消息接口
-     */
-    GameSettlement:function(){
-        var scorenum = this.score_Label.string;
-        isSendEnd = true;
-        var cb = {
-            "cmd":"fish/insertFishUserScore",
-            "data":{
-                "phone" : phoneNumber,
-                "scoreNum" : scorenum
-            }
-        };
-        if(scorenum > 0 && phoneNumber != '')
-        {
-            HTTP.sendobj(cb,2);
-        }
-    },
+
 });

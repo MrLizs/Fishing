@@ -1,5 +1,5 @@
-// var url = 'http://192.168.3.191:8080/game-collection-server/ws/rest';
-var url = 'http://118.190.87.31:8080/game-collection-server/ws/rest';
+var url = 'http://192.168.3.191:8080/game-collection-server/ws/rest';
+// var url = 'http://118.190.87.31:8080/game-collection-server/ws/rest';
 module.exports = {
     sendobj:function(msg,type){
         var xhr = new XMLHttpRequest();
@@ -60,12 +60,17 @@ module.exports = {
                 if(type == 6){
                     synchroFriends = null;
                     synchroFriends = response.data;
-                    cc.log('synchroFriends'+synchroFriends);
+                    cc.log('synchroFriends:'+synchroFriends);
                 }
                 if(type == 7){
                     CouponCB = null;
                     CouponCB = response;
-                    cc.log('CouponCB'+CouponCB);
+                    cc.log('CouponCB:'+CouponCB);
+                }
+                if(type == 8){
+                    CouponPage = null;
+                    CouponPage = response;
+                    cc.log('CouponPage:'+CouponPage);
                 }
 
             };

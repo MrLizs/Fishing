@@ -8,9 +8,11 @@ cc.Class({
         score_Label:cc.Label,
         inputEdit_Node:cc.EditBox,
         TipsString_Node:cc.Node,
+        shadow_Node:cc.Node,
     },
 
     onLoad: function () {
+        this.shadow_Node.active = true;
         this.requestCouponMessage();
     },
 
@@ -22,14 +24,14 @@ cc.Class({
                 "scoreNum": this.score_Label.string
             }
         };
-        if(phoneNumber != '')
-        {
+        if(phoneNumber != ''){
             HTTP.sendobj(cb,7);
             var self = this;
             var interval = setInterval(function(){
                 self.responseCouponMessage(interval);
             });
         }
+
     },
     responseCouponMessage:function(interval){
         if(CouponCB){
@@ -37,18 +39,26 @@ cc.Class({
             if(CouponCB.data){
                 cc.log('查询到优惠券...');
             }
-            if(Coupon.msg == '该用户不存在!'){
+            else
+            {
                 cc.log('该用户不存在!');
             }
         }
     },
 
     getreward:function(){
-        this.clickPhone();
+        if(phoneNumber == '')
+        {
+            this.clickPhone();
+        }
+        else
+        {
+            cc.log('这里发送领取奖励消息');
+        }
     },
 
     clickPhone:function(){
-        printStr = this.node.getChildByName('phoneNumberEditBox').getComponent(cc.EditBox).string;
+        var printStr = this.node.getChildByName('phoneNumberEditBox').getComponent(cc.EditBox).string;
         if(printStr.length===11)
         {
             var t=0;
@@ -66,7 +76,6 @@ cc.Class({
                     }
                     else{
                         cc.log("错误的手机号");
-                        phoneNumber = '';
                         break;
                     }
                 }
@@ -82,7 +91,7 @@ cc.Class({
             {
                 phoneNumber = printStr;
                 this.shadow_Node.active = false;
-                isPrintPhone = 1;
+                this.openURL();
             }
             else{
                 this.TipsString();
@@ -110,8 +119,11 @@ cc.Class({
         }, 2000);
     },
     openURL:function(){
-        cc.Application.getInstance().openURL("www.baidu.com");
+        cc.Application.getInstance().openURL("www.izxcs.com/zxcs.html");
     },
 
-
+    closeReward:function(){
+        this.shadow_Node.active = false;
+        this.Reward_Node.active = false;
+    },
 });
