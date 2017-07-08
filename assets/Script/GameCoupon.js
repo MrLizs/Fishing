@@ -119,7 +119,7 @@ cc.Class({
         }, 2000);
     },
     openURL:function(){
-        cc.Application.getInstance().openURL("www.izxcs.com/zxcs.html");
+        window.open("http://www.izxcs.com/zxcs.html");
     },
 
     closeReward:function(){
