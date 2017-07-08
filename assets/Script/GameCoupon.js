@@ -124,6 +124,6 @@ cc.Class({
 
     closeReward:function(){
         this.shadow_Node.active = false;
-        this.Reward_Node.active = false;
+        this.node.active = false;
     },
 });
