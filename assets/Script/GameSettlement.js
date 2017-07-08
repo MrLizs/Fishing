@@ -73,6 +73,7 @@ cc.Class({
             this.MaxScore_Label.string = this.targetScore_Node.string;
             this.HistoryHightest_Anim.active = true;
             this.HistoryHightest_Anim.getComponent(cc.Animation).play();
+            this.ShowReward();
         }
         else
         {
