@@ -46,12 +46,13 @@ cc.Class({
         share_Node:cc.Node,
         share2_Node:cc.Node,
         Reward_Node:cc.Node,
+        flauntBtn_Node:cc.Node,
     },
 
     onLoad: function () {
         var self = this;
         this.score_Label.string = this.targetScore_Node.string;
-
+        this.flauntBtn_Node.active = false;
 
         if(phoneNumber != ''){
             this.requestMaxScore();
@@ -198,6 +199,7 @@ cc.Class({
                 this.MaxScore_Label.string = '' + parseInt(this.targetScore_Node.string);
                 this.HistoryHightest_Anim.active = true;
                 this.HistoryHightest_Anim.getComponent(cc.Animation).play();
+                this.flauntBtn_Node.active = true;
             }
             else{
                 this.HistoryHightest_Anim.active = false;
@@ -324,6 +326,10 @@ cc.Class({
 
     getShareIconURL:function(){
         return "http://tsnrhapp.oss-cn-hangzhou.aliyuncs.com/game_mj/DY_ICON64.png";
+    },
+
+    flaunt:function(){
+        cc.log('炫耀~~我~~炫耀~~~yeah~');
     },
 
     /**
