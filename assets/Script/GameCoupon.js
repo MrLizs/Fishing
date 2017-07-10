@@ -1,5 +1,6 @@
 var HTTP = require("HTTP");
 window.CouponCB = null;
+var CouponID = 0;
 
 cc.Class({
     extends: cc.Component,
@@ -9,10 +10,23 @@ cc.Class({
         inputEdit_Node:cc.EditBox,
         TipsString_Node:cc.Node,
         shadow_Node:cc.Node,
+        couponAmount_Label:cc.Label,
+        couponAmountMin_Label:cc.Label,
+        couponName_Label:cc.Label,
+        couponEndTime_Label:cc.Label,
+        couponEndTime_Node:cc.Node,
     },
 
     onLoad: function () {
         this.shadow_Node.active = true;
+        if(phoneNumber != ''){
+            this.node.getChildByName("phoneNumberEditBox").active = false;
+            this.node.getChildByName('receive1').x = 0;
+        }
+        else{
+            this.node.getChildByName("phoneNumberEditBox").active = true;
+            this.node.getChildByName('receive1').x = 128;
+        }
         this.requestCouponMessage();
     },
 
@@ -31,16 +45,36 @@ cc.Class({
                 self.responseCouponMessage(interval);
             });
         }
-
+        else{
+            this.couponEndTime_Node.active = false;
+        }
+    },
+    requestGetCoupon:function(){
+        var cb = {
+            "cmd":"fish/takeUserCoupon",
+            "data":{
+                "couponId":CouponID,
+                "phone":phoneNumber
+            }
+        };
+        if(CouponID != 0){
+            HTTP.sendobj(cb,9);
+        }
     },
     responseCouponMessage:function(interval){
         if(CouponCB){
             clearInterval(interval);
             if(CouponCB.data){
                 cc.log('查询到优惠券...');
+                this.couponAmount_Label.string = CouponCB.data.amount;
+                this.couponAmountMin_Label.string = '满' + CouponCB.data.amountMin + '减' + CouponCB.data.amount;
+                this.couponName_Label.string = CouponCB.data.name;
+                this.couponEndTime_Label.string = CouponCB.data.endTime.slip('0')[0];
+                CouponID = CouponCB.data.id;
             }
             else
             {
+                this.couponEndTime_Node.active = false;
                 cc.log('该用户不存在!');
             }
         }
@@ -90,13 +124,11 @@ cc.Class({
             }
             if(t==11)
             {
-                phoneNumber = printStr;
                 this.shadow_Node.active = false;
                 this.openURL();
             }
             else{
                 this.TipsString();
-                phoneNumber = "";
             }
             cc.log("输入的是:"+printStr);
         }
@@ -120,8 +152,10 @@ cc.Class({
         }, 2000);
     },
     openURL:function(){
-        window.open("http://www.izxcs.com/zxcs.html");
+        this.shadow_Node.active = false;
         this.node.active = false;
+        this.requestGetCoupon();
+        window.open("http://www.izxcs.com/zxcs.html");
     },
 
     closeReward:function(){

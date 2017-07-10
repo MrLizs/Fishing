@@ -109,20 +109,15 @@ cc.Class({
             cc.log(CouponPage);
             if(CouponPage.data.total < 3)
             {
-                this.ShowReward();
+                if(parseInt(this.targetScore_Node.getComponent(cc.Label).string) > 500)
+                {
+                    this.ShowReward();
+                }
             }
         }
     },
     ShowReward:function(){
         this.Reward_Node.active = true;
-        if(phoneNumber != ''){
-            this.Reward_Node.getChildByName("phoneNumberEditBox").active = false;
-            this.Reward_Node.getChildByName('receive1').x = 0; 
-        }
-        else{
-            this.Reward_Node.getChildByName("phoneNumberEditBox").active = true;
-            this.Reward_Node.getChildByName('receive1').x = 128;
-        }
     },
 
     sendRequestSelfCB:function(){

@@ -72,6 +72,9 @@ module.exports = {
                     CouponPage = response;
                     cc.log('CouponPage:'+CouponPage);
                 }
+                if(type == 9){
+                    cc.log('takeUserCoupon:'+response.msg);
+                }
 
             };
         }
