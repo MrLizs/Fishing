@@ -47,6 +47,7 @@ cc.Class({
         share2_Node:cc.Node,
         Reward_Node:cc.Node,
         flauntBtn_Node:cc.Node,
+        beyondPlay_Labal:cc.Label,
     },
 
     onLoad: function () {
@@ -164,6 +165,7 @@ cc.Class({
             if(ScoreSelectRankings.data){
                 this.ThousandRanking(parseInt(this.targetScore_Node.string));
                 this.ranking_Label.getComponent(cc.Label).string = '' + ScoreSelectRankings.data.bigNum;
+                this.beyondPlay_Labal.string = '超越全球' + ScoreSelectRankings.data.bigPercent.toFixed(2) + '%的玩家';
             }
             var friendsList = ScoreSelectRankings.data.list;
             if(friendsList && friendsList.length > 0){

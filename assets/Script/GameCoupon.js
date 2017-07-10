@@ -53,6 +53,7 @@ cc.Class({
         }
         else
         {
+            this.openURL();
             cc.log('这里发送领取奖励消息');
         }
     },
@@ -120,6 +121,7 @@ cc.Class({
     },
     openURL:function(){
         window.open("http://www.izxcs.com/zxcs.html");
+        this.node.active = false;
     },
 
     closeReward:function(){
