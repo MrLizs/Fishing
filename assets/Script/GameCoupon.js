@@ -69,7 +69,7 @@ cc.Class({
                 this.couponAmount_Label.string = CouponCB.data.amount;
                 this.couponAmountMin_Label.string = '满' + CouponCB.data.amountMin + '减' + CouponCB.data.amount;
                 this.couponName_Label.string = CouponCB.data.name;
-                this.couponEndTime_Label.string = CouponCB.data.endTime.slip('0')[0];
+                this.couponEndTime_Label.string = CouponCB.data.endTime.split(' ')[0];
                 CouponID = CouponCB.data.id;
             }
             else
@@ -88,6 +88,7 @@ cc.Class({
         else
         {
             this.openURL();
+            this.requestGetCoupon();
             cc.log('这里发送领取奖励消息');
         }
     },
@@ -154,8 +155,10 @@ cc.Class({
     openURL:function(){
         this.shadow_Node.active = false;
         this.node.active = false;
-        this.requestGetCoupon();
-        window.open("http://www.izxcs.com/zxcs.html");
+        if(phoneNumber == '')
+        {
+            window.open("http://www.izxcs.com/zxcs.html");
+        }
     },
 
     closeReward:function(){
