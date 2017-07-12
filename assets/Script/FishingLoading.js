@@ -16,12 +16,21 @@ cc.Class({
 
     // use this for initialization
     onLoad: function () {
-        cc.director.preloadScene('FishingGame');
+        if(cc.director.isPaused())
+        {
+            //这里须恢复.
+            cc.director.resume();
+        }
 
-        this.schedule(this.updatime_minute,10);
+        cc.director.preloadScene('FishingGame');
+        
+        var self = this;
+        var _interval = setInterval(function(){
+            self.updatime_minute(_interval)
+        },5000);
     },
-    updatime_minute:function(){
-        this.unschedule(this.updatime_minute);
+    updatime_minute:function(_interval){
+        clearInterval(_interval);
         cc.director.loadScene('FishingGame');
     },
     // called every frame, uncomment this function to activate update callback

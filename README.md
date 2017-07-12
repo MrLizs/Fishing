@@ -1,5 +1,8 @@
 # Fishing
 
+# Ver 0.9.82
+# 1.Fixed "Loading" ui for two bug
+
 # Ver 0.9.81
 # 1.修复排行榜列表节点没有清除的BUG
 # 2.增加载入界面以及动画
