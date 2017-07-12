@@ -160,7 +160,7 @@ cc.Class({
         });
     },
     ExitGame:function(){
-        cc.game.end();
+        // cc.game.end();
         // var self = this;
         // cc.loader.loadRes('Login/UI_home_exit',cc.SpriteFrame,function(err,spriteFrame){
         //     self.gameExitBtn_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
