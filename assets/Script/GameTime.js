@@ -2,7 +2,7 @@ var HTTP = require('HTTP');
 window.insertFishUserScore = null;
 window.TimeIsOver = false;
 window.MinTime = 0;
-window.MaxTime = 90;
+window.MaxTime = 10;
 window.isSendEnd = false//是否发送结算消息
 window.isPrintPhone = 0;//0没弹出,1输入正确,2输入错误
 

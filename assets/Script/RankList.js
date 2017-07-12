@@ -68,6 +68,7 @@ cc.Class({
         if(RankingsCB.data)
         {
             var cb = RankingsCB.data.scoreDescPage.records;
+            this.rankListContent_Node.removeAllChildren();
             this.rankListContent_Node.height = cb.length * 80;
             for (var i = 0; i < cb.length; i++) {
                 var itme = cc.instantiate(this.rankContentItem_Prefab);

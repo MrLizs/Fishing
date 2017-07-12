@@ -57,10 +57,10 @@ cc.Class({
 
         if(phoneNumber != ''){
             this.requestMaxScore();
+            var interval1 = setInterval(function(){
+                self.showMaxScore(interval1)
+            },200);
         }
-        var interval1 = setInterval(function(){
-            self.showMaxScore(interval1)
-        },200);
 
         this.sendRequestSelfCB();
         var interval = setInterval(function(){

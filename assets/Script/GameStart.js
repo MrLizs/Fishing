@@ -57,7 +57,6 @@ cc.Class({
         // phoneNumber = '13419695310';
         this.loadPhone();
         
-        cc.director.preloadScene('FishingGame');
     },
 
     // called every frame, uncomment this function to activate update callback
@@ -113,7 +112,7 @@ cc.Class({
         // cc.loader.loadRes('Login/UI_home_start',cc.SpriteFrame,function(err,spriteFrame){
         //     self.start_Node.getComponent(cc.Sprite).spriteFrame = spriteFrame;
         // });
-        cc.director.loadScene('FishingGame');
+        cc.director.loadScene('FishingLoading');
     },
 
     ruleClickStart:function(){
