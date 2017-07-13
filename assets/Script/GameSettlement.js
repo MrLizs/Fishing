@@ -312,7 +312,7 @@ cc.Class({
 
     getShareString:function(){
         //最大分
-        UserMaxScore
+        //UserMaxScore
         //排行
         this.ranking_Label.getComponent(cc.Label).string
         var shareStr = "我玩小猪钓鱼最高得分"+UserMaxScore+"，排名"+this.ranking_Label.getComponent(cc.Label).string+"，超越X%的玩家，有本事来战啊！";
