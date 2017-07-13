@@ -2,16 +2,7 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        // foo: {
-        //    default: null,      // The default value will be used only when the component attaching
-        //                           to a node for the first time
-        //    url: cc.Texture2D,  // optional, default is typeof default
-        //    serializable: true, // optional, default is true
-        //    visible: true,      // optional, default is true
-        //    displayName: 'Foo', // optional
-        //    readonly: false,    // optional, default is false
-        // },
-        // ...
+        // _progress:0,
     },
 
     // use this for initialization
@@ -22,17 +13,27 @@ cc.Class({
             cc.director.resume();
         }
 
-        cc.director.preloadScene('FishingGame');
-        
-        var self = this;
-        var _interval = setInterval(function(){
-            self.updatime_minute(_interval)
-        },5000);
+        //载入完成自动进入场景
+        cc.director.preloadScene('FishingGame',function(){
+            cc.log("预加载完成,进入场景...");
+            cc.director.loadScene('FishingGame');
+        });
+        //加载完成时_progress会变成1
+        // var self = this;
+        // cc.loader.onProgress = function ( completedCount, totalCount,  item ){
+        //     self._progress = completedCount/totalCount;
+        //     cc.log("进度"+self._progress);
+        // };
+
+        //5秒后自动跳转场景
+        // var self = this;
+        // var _interval = setInterval(function(){
+        //     self.updatime_minute(_interval)
+        // },5000);
     },
-    updatime_minute:function(_interval){
-        clearInterval(_interval);
-        cc.director.loadScene('FishingGame');
-    },
+    // updatime_minute:function(_interval){
+    //     clearInterval(_interval);
+    // },
     // called every frame, uncomment this function to activate update callback
     // update: function (dt) {
 

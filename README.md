@@ -1,5 +1,8 @@
 # Fishing
 
+# Ver 0.9.83
+# 1.use real "loading resources" ui event...
+
 # Ver 0.9.82
 # 1.Fixed "Loading" ui for two bug
 
