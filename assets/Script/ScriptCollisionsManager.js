@@ -26,7 +26,8 @@ var floorOne = 550;
 var floorTwo = 370;
 var floorThree = 190;
 var MaxViewNums = 16;
-
+var FishesMaxType = 7;
+var GarbageMaxType = 6;
 var SPD1 = 300;
 var SPD2 = 400;
 var SPD3 = 500;
@@ -497,47 +498,59 @@ var ScriptCollisionsManager = cc.Class({
 
     pushtheFish:function(){
         FishNum++;
-        var rand = Math.random() * 6 + 1;
-        switch (Math.round(rand)) {
-            case 1:
-                return this.agouti_Node;
-            case 2:
-                return this.bluefish_Node;
-            case 3:
-                return this.crab_Node;
-            case 4:
-                return this.cuttlefish_Node;
-            case 5:
-                return this.redfish_Node;
-            case 6:
-                return this.tropicalfish_Node;
-            case 7:
-                return this.yellowfish_Node;
-            default:
-                cc.log('返回了一个空对象1:'+Math.round(rand));
-                return;
+        var rand = Math.random();
+        if(rand > 0 && rand < 1/FishesMaxType){
+            return this.agouti_Node;
         }
+        else if(rand > 1/FishesMaxType && rand < 2/FishesMaxType){
+            return this.bluefish_Node;
+        }
+        else if(rand > 2/FishesMaxType && rand < 3/FishesMaxType){
+            return this.crab_Node;
+        }
+        else if(rand > 3/FishesMaxType && rand < 4/FishesMaxType){
+            return this.cuttlefish_Node;
+        }
+        else if(rand > 4/FishesMaxType && rand < 5/FishesMaxType){
+            return this.redfish_Node;
+        }
+        else if(rand > 5/FishesMaxType && rand < 6/FishesMaxType){
+            return this.tropicalfish_Node;
+        }
+        else if(rand > 6/FishesMaxType && rand < 7/FishesMaxType){
+            return this.yellowfish_Node;
+        }
+        else{
+            --FishNum;
+            return this.pushtheFish();
+        }
+
     },
     pushtheGarbage:function(){
         GarbageNum++;
-            var rand = Math.random() * 5 + 1;
-            switch (Math.round(rand)) {
-                case 1:
-                    return this.prop1_Node;
-                case 2:
-                    return this.prop2_Node;
-                case 3:
-                    return this.prop3_Node;
-                case 4:
-                    return this.prop4_Node;
-                case 5:
-                    return this.prop5_Node;
-                case 6:
-                    return this.prop6_Node;
-                default:
-                    cc.log('返回了一个空对象2:'+Math.round(rand));
-                    return;
-            }
+        var rang = Math.random();
+        if(rang > 0 && rang < 1/GarbageMaxType){
+            return this.agouti_Node;
+        }
+        else if(rang > 1/GarbageMaxType && rang < 2/GarbageMaxType){
+            return this.prop1_Node;
+        }
+        else if(rang > 2/GarbageMaxType && rang < 3/GarbageMaxType){
+            return this.prop2_Node;
+        }
+        else if(rang > 3/GarbageMaxType && rang < 4/GarbageMaxType){
+            return this.prop3_Node;
+        }
+        else if(rang > 4/GarbageMaxType && rang < 5/GarbageMaxType){
+            return this.prop4_Node;
+        }
+        else if(rang > 5/GarbageMaxType && rang < 6/GarbageMaxType){
+            return this.prop5_Node;
+        }
+        else{
+            --GarbageNum;
+            return this.pushtheGarbage();
+        }
     },
 
     /**

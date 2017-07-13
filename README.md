@@ -1,5 +1,8 @@
 # Fishing
 
+# Ver 0.9.84
+# 1.reset for add 'fish' and 'Garbage' logic.
+
 # Ver 0.9.83
 # 1.use real "loading resources" ui event...
 
