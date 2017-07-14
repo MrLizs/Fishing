@@ -2,7 +2,7 @@
 
 # Ver 0.9.86
 # 1.Fix a settlementing ranking of bug
-# 2.New add an aes encrypt of HTTP get response
+# 2.New add an aes encrypt of HTTP GET response
 
 # Ver 0.9.84
 # 1.reset for add 'fish' and 'Garbage' logic.
