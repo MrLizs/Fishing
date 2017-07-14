@@ -1,5 +1,9 @@
 # Fishing
 
+# Ver 0.9.86
+# 1.Fix a settlementing ranking of bug
+# 2.New add an aes encrypt of HTTP get response
+
 # Ver 0.9.84
 # 1.reset for add 'fish' and 'Garbage' logic.
 
@@ -7,7 +11,7 @@
 # 1.use real "loading resources" ui event...
 
 # Ver 0.9.82
-# 1.Fixed "Loading" ui for two bug
+# 1.Fix "Loading" ui for two bug
 
 # Ver 0.9.81
 # 1.修复排行榜列表节点没有清除的BUG

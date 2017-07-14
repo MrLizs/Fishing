@@ -27,6 +27,11 @@ cc.Class({
 
     // use this for initialization
     onLoad: function () {
+        if(cc.director.isPaused())
+        {
+            //这里须恢复.
+            cc.director.resume();
+        }
     },
 
     requestRanklist:function(){

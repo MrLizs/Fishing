@@ -81,7 +81,6 @@ cc.Class({
             this.requestRewardCouponPage();
         }
         
-        this.GameSettlement();
 
     },
     requestRewardCouponPage:function(){
@@ -166,6 +165,7 @@ cc.Class({
             if(friendsList && friendsList.length > 0){
                 cc.log('超过 '+friendsList.length+' 个好友');
                 this.friendsScrollView_Node.active = true;
+                this.flauntBtn_Node.active = true;
                 this.friendsStr_Node.active = false;
                 for (var i = 0; i < friendsList.length; i++) {
                     var element = friendsList[i];
@@ -180,7 +180,7 @@ cc.Class({
                 this.friendsScrollView_Node.active = false;
                 this.friendsStr_Node.active = true;
             }
-
+            this.GameSettlement();
         }
     },
 
@@ -197,7 +197,6 @@ cc.Class({
                 this.MaxScore_Label.string = '' + parseInt(this.targetScore_Node.string);
                 this.HistoryHightest_Anim.active = true;
                 this.HistoryHightest_Anim.getComponent(cc.Animation).play();
-                this.flauntBtn_Node.active = true;
             }
             else{
                 this.HistoryHightest_Anim.active = false;
@@ -345,6 +344,7 @@ cc.Class({
         };
         if(scorenum > 0 && phoneNumber != '')
         {
+            cc.log('增加一条记录');
             HTTP.sendobj(cb,2);
         }
     },

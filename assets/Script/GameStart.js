@@ -69,24 +69,26 @@ cc.Class({
         var phonenums = window.location.search;
         var phonestr = phonenums.split('=')[0].split('?')[1];
         cc.log("phonestr:"+phonestr);
-        if(phonestr == 'phone'){
+        if(phonestr == 'param'){
+            // this.aesJiaMi();
             phonenums = phonenums.split('=')[1];
-            if(phonenums.length == 11){
-                for (var i = 0; i < phonenums.length; i++) {
-                    var element = phonenums.split('');
-                    if(this.isNumber(element) == true){
-                        cc.log('phone is false')
-                        break;
-                    }
-                    nums++;
-                }
-            }
-            if(nums == 11){
-                phoneNumber = phonenums;
-                console.log('phone input right : ' + phoneNumber);
-                this.friendSynchronization();
-            }
-            cc.log(phonenums);
+            this.aesJieMi(phonenums);
+            // if(phonenums.length == 11){
+            //     for (var i = 0; i < phonenums.length; i++) {
+            //         var element = phonenums.split('');
+            //         if(this.isNumber(element) == true){
+            //             cc.log('phone is false')
+            //             break;
+            //         }
+            //         nums++;
+            //     }
+            // }
+            // if(nums == 11){
+            //     phoneNumber = phonenums;
+            //     console.log('phone input right : ' + phoneNumber);
+            //     this.friendSynchronization();
+            // }
+            // cc.log(phonenums);
         }
     },
     friendSynchronization:function(){
@@ -99,7 +101,47 @@ cc.Class({
             HTTP.sendobj(cb,6);
         }
     },
-    
+    getAesString:function(data,key,iv){
+        var key  = CryptoJS.enc.Utf8.parse(key);  
+                     //alert(key）;  
+            var iv   = CryptoJS.enc.Utf8.parse(iv);  
+            var encrypted =CryptoJS.AES.encrypt(data,key,  
+                    {  
+                        iv:iv,  
+                        mode:CryptoJS.mode.ECB,  
+                       padding:CryptoJS.pad.Pkcs7  
+                    });  
+            return encrypted.toString();
+    },
+    html:function(){
+        //window.location = "http://www.baidu.com";
+    },
+    aesJiaMi:function(){
+        var data = '{"phone":"15915915915","userId":31}';
+        var key  = '4a0f7caaf69b49a0';  //密钥  
+        var iv   = '4a0f7caaf69b49a0';  
+        var encrypted =this.getAesString(data,key,iv); //密文  
+        console.log(encrypted);
+        return encrypted;
+        // var encrypted1 =CryptoJS.enc.Utf8.parse(encrypted);
+        // var phoneNum = window.location.href.substring(window.location.href.indexOf("=")+1);
+        // var things = '{"phone":"18963984338","userId":31}';
+        // var key = CryptoJS.enc.Utf8.parse("81aefe4d81ca");   
+  
+        // var srcs = CryptoJS.enc.Utf8.parse(things);  
+        // var encrypted = CryptoJS.AES.encrypt(srcs, key, {mode:CryptoJS.mode.CBC,padding: CryptoJS.pad.Pkcs7});  
+        // this.jiaMiPhoneNum = encrypted.toString();
+        // console.log("加密:"+this.jiaMiPhoneNum);
+    },
+    aesJieMi:function(word){
+        var key = CryptoJS.enc.Utf8.parse('4a0f7caaf69b49a0');
+        var decrypt = CryptoJS.AES.decrypt(word, key, {mode:CryptoJS.mode.ECB,padding: CryptoJS.pad.Pkcs7});
+        var aesParamObj = CryptoJS.enc.Utf8.stringify(decrypt).toString(); 
+        var paramObj = JSON.parse(aesParamObj);
+        phoneNumber = paramObj.phone;
+        console.log("解密phone:"+phoneNumber);
+    },
+
     clickStartBtn:function(){
         var self = this;
         cc.loader.loadRes('Login/UI_home_start_click',cc.SpriteFrame,function(err,spriteFrame){
