@@ -20,5 +20,8 @@
   "renderMode": "0",
   "startScene": "59fd0bb8-a791-4b84-a838-e302f21fc43c",
   "title": "Fishing",
-  "webOrientation": "landscape"
+  "webOrientation": "landscape",
+  "includeSDKBox": false,
+  "inlineSpriteFrames_native": true,
+  "optimizeHotUpdate": false
 }
