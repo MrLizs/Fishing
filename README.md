@@ -1,5 +1,8 @@
 # Fishing
 
+# Ver 0.9.87
+# 1.Encryption failure after handle for AES
+
 # Ver 0.9.86
 # 1.Fix a settlementing ranking of bug
 # 2.New add an aes encrypt of HTTP GET response

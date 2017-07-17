@@ -71,7 +71,7 @@ cc.Class({
         cc.log("phonestr:"+phonestr);
         if(phonestr == 'param'){
             // this.aesJiaMi();
-            phonenums = phonenums.split('=')[1];
+            phonenums = phonenums.split('?param=')[1];
             this.aesJieMi(phonenums);
             // if(phonenums.length == 11){
             //     for (var i = 0; i < phonenums.length; i++) {
@@ -136,10 +136,15 @@ cc.Class({
     aesJieMi:function(word){
         var key = CryptoJS.enc.Utf8.parse('4a0f7caaf69b49a0');
         var decrypt = CryptoJS.AES.decrypt(word, key, {mode:CryptoJS.mode.ECB,padding: CryptoJS.pad.Pkcs7});
-        var aesParamObj = CryptoJS.enc.Utf8.stringify(decrypt).toString(); 
-        var paramObj = JSON.parse(aesParamObj);
-        phoneNumber = paramObj.phone;
-        console.log("解密phone:"+phoneNumber);
+        var aesParamObj = CryptoJS.enc.Utf8.stringify(decrypt).toString();
+        if(aesParamObj != ''){
+            var paramObj = JSON.parse(aesParamObj);
+            phoneNumber = paramObj.phone;
+            console.log("解密phone:"+phoneNumber);
+        }
+        else{
+            cc.log("加密语句错误");
+        }
     },
 
     clickStartBtn:function(){
