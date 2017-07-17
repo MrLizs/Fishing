@@ -96,7 +96,7 @@ cc.Class({
         UserMaxScore = null;
         ScoreSelectRankings = null;
 
-        cc.director.setDisplayStats(true);
+        // cc.director.setDisplayStats(true);
     },
 
     // called every frame, uncomment this function to activate update callback
